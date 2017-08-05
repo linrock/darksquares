@@ -1,10 +1,8 @@
 /* eslint no-console: 0 */
 
 import Vue from 'vue'
-import App from '../components/app.vue'
+import Home from '../routes/home.vue'
 
 document.addEventListener('DOMContentLoaded', () => {
-  const app = new Vue(App).$mount('#application')
-
-  console.log(app)
+  new Vue(Home).$mount('#application')
 })

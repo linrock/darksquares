@@ -1,0 +1,214 @@
+<template>
+  <article>
+    <div class="background">
+      <div class="left-content shadowed">
+        <mini-board-detailed :showPgn="true" :showHeaderInfo="false"/>
+
+        <div class="container">
+          <header class="shadowed">
+            <h1>Annotated games</h1>
+
+            <div class="instructions">
+              Hover over the graphs to explore positions.
+              Click to view the move list and annotations.
+            </div>
+          </header>
+
+          <div class="game-submission" v-for="i in nGames">
+            <game-card-header :gameIndex="i - 1" :gameData="games[i - 1]"/>
+            <div class="game-container shadowed">
+              <game-card :gameIndex="i - 1" :gameData="games[i - 1]"/>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </article>
+</template>
+
+<script>
+  import Chess from 'chess.js'
+  import MiniBoardDetailed from '../components/mini_board_detailed.vue'
+  import GameCardHeader from '../components/game_card_header.vue'
+  import GameCard from '../components/game_card.vue'
+  import Game from '../models/game'
+
+  window.Chess = Chess
+
+  export default {
+    data: function() {
+      return {
+        games: Game.loadGamesFromData(window.data),
+      }
+    },
+
+    computed: {
+      nGames: function() {
+        return this.games.length
+      },
+    },
+
+    components: {
+      GameCard,
+      GameCardHeader,
+      MiniBoardDetailed,
+    }
+  }
+</script>
+
+<style lang="scss">
+  @mixin clearfix {
+    &:before, &:after {
+      display: table;
+      content: "";
+    }
+
+    &:after {
+      clear: both;
+    }
+  }
+
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .shadowed {
+    box-shadow: 0 0 5px rgba(0,0,0,0.15);
+  }
+
+  .background {
+    background: #eee;
+    width: 100%;
+    height: 100%;
+    min-height: 1000px;
+
+    .left-content {
+      background: white;
+      width: 420px;
+      height: 100%;
+      min-height: 1000px;
+    }
+  }
+
+  .mini-board-view {
+    position: fixed;
+    top: 70px;
+    left: 35px;
+    width: 338px;
+
+    .game-info {
+      margin-bottom: 17px;
+    }
+
+    .position-info {
+      margin-top: 10px;
+      @include clearfix;
+
+      .game-position {
+        float: left;
+      }
+
+      .position-evaluation {
+        float: right;
+      }
+    }
+  }
+
+  .main-header {
+    height: 40px;
+    line-height: 40px;
+    color: white;
+    padding-left: 35px;
+    width: 100%;
+    background: #222;
+    position: fixed;
+    z-index: 1;
+  }
+
+  .container {
+    width: 800px;
+    margin-left: 450px;
+    border-left: 1px solid #eee;
+
+    header {
+      padding-left: 25px;
+      border-bottom: 1px solid #eee;
+      width: 640px;
+      background: white;
+    }
+
+    .game-submission {
+      margin: 25px 0;
+    }
+
+    .game-container {
+      @include clearfix;
+      border-radius: 1px;
+      padding: 15px 20px;
+      width: 640px;
+      border-bottom: 1px solid #eee;
+      background: white;
+
+      .move-list {
+        margin: 15px 30px 0 0;
+      }
+    }
+  }
+
+  h1 {
+    color: #292929;
+    font-size: 20px;
+    padding: 60px 0 10px;
+    margin: 0;
+  }
+
+  .description {
+    font-size: 14px;
+    line-height: 20px;
+    width: 640px;
+
+    .contender {
+      margin: 30px 0;
+    }
+  }
+
+  .instructions {
+    font-size: 12px;
+    margin: 10px 0 20px;
+    font-weight: bold;
+    color: rgba(0,0,0,0.3);
+  }
+
+  .graph-container {
+    .game-info {
+      opacity: 0.8;
+      transition: opacity 0.25s ease;
+    }
+  }
+
+  .annotation-preview {
+    font-size: 12px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin: 5px 0;
+    color: #005F2F;
+    opacity: 0.9;
+  }
+
+  .game-summary {
+    float: left;
+    width: 300px;
+    margin-left: 40px;
+    margin-top: 60px;
+  }
+
+  .position-annotations {
+    margin-top: 26px;
+    font-size: 15px;
+    line-height: 20px;
+  }
+</style>

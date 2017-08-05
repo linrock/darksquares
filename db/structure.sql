@@ -28,6 +28,37 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: annotations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE annotations (
+    id bigint NOT NULL,
+    game_id integer,
+    user_id integer,
+    text character varying
+);
+
+
+--
+-- Name: annotations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE annotations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: annotations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE annotations_id_seq OWNED BY annotations.id;
+
+
+--
 -- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -51,6 +82,8 @@ CREATE TABLE games (
     positions jsonb,
     moves jsonb,
     analysis jsonb,
+    best_moves jsonb,
+    graph_points jsonb,
     metadata jsonb,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
@@ -119,6 +152,13 @@ CREATE TABLE schema_migrations (
 
 
 --
+-- Name: annotations id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY annotations ALTER COLUMN id SET DEFAULT nextval('annotations_id_seq'::regclass);
+
+
+--
 -- Name: games id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -130,6 +170,14 @@ ALTER TABLE ONLY games ALTER COLUMN id SET DEFAULT nextval('games_id_seq'::regcl
 --
 
 ALTER TABLE ONLY position_analyses ALTER COLUMN id SET DEFAULT nextval('position_analyses_id_seq'::regclass);
+
+
+--
+-- Name: annotations annotations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY annotations
+    ADD CONSTRAINT annotations_pkey PRIMARY KEY (id);
 
 
 --
@@ -165,6 +213,20 @@ ALTER TABLE ONLY schema_migrations
 
 
 --
+-- Name: index_annotations_on_game_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_annotations_on_game_id ON annotations USING btree (game_id);
+
+
+--
+-- Name: index_annotations_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_annotations_on_user_id ON annotations USING btree (user_id);
+
+
+--
 -- Name: index_games_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -186,6 +248,7 @@ SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
 ('20170804072614'),
-('20170804072759');
+('20170804072759'),
+('20170805085301');
 
 

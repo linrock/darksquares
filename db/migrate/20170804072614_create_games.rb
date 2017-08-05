@@ -7,6 +7,8 @@ class CreateGames < ActiveRecord::Migration[5.1]
       t.jsonb :positions
       t.jsonb :moves
       t.jsonb :analysis
+      t.jsonb :best_moves
+      t.jsonb :graph_points
       t.jsonb :metadata
       t.timestamps
     end
