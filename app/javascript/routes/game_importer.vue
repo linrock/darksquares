@@ -18,9 +18,9 @@
 
 <script>
   import Chess from 'chess.js'
-  import axios from 'axios'
   import { state } from '../store/miniboard'
   import MiniBoard from '../components/mini_board.vue'
+  import { createGame } from '../api_client'
 
   export default {
     data: function() {
@@ -35,21 +35,18 @@
         const pgn = this.$el.querySelector(`.pgn-importer`).value
         const cjs = new Chess()
         if (cjs.load_pgn(pgn)) {
-          this.createGame(pgn)
+          const data = {
+            game: {
+              pgn: pgn
+            }
+          }
+          createGame(data).then(response => {
+            console.log("yay, game uploaded!")
+          })
         } else {
           console.log("pgn is invalid!")
         }
       },
-      createGame: function(pgn) {
-        const data = {
-          game: {
-            pgn: pgn
-          }
-        }
-        axios.post("/api/v1/games", data).then((response) => {
-          console.log("yay, game uploaded!")
-        })
-      }
     },
 
     components: {

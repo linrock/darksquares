@@ -2,7 +2,7 @@ class API::V1::GamesController < API::V1::BaseController
 
   # GET /api/v1/games
   def index
-    games = Game.all
+    games = Game.order('id DESC').all
     render json: games
   end
 

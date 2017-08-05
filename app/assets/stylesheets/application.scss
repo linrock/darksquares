@@ -25,6 +25,7 @@ header.main {
   padding: 0 35px;
   position: fixed;
   display: flex;
+  z-index: 1;
 
   a {
     color: inherit;

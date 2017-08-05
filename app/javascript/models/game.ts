@@ -4,6 +4,7 @@ interface GameMeta {
 }
 
 interface GameData {
+  id: number
   meta: GameMeta
   pgn: string
   pgn_headers: object
@@ -15,6 +16,7 @@ interface GameData {
 }
 
 export default class Game {
+  id: number
   meta: GameMeta
   pgn: string
   pgnHeaders: object
@@ -29,6 +31,7 @@ export default class Game {
   }
 
   public constructor(options: GameData) {
+    this.id = options.id
     this.meta = options.meta
     this.pgn = options.pgn
     this.pgnHeaders = options.pgn_headers

@@ -21,6 +21,7 @@
 
 <script>
   import Annotation from './annotation.vue'
+  import { createAnnotation } from '../api_client'
 
   export default {
     props: {
@@ -65,6 +66,9 @@
             text: annotation,
           },
           i: this.annotationInputIndex,
+        })
+        createAnnotation(gameState.id, {
+          text: annotation
         })
         annotationInput.value = ''
         this.annotationInputIndex = -1

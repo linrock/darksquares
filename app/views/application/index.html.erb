@@ -1,7 +1,7 @@
 <%= render partial: "main_header" %>
 
 <script>
-  window.data = <%= Game.all.to_json.html_safe %>;
+  window.data = <%= @games.to_json.html_safe %>;
 </script>
 
 <div id="application"></div>
