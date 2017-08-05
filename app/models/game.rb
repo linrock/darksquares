@@ -12,6 +12,10 @@ class Game < ApplicationRecord
     self.graph_points = GraphPointsCalculator.new(self.analysis).calculate!.values[0].values
   end
 
+  def as_json(options = {})
+    super(options).merge(annotations: annotations)
+  end
+
   private
 
   def pgn_loader

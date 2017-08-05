@@ -1,6 +1,4 @@
-<header class="main">
-  Dark Squares
-</header>
+<%= render partial: "main_header" %>
 
 <script>
   window.data = <%= Game.all.to_json.html_safe %>;

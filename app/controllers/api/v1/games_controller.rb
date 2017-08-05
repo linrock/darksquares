@@ -3,7 +3,7 @@ class API::V1::GamesController < API::V1::BaseController
   # GET /api/v1/games
   def index
     games = Game.all
-    render json: games, serializer: GameSerializer
+    render json: games
   end
 
   # GET /api/v1/games/:id
@@ -12,6 +12,9 @@ class API::V1::GamesController < API::V1::BaseController
 
   # POST /api/v1/games
   def create
+    game = Game.create(game_params)
+    GameDataCalculatorJob.perform_later game
+    render json: {}
   end
 
   # PATCH /api/v1/games/:id
@@ -21,4 +24,11 @@ class API::V1::GamesController < API::V1::BaseController
   # DELETE /api/v1/games/:id
   def destroy
   end
+
+  private
+
+  def game_params
+    params.require(:game).permit(:pgn)
+  end
+
 end

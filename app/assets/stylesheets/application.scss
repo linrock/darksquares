@@ -24,4 +24,25 @@ header.main {
   line-height: 40px;
   padding: 0 35px;
   position: fixed;
+  display: flex;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .left {
+    width: 415px;
+  }
+
+  .right {
+    a {
+      color: rgba(255,255,255,0.6);
+      margin-right: 30px;
+    }
+  }
+}
+
+.header-spacer {
+  height: 40px;
 }
