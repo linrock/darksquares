@@ -9,13 +9,15 @@
 </template>
 
 <script>
-  import { createSession } from '../api_client'
-  import store from 'store'
+  import { createSession, getUserInfo } from '../api_client'
+  import { getAccessToken } from '../store/local_storage'
 
   export default {
-    beforeCreate: function() {
-      if (store.get('access_token')) {
-         window.location = "/"
+    beforeRouteEnter: function(to, from, next) {
+      if (getAccessToken()) {
+        next({ path: "/" })
+      } else {
+        next()
       }
     },
     methods: {
@@ -26,6 +28,7 @@
           password: this.$refs.password.value
         }
         createSession(credentials).then(() => {
+          getUserInfo()
           window.location = "/"
         })
       }

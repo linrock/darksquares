@@ -9,9 +9,11 @@ Rails.application.routes.draw do
 
   get "/importer"    => "application#index"
   get "/games"       => "application#index"
+  get "/games/:id"   => "application#index"
   get "/annotations" => "application#index"
   get "/login"       => "application#index"
   get "/sign_up"     => "application#index"
+  get "/profile"     => "application#index"
 
   namespace :api do
     namespace :v1 do

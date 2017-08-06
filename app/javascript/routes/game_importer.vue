@@ -21,8 +21,16 @@
   import { state } from '../store/miniboard'
   import MiniBoard from '../components/mini_board.vue'
   import { createGame } from '../api_client'
+  import { getAccessToken } from '../store/local_storage'
 
   export default {
+    beforeRouteEnter: function(to, from, next) {
+      if (getAccessToken()) {
+        next()
+      } else {
+        next({ path: "/login" })
+      }
+    },
     data: function() {
       return {
         boardState: state

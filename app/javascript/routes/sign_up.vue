@@ -1,33 +1,38 @@
 <template>
   <div id="sign_up">
     <form @submit="submitCredentials">
-      <input type="text" ref="username" placeholder="Username"/>
-      <input type="password" ref="password" placeholder="Password"/>
-      <input type="password" ref="password_confirmation" placeholder="Confirm password"/>
+      <input type="text" placeholder="Username" ref="username"/>
+      <input type="password" placeholder="Password" ref="password"/>
+      <input type="password" placeholder="Confirm password" ref="password_confirmation"/>
       <input type="submit" value="Sign up"/>
     </form>
   </div>
 </template>
 
 <script>
-  import { createUser } from '../api_client'
-  import store from 'store'
+  import { createUser, getUserInfo } from '../api_client'
+  import { getAccessToken } from '../store/local_storage'
 
   export default {
-    beforeCreate: function() {
-      if (store.get('access_token')) {
-         window.location = "/"
+    beforeRouteEnter: function(to, from, next) {
+      if (getAccessToken()) {
+        next({ path: "/" })
+      } else {
+        next()
       }
     },
     methods: {
       submitCredentials: function(e) {
         e.preventDefault()
         const credentials = {
-          username: this.$refs.username.value,
-          password: this.$refs.password.value,
-          password_confirmation: this.$refs.password_confirmation.value
+          user: {
+            username: this.$refs.username.value,
+            password: this.$refs.password.value,
+            password_confirmation: this.$refs.password_confirmation.value
+          }
         }
         createUser(credentials).then(() => {
+          getUserInfo()
           window.location = "/"
         })
       }

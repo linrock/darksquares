@@ -6,8 +6,8 @@ class AddUsernameToUsers < ActiveRecord::Migration[5.1]
   end
 
   def down
-    remove_column :users, :username
     execute "DROP INDEX index_users_on_lowercase_username;"
+    remove_column :users, :username
   end
 
 end

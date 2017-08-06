@@ -12,6 +12,10 @@
         <router-link to="/games">Games</router-link>
         <router-link to="/annotations">Annotations</router-link>
       </div>
+
+      <div class="far-right">
+        <router-link :to="userPath">{{ userLinkText }}</router-link>
+      </div>
     </header>
 
     <div class="header-spacer"></div>
@@ -19,8 +23,22 @@
 </template>
 
 <script>
-  export default {
+  import { getUsername } from '../store/local_storage'
 
+  export default {
+    data: function() {
+      return {
+        username: getUsername()
+      }
+    },
+    computed: {
+      userPath: function() {
+        return this.username ? "/profile" : "/login"
+      },
+      userLinkText: function() {
+        return this.username ? this.username : "Log in"
+      }
+    }
   }
 </script>
 
@@ -59,6 +77,10 @@
         color: rgba(255,255,255,0.6);
         margin-right: 30px;
       }
+    }
+
+    .far-right {
+
     }
   }
 

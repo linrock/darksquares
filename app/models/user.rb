@@ -7,6 +7,13 @@ class User < ApplicationRecord
   has_many :games
   has_many :annotations
 
+  def self.find_for_database_authentication(conditions)
+    if conditions.has_key?(:username)
+      username = conditions[:username].downcase
+      where("LOWER(username) = ?", username).first
+    end
+  end
+
   private
 
   def email_required?
