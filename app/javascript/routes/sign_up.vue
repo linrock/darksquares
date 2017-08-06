@@ -2,12 +2,13 @@
   <form @submit="submitCredentials">
     <input type="text" ref="username"/>
     <input type="password" ref="password"/>
-    <input type="submit" value="Log in"/>
+    <input type="password" ref="password_confirmation"/>
+    <input type="submit" value="Sign up"/>
   </form>
 </template>
 
 <script>
-  import { createSession } from '../api_client'
+  import { createUser } from '../api_client'
   import store from 'store'
 
   export default {
@@ -21,9 +22,10 @@
         e.preventDefault()
         const credentials = {
           username: this.$refs.username.value,
-          password: this.$refs.password.value
+          password: this.$refs.password.value,
+          password_confirmation: this.$refs.password_confirmation.value
         }
-        createSession(credentials).then(() => {
+        createUser(credentials).then(() => {
           window.location = "/"
         })
       }

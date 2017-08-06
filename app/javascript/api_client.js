@@ -1,31 +1,57 @@
 import axios from 'axios'
-import store from 'store'
+import { getAccessToken, setAccessToken } from './store/local_storage'
 
+class APIClient {
 
-const createAuthClient = () => {
-  const token = store.get('access_token')
-  return axios.create({
-    headers: {
-      'Authorization': `Bearer ${token}`
+  constructor() {
+    this.createHttpClient(getAccessToken())
+  }
+
+  createHttpClient(accessToken) {
+    setAccessToken(accessToken)
+    const options = {}
+    if (accessToken) {
+      options.headers = {
+        'Authorization': `Bearer ${accessToken}`
+      }
     }
-  })
+    this.httpClient = axios.create(options)
+  }
+
+  post() {
+    return this.httpClient.post(...arguments)
+  }
+
+  get() {
+    return this.httpClient.get(...arguments)
+  }
 }
 
-let authRequest = createAuthClient()
+const api = new APIClient()
 
 export const createGame = function(data) {
-  return authRequest.post(`/api/v1/games`, data)
+  return api.post(`/api/v1/games`, data)
 }
 
 export const createAnnotation = function(gameId, data) {
-  return authRequest.post(`/api/v1/games/${gameId}/annotations`, data)
+  return api.post(`/api/v1/games/${gameId}/annotations`, data)
 }
 
 export const createSession = function(data) {
   data.grant_type = 'password'
-  return axios.post(`/oauth/token`, data).then(response => {
+  return api.post(`/oauth/token`, data).then(response => {
     const accessToken = response.data.access_token
-    store.set('access_token', accessToken)
-    authRequest = createAuthClient()
+    api.createHttpClient(accessToken)
   })
+}
+
+export const createUser = function(data) {
+  return api.post(`/api/v1/users`, data).then(response => {
+    const accessToken = response.data.access_token
+    api.createHttpClient(accessToken)
+  })
+}
+
+export const getUsername = function() {
+  return api.get(`/api/v1/users/me`)
 }

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get "/games"       => "application#games"
   get "/annotations" => "application#annotations"
   get "/login"       => "application#login"
+  get "/sign_up"     => "application#sign_up"
 
   namespace :api do
     namespace :v1 do

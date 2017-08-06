@@ -4,6 +4,7 @@ import Vue from 'vue'
 import Home from '../routes/home.vue'
 import GameImporter from '../routes/game_importer.vue'
 import Login from '../routes/login.vue'
+import SignUp from '../routes/sign_up.vue'
 
 document.addEventListener('DOMContentLoaded', () => {
   const getRoute = (path) => {
@@ -18,18 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
       case "/login":
         return Login
 
+      case "/sign_up":
+        return SignUp
+
       default:
         throw new Error(`Invalid URL - ${window.location.pathname}`)
     }
   }
 
   const pathname = window.location.pathname
-
-  if (pathname === "/") {
-    new Vue(Home).$mount("#application")
-  } else if (pathname === "/importer") {
-    new Vue(GameImporter).$mount("#application")
-  } else if (pathname === "/login") {
-    new Vue(Login).$mount("#application")
-  }
+  new Vue(getRoute(pathname)).$mount("#application")
 })
