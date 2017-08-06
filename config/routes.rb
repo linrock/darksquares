@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      resources :users, only: [:create]
       resources :games, only: [:index, :show, :create, :destroy, :update] do
         resources :annotations, only: [:create, :destroy, :update]
       end
