@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get "/importer"    => "application#game_importer"
   get "/games"       => "application#games"
   get "/annotations" => "application#annotations"
+  get "/login"       => "application#login"
 
   namespace :api do
     namespace :v1 do

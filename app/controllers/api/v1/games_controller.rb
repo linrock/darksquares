@@ -1,4 +1,5 @@
 class API::V1::GamesController < API::V1::BaseController
+  before_action :doorkeeper_authorize!, only: [:create, :update, :destroy]
 
   # GET /api/v1/games
   def index
@@ -12,7 +13,7 @@ class API::V1::GamesController < API::V1::BaseController
 
   # POST /api/v1/games
   def create
-    game = Game.create(game_params)
+    game = Game.create(game_params.merge(user_id: current_user.id))
     GameDataCalculatorJob.perform_later game
     render json: {}
   end

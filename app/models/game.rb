@@ -1,6 +1,7 @@
 class Game < ApplicationRecord
   validates_presence_of :pgn
 
+  belongs_to :user
   has_many :annotations
 
   def calculate_game_data!
