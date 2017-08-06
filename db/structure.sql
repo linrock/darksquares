@@ -33,9 +33,10 @@ SET default_with_oids = false;
 
 CREATE TABLE annotations (
     id bigint NOT NULL,
-    game_id integer,
-    user_id integer,
-    text character varying
+    game_id integer NOT NULL,
+    user_id integer NOT NULL,
+    move_string character varying NOT NULL,
+    text character varying NOT NULL
 );
 
 

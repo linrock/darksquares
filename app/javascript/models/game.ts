@@ -1,3 +1,5 @@
+import Annotation from './annotation'
+
 interface GameMeta {
   name: string
   submitter: string
@@ -12,7 +14,7 @@ interface GameData {
   moves: Array<object>
   best_moves: Array<object>
   graph_points: Array<Array<number>>
-  annotations: Array<null|Array<string>>
+  annotations: Array<any>
 }
 
 export default class Game {
@@ -24,7 +26,7 @@ export default class Game {
   moves: Array<object>
   bestMoves: Array<object>
   graphPoints: Array<Array<number>>
-  annotations: Array<null|Array<string>>
+  annotations: Array<Annotation>
 
   public static loadGamesFromData(gameData): Array<Game> {
     return gameData.map(data => new Game(data))
@@ -39,6 +41,6 @@ export default class Game {
     this.moves = options.moves
     this.bestMoves = options.best_moves
     this.graphPoints = options.graph_points
-    this.annotations = options.annotations
+    this.annotations = options.annotations.map(annotation => new Annotation(annotation))
   }
 }

@@ -10,8 +10,12 @@
 </template>
 
 <script>
+  import Annotation from '../models/annotation'
+
   export default {
-    props: ["annotation"],
+    props: {
+      annotation: Annotation
+    },
 
     methods: {
       showUsername: function(annotation) {

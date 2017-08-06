@@ -1,8 +1,8 @@
-class API::V1::Games::AnnotationsController < API::V1::BaseController
+class API::V1::AnnotationsController < API::V1::BaseController
 
   # POST /api/v1/games/:game_id/annotations
   def create
-    game.annotations.create(annotation_params)
+    game.annotations.create(annotation_params.merge(user_id: 1))
     render json: {}
   end
 
@@ -21,6 +21,6 @@ class API::V1::Games::AnnotationsController < API::V1::BaseController
   end
 
   def annotation_params
-    params.require(:annotation).permit(:text)
+    params.require(:annotation).permit(:text, :move_string)
   end
 end

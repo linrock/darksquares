@@ -1,6 +1,6 @@
 <template>
   <div class="move-list">
-    <template v-for="(move, i) in moves">
+    <template v-for="(move, i) in game.moves">
       <div class="move-num" v-if="showMoveNum(i)">{{ moveNum(i) }}</div>
       <div class="move">
         <div class="move-san" :style="isHighlighted(i)"
@@ -10,7 +10,10 @@
                @click="toggleAnnotationInput(i)">
         </div>
       </div>
-      <annotation v-if="annotations[i]" v-for="annotation in annotations[i]" :annotation="annotation"/>
+      <annotation-text v-if="annotationMap[moveString(i)]"
+                       v-for="annotation in annotationMap[moveString(i)]"
+                       :key="annotation.id"
+                       :annotation="annotation"/>
       <form v-if="annotationInputIndex === i" @submit="createAnnotation">
         <input class="annotation-input" type="text" :placeholder="annotationInputPlaceholder(i)"
                ref="annotationInput" v-focus/>
@@ -20,13 +23,15 @@
 </template>
 
 <script>
-  import Annotation from './annotation.vue'
+  import AnnotationText from './annotation_text.vue'
+  import Game from '../models/game'
+  import Annotation from '../models/annotation'
   import { createAnnotation } from '../api_client'
+  import { groupBy } from '../util'
 
   export default {
     props: {
-      moves: Array,
-      annotations: Array,
+      game: Game,
       gameState: Object,
     },
 
@@ -51,7 +56,10 @@
         }
       },
       annotationInputPlaceholder: function(i) {
-        return `Write an annotation for ${this.moveNum(i)} ${this.moves[i].san}`
+        return `Write an annotation for ${this.moveString(i)}`
+      },
+      moveString: function(i) {
+        return `${this.moveNum(i)} ${this.game.moves[i].san}`
       },
       clickedMoveIndex: function(i) {
         this.gameState.i = i + 1
@@ -59,17 +67,13 @@
       createAnnotation: function(ev) {
         ev.preventDefault()
         const annotationInput = this.$refs.annotationInput[0]
-        const annotation = annotationInput.value
-        this.$emit(`createdAnnotation`, {
-          annotation: {
-            username: `flamehead`,
-            text: annotation,
-          },
-          i: this.annotationInputIndex,
+        const annotation = new Annotation({
+          username: `flamehead`,
+          move_string: this.moveString(this.annotationInputIndex),
+          text: annotationInput.value
         })
-        createAnnotation(gameState.id, {
-          text: annotation
-        })
+        this.game.annotations.push(annotation)
+        createAnnotation(this.game.id, annotation)
         annotationInput.value = ''
         this.annotationInputIndex = -1
       },
@@ -78,6 +82,15 @@
           return `background: #ffff66`
         }
       },
+    },
+
+    computed: {
+      annotations: function() {
+        return this.game.annotations
+      },
+      annotationMap: function() {
+        return groupBy(this.annotations, 'move_string')
+      }
     },
 
     directives: {
@@ -89,7 +102,7 @@
     },
 
     components: {
-      Annotation
+      AnnotationText
     }
   }
 </script>

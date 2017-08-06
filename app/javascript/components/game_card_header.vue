@@ -1,17 +1,19 @@
 <template>
-  <div class="game-card-header" v-if="gameData.meta">
-    <span class="game-card-name">{{ gameData.meta.name }}</span>
-    <span class="game-card-submitter" v-if="gameData.meta.submitter">
-      &nbsp;&ndash;&nbsp; submitted by {{ gameData.meta.submitter }}
+  <div class="game-card-header" v-if="game.meta">
+    <span class="game-card-name">{{ game.meta.name }}</span>
+    <span class="game-card-submitter" v-if="game.meta.submitter">
+      &nbsp;&ndash;&nbsp; submitted by {{ game.meta.submitter }}
     </span>
   </div>
 </template>
 
 <script>
+  import Game from '../models/game'
+
   export default {
     props: {
       gameIndex: Number,
-      gameData: Object,
+      game: Game,
     }
   }
 </script>

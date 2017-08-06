@@ -15,9 +15,9 @@
           </header>
 
           <div class="game-submission" v-for="i in nGames">
-            <game-card-header :gameIndex="i - 1" :gameData="games[i - 1]"/>
+            <game-card-header :gameIndex="i - 1" :game="games[i - 1]"/>
             <div class="game-container shadowed">
-              <game-card :gameIndex="i - 1" :gameData="games[i - 1]"/>
+              <game-card :gameIndex="i - 1" :game="games[i - 1]"/>
             </div>
           </div>
 
