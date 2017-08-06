@@ -42,7 +42,7 @@ class PgnLoader
       const movesSan = cjs.history();
       cjs.reset();
       let positions = [];
-      for (let i = 0, len = movesSan.length; i < len; i++) {
+      for (let i = 0, len = movesSan.length; i <= len; i++) {
         positions.push(cjs.fen());
         cjs.move(movesSan[i]);
       }
