@@ -1,5 +1,9 @@
 import axios from 'axios'
-import { getAccessToken, setAccessToken } from './store/local_storage'
+import {
+  getAccessToken,
+  setAccessToken,
+  setUsername,
+} from './store/local_storage'
 
 class APIClient {
 
@@ -52,6 +56,8 @@ export const createUser = function(data) {
   })
 }
 
-export const getUsername = function() {
-  return api.get(`/api/v1/users/me`)
+export const getUserInfo = function() {
+  return api.get(`/api/v1/users/me`).then(response => {
+    setUsername(response.data.username)
+  })
 }

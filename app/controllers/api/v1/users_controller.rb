@@ -1,4 +1,4 @@
-class API::V1::UsersController < ActionController::Base
+class API::V1::UsersController < API::V1::BaseController
 
   # POST /api/v1/users
   def create
@@ -11,6 +11,14 @@ class API::V1::UsersController < ActionController::Base
     render json: {
       access_token: access_token.token,
       token_type: "bearer",
+    }
+  end
+
+  # GET /api/v1/users/me
+  def me
+    render json: {
+      username: current_user.username,
+      email: current_user.email
     }
   end
 
