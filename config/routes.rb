@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  use_doorkeeper do
+    skip_controllers :applications, :authorized_applications, :authorizations
+  end
+
   root to: "application#index"
 
   get "/importer"    => "application#game_importer"
