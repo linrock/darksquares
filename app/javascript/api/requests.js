@@ -26,6 +26,10 @@ export const createUser = function(data) {
   })
 }
 
+export const getGames = function() {
+  return api.get(`/api/v1/games`)
+}
+
 export const getUserInfo = function() {
   return api.get(`/api/v1/users/me`).then(response => {
     setUsername(response.data.username)

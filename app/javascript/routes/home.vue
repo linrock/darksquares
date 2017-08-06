@@ -33,14 +33,25 @@
   import GameCardHeader from '../components/game_card_header.vue'
   import GameCard from '../components/game_card.vue'
   import Game from '../models/game'
+  import { getGames } from '../api/requests'
 
   window.Chess = Chess
 
   export default {
     data: function() {
       return {
-        games: Game.loadGamesFromData(window.data),
+        games: window.data ? Game.loadGamesFromData(window.data) : []
       }
+    },
+
+    created() {
+      if (this.games.length > 0) {
+        return
+      }
+      getGames().then(response => {
+        window.data = response.data
+        this.games = Game.loadGamesFromData(window.data)
+      })
     },
 
     computed: {

@@ -27,6 +27,7 @@
   import Game from '../models/game'
   import Annotation from '../models/annotation'
   import { createAnnotation } from '../api/requests'
+  import { getUsername } from '../store/local_storage'
   import { groupBy } from '../util'
 
   export default {
@@ -68,7 +69,7 @@
         ev.preventDefault()
         const annotationInput = this.$refs.annotationInput[0]
         const annotation = new Annotation({
-          username: `flamehead`,
+          username: getUsername(),
           move_string: this.moveString(this.annotationInputIndex),
           text: annotationInput.value
         })
