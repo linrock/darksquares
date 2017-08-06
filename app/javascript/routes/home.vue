@@ -1,5 +1,6 @@
 <template>
   <article>
+    <main-header/>
     <div class="background">
       <div class="left-content shadowed">
         <mini-board-detailed :showPgn="true" :showHeaderInfo="false"/>
@@ -29,6 +30,7 @@
 
 <script>
   import Chess from 'chess.js'
+  import MainHeader from '../components/main_header.vue'
   import MiniBoardDetailed from '../components/mini_board_detailed.vue'
   import GameCardHeader from '../components/game_card_header.vue'
   import GameCard from '../components/game_card.vue'
@@ -50,6 +52,7 @@
     },
 
     components: {
+      MainHeader,
       GameCard,
       GameCardHeader,
       MiniBoardDetailed,

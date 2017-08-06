@@ -1,13 +1,17 @@
 <template>
-  <form @submit="submitCredentials">
-    <input type="text" ref="username"/>
-    <input type="password" ref="password"/>
-    <input type="password" ref="password_confirmation"/>
-    <input type="submit" value="Sign up"/>
-  </form>
+  <div id="sign_up">
+    <main-header/>
+    <form @submit="submitCredentials">
+      <input type="text" ref="username" placeholder="Username"/>
+      <input type="password" ref="password" placeholder="Password"/>
+      <input type="password" ref="password_confirmation" placeholder="Confirm password"/>
+      <input type="submit" value="Sign up"/>
+    </form>
+  </div>
 </template>
 
 <script>
+  import MainHeader from '../components/main_header.vue'
   import { createUser } from '../api_client'
   import store from 'store'
 
@@ -29,6 +33,9 @@
           window.location = "/"
         })
       }
+    },
+    components: {
+      MainHeader
     }
   }
 </script>

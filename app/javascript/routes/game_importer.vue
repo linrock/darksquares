@@ -1,5 +1,6 @@
 <template>
   <div id="game-importer">
+    <main-header/>
     <div class="container">
       <div class="left-content">
         <mini-board :fen="boardState.fen"/>
@@ -19,6 +20,7 @@
 <script>
   import Chess from 'chess.js'
   import { state } from '../store/miniboard'
+  import MainHeader from '../components/main_header.vue'
   import MiniBoard from '../components/mini_board.vue'
   import { createGame } from '../api_client'
 
@@ -50,6 +52,7 @@
     },
 
     components: {
+      MainHeader,
       MiniBoard
     }
   }
