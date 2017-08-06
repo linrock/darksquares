@@ -26,7 +26,7 @@
   import AnnotationText from './annotation_text.vue'
   import Game from '../models/game'
   import Annotation from '../models/annotation'
-  import { createAnnotation } from '../api_client'
+  import { createAnnotation } from '../api/requests'
   import { groupBy } from '../util'
 
   export default {

@@ -10,7 +10,7 @@
 </template>
 
 <script>
-  import { createUser, getUserInfo } from '../api_client'
+  import { createUser, getUserInfo } from '../api/requests'
   import { getAccessToken } from '../store/local_storage'
 
   export default {

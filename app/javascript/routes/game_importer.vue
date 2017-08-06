@@ -20,7 +20,7 @@
   import Chess from 'chess.js'
   import { state } from '../store/miniboard'
   import MiniBoard from '../components/mini_board.vue'
-  import { createGame } from '../api_client'
+  import { createGame } from '../api/requests'
   import { getAccessToken } from '../store/local_storage'
 
   export default {

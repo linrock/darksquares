@@ -1,35 +1,5 @@
-import axios from 'axios'
-import {
-  getAccessToken,
-  setAccessToken,
-  setUsername,
-} from './store/local_storage'
-
-class APIClient {
-
-  constructor() {
-    this.createHttpClient(getAccessToken())
-  }
-
-  createHttpClient(accessToken) {
-    setAccessToken(accessToken)
-    const options = {}
-    if (accessToken) {
-      options.headers = {
-        'Authorization': `Bearer ${accessToken}`
-      }
-    }
-    this.httpClient = axios.create(options)
-  }
-
-  post() {
-    return this.httpClient.post(...arguments)
-  }
-
-  get() {
-    return this.httpClient.get(...arguments)
-  }
-}
+import APIClient from './client'
+import { setUsername } from '../store/local_storage'
 
 const api = new APIClient()
 
