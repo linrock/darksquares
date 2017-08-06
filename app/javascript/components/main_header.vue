@@ -1,12 +1,16 @@
 <template>
   <div class="main-header">
     <header class="main">
-      <div class="left"><a href="/">Dark Squares</a></div>
+      <div class="square"></div>
+
+      <div class="left">
+        <router-link to="/">Dark Squares</router-link>
+      </div>
 
       <div class="right">
-        <a href="/importer">Import game</a>
-        <a href="/games">Games</a>
-        <a href="/annotations">Annotations</a>
+        <router-link to="/importer">Import game</router-link>
+        <router-link to="/games">Games</router-link>
+        <router-link to="/annotations">Annotations</router-link>
       </div>
     </header>
 
@@ -21,13 +25,15 @@
 </script>
 
 <style lang="scss" scoped>
+  .main-header {
+
+  }
   .main {
     background: #333;
     color: white;
     width: 100%;
     height: 40px;
     line-height: 40px;
-    padding: 0 35px;
     position: fixed;
     display: flex;
     z-index: 1;
@@ -37,8 +43,15 @@
       text-decoration: none;
     }
 
+    .square {
+      width: 40px;
+      height: 40px;
+      background: #222;
+    }
+
     .left {
       width: 415px;
+      margin-left: 40px;
     }
 
     .right {

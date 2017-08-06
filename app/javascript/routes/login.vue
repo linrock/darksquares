@@ -1,6 +1,5 @@
 <template>
   <div id="login">
-    <main-header/>
     <form @submit="submitCredentials">
       <input type="text" ref="username" placeholder="Username"/>
       <input type="password" ref="password" placeholder="Password"/>
@@ -10,7 +9,6 @@
 </template>
 
 <script>
-  import MainHeader from '../components/main_header.vue'
   import { createSession } from '../api_client'
   import store from 'store'
 
@@ -32,9 +30,6 @@
         })
       }
     },
-    components: {
-      MainHeader
-    }
   }
 </script>
 

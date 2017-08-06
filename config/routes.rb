@@ -5,13 +5,13 @@ Rails.application.routes.draw do
     skip_controllers :applications, :authorized_applications, :authorizations
   end
 
-  root to: "application#index"
+  root to: "application#home"
 
-  get "/importer"    => "application#game_importer"
-  get "/games"       => "application#games"
-  get "/annotations" => "application#annotations"
-  get "/login"       => "application#login"
-  get "/sign_up"     => "application#sign_up"
+  get "/importer"    => "application#index"
+  get "/games"       => "application#index"
+  get "/annotations" => "application#index"
+  get "/login"       => "application#index"
+  get "/sign_up"     => "application#index"
 
   namespace :api do
     namespace :v1 do

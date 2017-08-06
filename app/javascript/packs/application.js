@@ -1,32 +1,55 @@
 /* eslint no-console: 0 */
 
 import Vue from 'vue'
+import VueRouter from 'vue-router'
+
+import Application from '../layouts/application.vue'
+
 import Home from '../routes/home.vue'
 import GameImporter from '../routes/game_importer.vue'
 import Login from '../routes/login.vue'
 import SignUp from '../routes/sign_up.vue'
+import Games from '../routes/games.vue'
+import Annotations from '../routes/annotations.vue'
+
+Vue.use(VueRouter)
+
+const routes = [
+  {
+    path: '/',
+    component: Home
+  },
+  {
+    path: '/importer',
+    component: GameImporter
+  },
+  {
+    path: '/login',
+    component: Login
+  },
+  {
+    path: '/sign_up',
+    component: SignUp
+  },
+  {
+    path: '/games',
+    component: Games
+  },
+  {
+    path: '/annotations',
+    component: Annotations
+  },
+]
+
+const router = new VueRouter({
+  routes,
+  mode: 'history'
+})
 
 document.addEventListener('DOMContentLoaded', () => {
-  const getRoute = (path) => {
-    switch (path) {
-
-      case "/":
-        return Home
-
-      case "/importer":
-        return GameImporter
-
-      case "/login":
-        return Login
-
-      case "/sign_up":
-        return SignUp
-
-      default:
-        throw new Error(`Invalid URL - ${window.location.pathname}`)
-    }
-  }
-
-  const pathname = window.location.pathname
-  new Vue(getRoute(pathname)).$mount("#application")
+  new Vue({
+    el: "#application",
+    router,
+    render: h => h(Application)
+  })
 })
