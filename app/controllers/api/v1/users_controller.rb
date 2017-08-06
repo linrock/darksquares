@@ -9,7 +9,8 @@ class API::V1::UsersController < ActionController::Base
       scopes: 'public'
     )
     render json: {
-      access_token: access_token.token
+      access_token: access_token.token,
+      token_type: "bearer",
     }
   end
 
