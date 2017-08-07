@@ -4,12 +4,7 @@
          @click="gameState.expanded = false" v-if="gameState.expanded">-</div>
     <div class="graph-container" @mouseenter="setCurrentPgn">
       <game-info :pgnHeaders="game.pgnHeaders"/>
-      <hover-graph-clickable :width="600" :height="150" :listOfPoints="game.graphPoints"
-                             :positions="game.positions" :moves="game.moves"
-                             :bestMoves="game.bestMoves"
-                             :annotations="game.annotations"
-                             :pgn="game.pgn"
-                             :gameState="gameState"/>
+      <hover-graph-clickable :width="600" :height="150" :game="game" :gameState="gameState"/>
     </div>
     <annotation-previews :annotations="game.annotations" v-if="showAnnotationPreviews"/>
     <move-list v-if="gameState.expanded"

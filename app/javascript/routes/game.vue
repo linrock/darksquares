@@ -3,24 +3,26 @@
     <sub-header>
       <div>Game {{ id }}</div>
     </sub-header>
-    <div class="sub-header-spacer"></div>
 
     <div class="content">
-      <div class="left-content">
+      <section class="left-side">
         <mini-board-detailed :showHeaderInfo="false" :squareSize="55"/>
-      </div>
+        <hover-graph-clickable :width="443" :height="120" :game="game" :gameState="gameState"
+                               v-if="game"/>
+      </section>
 
-      <div class="right-content">
+      <section class="right-side">
         <game-info v-if="game" :pgnHeaders="game.pgnHeaders"/>
         <div class="annotations-filter"></div>
         <move-list v-if="game" :game="game" :gameState="gameState"/>
         <div class="game-actions"></div>
-      </div>
+      </section>
     </div>
   </main>
 </template>
 
 <script>
+  import HoverGraphClickable from '../components/hover_graph_clickable.vue'
   import MiniBoardDetailed from '../components/mini_board_detailed.vue'
   import GameInfo from '../components/game_info'
   import MoveList from '../components/move_list'
@@ -51,6 +53,7 @@
     components: {
       SubHeader,
       GameInfo,
+      HoverGraphClickable,
       MiniBoardDetailed,
       MoveList
     }
@@ -64,20 +67,23 @@
     margin-top 30px
     margin-left 80px
 
-    .left-content
-      position fixed
+  section.left-side
+    position fixed
 
-    .right-content
-      margin-left 510px
+    .hover-graph-clickable
+      margin-top 25px
 
-  .game-info
-    margin-bottom 20px
+  section.right-side
+    margin-left 510px
 
-  .annotations-filter
-    border-bottom 1px solid rgba(0,0,0,0.05)
-    margin-bottom 15px
+    .game-info
+      margin-bottom 20px
 
-  .game-actions
-    margin-bottom: 200px
+    .annotations-filter
+      border-bottom 1px solid rgba(0,0,0,0.05)
+      margin-bottom 15px
+
+    .game-actions
+      margin-bottom: 200px
 
 </style>
