@@ -1,7 +1,7 @@
 <template>
   <div class="move-list">
     <template v-for="(move, i) in game.moves">
-      <div class="move-num" v-if="showMoveNum(i)">{{ moveNum(i) }}</div>
+      <div class="move-num" v-if="showMoveNum(i)">{{ game.moveNum(i) }}</div>
       <div class="move">
         <div class="move-san" :style="isHighlighted(i)"
              @click="updateMoveIndex(i)">{{ move.san }}</div>
@@ -10,13 +10,14 @@
                @click="toggleAnnotationInput(i)">
         </div>
       </div>
-      <div class="annotations" v-if="annotationMap[moveString(i)]">
-        <annotation-text v-for="annotation in annotationMap[moveString(i)]"
+      <div class="annotations" v-if="game.annotationsAt(i)">
+        <annotation-text v-for="annotation in game.annotationsAt(i)"
                          :key="annotation.id"
                          :annotation="annotation"/>
       </div>
       <annotation-input v-if="annotationInputIndex === i"
-                        :game="game" :moveString="moveString(i)"/>
+                        :game="game" :moveString="game.moveString(i)"
+                        @annotation-created="annotationInputIndex = -1"/>
       </form>
     </template>
   </div>
@@ -26,7 +27,6 @@
   import AnnotationInput from './annotation_input.vue'
   import AnnotationText from './annotation_text.vue'
   import Game from '../models/game'
-  import { groupBy } from '../util'
 
   export default {
     props: {
@@ -45,20 +45,14 @@
 
     methods: {
       showMoveNum: function(i) {
-        if (i > 0 && this.annotationMap[this.moveString(i - 1)]) {
+        if (i > 0 && this.game.annotationsAt(i - 1)) {
           return true
         }
         return (i - 1) === this.annotationInputIndex || i % 2 === 0
       },
-      moveNum: function(i) {
-        return `${~~(i / 2 + 1)}.${i % 2 === 0 ? '' : '..'}`
-      },
       toggleAnnotationInput: function(i) {
         this.annotationInputIndex = this.annotationInputIndex === i ? -1 : i
         this.updateMoveIndex(i)
-      },
-      moveString: function(i) {
-        return `${this.moveNum(i)} ${this.game.moves[i].san}`
       },
       updateMoveIndex: function(i) {
         this.gameState.i = i + 1
@@ -68,15 +62,6 @@
           return `background: #ffff66`
         }
       },
-    },
-
-    computed: {
-      annotations: function() {
-        return this.game.annotations
-      },
-      annotationMap: function() {
-        return groupBy(this.annotations, 'move_string')
-      }
     },
 
     directives: {

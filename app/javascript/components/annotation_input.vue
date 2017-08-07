@@ -20,22 +20,20 @@
         type: String,
         required: true
       },
-
     },
 
     methods: {
       createAnnotation: function(ev) {
         ev.preventDefault()
-        const annotationInput = this.$refs.annotationInput
         const annotation = new Annotation({
           username: getUsername(),
           move_string: this.moveString,
-          text: annotationInput.value
+          text: this.$refs.annotationInput.value
         })
-        this.game.annotations.push(annotation)
+        this.$refs.annotationInput.value = ''
+        this.game.addAnnotation(annotation)
         createAnnotation(this.game.id, annotation)
-        annotationInput.value = ''
-        this.annotationInputIndex = -1
+        this.$emit(`annotation-created`)
       }
     },
 

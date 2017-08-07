@@ -1,3 +1,5 @@
+import { groupBy } from '../util'
+import Move from './move'
 import Annotation from './annotation'
 
 interface GameMeta {
@@ -23,10 +25,11 @@ export default class Game {
   pgn: string
   pgnHeaders: object
   positions: Array<string>
-  moves: Array<object>
+  moves: Array<Move>
   bestMoves: Array<object>
   graphPoints: Array<Array<number>>
   annotations: Array<Annotation>
+  annotationMap: object
 
   public static loadGamesFromData(gameData): Array<Game> {
     return gameData.map(data => new Game(data))
@@ -38,9 +41,27 @@ export default class Game {
     this.pgn = options.pgn
     this.pgnHeaders = options.pgn_headers
     this.positions = options.positions
-    this.moves = options.moves
+    this.moves = options.moves.map(move => new Move(move))
     this.bestMoves = options.best_moves
     this.graphPoints = options.graph_points
     this.annotations = options.annotations.map(annotation => new Annotation(annotation))
+    this.annotationMap = groupBy(this.annotations, 'move_string')
+  }
+
+  public addAnnotation(annotation: Annotation) {
+    this.annotations.push(annotation)
+    this.annotationMap = groupBy(this.annotations, 'move_string')
+  }
+
+  public annotationsAt(i): Array<Annotation> {
+    return this.annotationMap[this.moveString(i)]
+  }
+
+  public moveString(i): string {
+    return `${this.moveNum(i)} ${this.moves[i].san}`
+  }
+
+  public moveNum(i): string {
+    return `${~~(i / 2 + 1)}.${i % 2 === 0 ? '' : '..'}`
   }
 }
