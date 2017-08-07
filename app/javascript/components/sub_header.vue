@@ -8,7 +8,7 @@
 
 <style lang="stylus" scoped>
   .sub-header
-    background rgba(0,0,0,0.05)
+    background #f5f5f5
     padding-left 80px
     font-size 14px
     width 100%

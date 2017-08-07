@@ -4,17 +4,16 @@
       <div>Game {{ id }}</div>
     </sub-header>
 
-    <div class="content">
+    <div class="content" v-if="game">
       <section class="left-side">
         <mini-board-detailed :showHeaderInfo="false" :squareSize="55"/>
-        <hover-graph-clickable :width="443" :height="120" :game="game" :gameState="gameState"
-                               v-if="game"/>
+        <hover-graph-clickable :width="443" :height="120" :game="game" :gameState="gameState"/>
       </section>
 
       <section class="right-side">
-        <game-info v-if="game" :pgnHeaders="game.pgnHeaders"/>
+        <game-info :pgnHeaders="game.pgnHeaders"/>
         <div class="annotations-filter"></div>
-        <move-list v-if="game" :game="game" :gameState="gameState"/>
+        <move-list :game="game" :gameState="gameState"/>
         <div class="game-actions"></div>
       </section>
     </div>
@@ -25,9 +24,9 @@
   import Mousetrap from 'mousetrap'
   import HoverGraphClickable from '../components/hover_graph_clickable.vue'
   import MiniBoardDetailed from '../components/mini_board_detailed.vue'
+  import SubHeader from '../components/sub_header'
   import GameInfo from '../components/game_info'
   import MoveList from '../components/move_list'
-  import SubHeader from '../components/sub_header'
   import Game from '../models/game'
   import { resetBoardState } from '../store/miniboard'
   import { getGame } from '../api/requests'
@@ -73,9 +72,9 @@
     components: {
       SubHeader,
       GameInfo,
+      MoveList,
       HoverGraphClickable,
       MiniBoardDetailed,
-      MoveList
     }
   }
 </script>
@@ -84,17 +83,19 @@
   .content
     display flex
     width 1200px
-    margin-top 30px
     margin-left 80px
 
   section.left-side
     position fixed
+    padding-top 30px
 
     .hover-graph-clickable
       margin-top 25px
 
   section.right-side
-    margin-left 510px
+    padding 30px 0 0 40px
+    margin-left 480px
+    border-left 1px solid rgba(0,0,0,0.07)
 
     .game-info
       margin-bottom 20px
