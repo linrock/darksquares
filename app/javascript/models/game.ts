@@ -57,6 +57,11 @@ export default class Game {
     this.annotationMap = groupBy(this.annotations, 'move_string')
   }
 
+  public removeAnnotation(annotation: Annotation) {
+    this.annotations = this.annotations.filter(a => a.id !== annotation.id)
+    this.annotationMap = groupBy(this.annotations, 'move_string')
+  }
+
   public annotationsAt(i): Array<Annotation> {
     return this.annotationMap[this.moveString(i)]
   }

@@ -6,11 +6,16 @@
 </template>
 
 <script>
+  import Game from '../models/game'
   import Annotation from '../models/annotation'
   import { deleteAnnotation } from '../api/requests'
 
   export default {
     props: {
+      game: {
+        type: Game,
+        required: true
+      },
       annotation: {
         type: Annotation,
         required: true
@@ -22,7 +27,10 @@
         // make annotation input show up with text inside
       },
       deleteAnnotation: function() {
-        deleteAnnotation(this.annotation)
+        if (this.annotation.id) {
+          deleteAnnotation(this.annotation)
+        }
+        this.game.removeAnnotation(this.annotation)
       }
     }
   }

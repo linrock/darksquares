@@ -13,7 +13,8 @@
       <div class="annotations" v-if="game.annotationsAt(i)">
         <annotation v-for="annotation in game.annotationsAt(i)"
                     :key="annotation.id"
-                    :annotation="annotation"/>
+                    :annotation="annotation"
+                    :game="game"/>
       </div>
       <annotation-input v-if="annotationInputIndex === i"
                         :game="game" :moveString="game.moveString(i)"

@@ -32,7 +32,9 @@
         })
         this.$refs.annotationInput.value = ''
         this.game.addAnnotation(annotation)
-        createAnnotation(this.game.id, annotation)
+        createAnnotation(this.game.id, annotation).then(response => {
+          this.game.annotations[this.game.annotations.length - 1].id = response.data.id
+        })
         this.$emit(`annotation-created`)
       }
     },
