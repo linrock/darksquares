@@ -44,7 +44,11 @@ export default class Game {
     this.moves = options.moves.map(move => new Move(move))
     this.bestMoves = options.best_moves
     this.graphPoints = options.graph_points
-    this.annotations = options.annotations.map(annotation => new Annotation(annotation))
+    this.annotations = options.annotations.map(annotation => {
+      return new Annotation(
+        (<any>Object).assign({ gameId: options.id }, annotation)
+      )
+    })
     this.annotationMap = groupBy(this.annotations, 'move_string')
   }
 

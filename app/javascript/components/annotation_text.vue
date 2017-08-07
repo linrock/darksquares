@@ -3,6 +3,7 @@
     <span class="annotation-username" v-if="showUsername(annotation)">
       {{ annotation.username }}:
     </span>
+    <span class="spacer"></span>
     <span class="annotation-text">
       {{ annotation.text }}
     </span>
@@ -25,8 +26,12 @@
   }
 </script>
 
-<style>
+<style lang="scss" scoped>
   .annotation-username {
     font-weight: bold;
+  }
+
+  .spacer {
+    width: 4px;
   }
 </style>
