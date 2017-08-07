@@ -6,7 +6,6 @@
 </template>
 
 <script>
-  import VueRouter from 'vue-router'
   import MainHeader from '../components/main_header'
 
   export default {
@@ -16,5 +15,5 @@
   }
 </script>
 
-<style>
+<style lang="scss" scoped>
 </style>

@@ -14,13 +14,7 @@
             </div>
           </header>
 
-          <div class="game-submission" v-for="i in nGames">
-            <game-card-header :gameIndex="i - 1" :game="games[i - 1]"/>
-            <div class="game-container shadowed">
-              <game-card :gameIndex="i - 1" :game="games[i - 1]"/>
-            </div>
-          </div>
-
+          <game-list :games="games"/>
         </div>
       </div>
     </div>
@@ -30,8 +24,7 @@
 <script>
   import Chess from 'chess.js'
   import MiniBoardDetailed from '../components/mini_board_detailed.vue'
-  import GameCardHeader from '../components/game_card_header.vue'
-  import GameCard from '../components/game_card.vue'
+  import GameList from '../components/game_list.vue'
   import Game from '../models/game'
   import { getGames } from '../api/requests'
 
@@ -54,15 +47,8 @@
       })
     },
 
-    computed: {
-      nGames: function() {
-        return this.games.length
-      },
-    },
-
     components: {
-      GameCard,
-      GameCardHeader,
+      GameList,
       MiniBoardDetailed,
     }
   }
@@ -139,23 +125,6 @@
       width: 640px;
       background: white;
     }
-
-    .game-submission {
-      margin: 25px 0;
-    }
-
-    .game-container {
-      @include clearfix;
-      border-radius: 1px;
-      padding: 15px 20px;
-      width: 640px;
-      border-bottom: 1px solid #eee;
-      background: white;
-
-      .move-list {
-        margin: 15px 30px 0 0;
-      }
-    }
   }
 
   h1 {
@@ -180,35 +149,5 @@
     margin: 10px 0 20px;
     font-weight: bold;
     color: rgba(0,0,0,0.3);
-  }
-
-  .graph-container {
-    .game-info {
-      opacity: 0.8;
-      transition: opacity 0.25s ease;
-    }
-  }
-
-  .annotation-preview {
-    font-size: 12px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    margin: 5px 0;
-    color: #005F2F;
-    opacity: 0.9;
-  }
-
-  .game-summary {
-    float: left;
-    width: 300px;
-    margin-left: 40px;
-    margin-top: 60px;
-  }
-
-  .position-annotations {
-    margin-top: 26px;
-    font-size: 15px;
-    line-height: 20px;
   }
 </style>
