@@ -1,13 +1,10 @@
-<template>
-  <div class="annotation">
-    <span class="annotation-username" v-if="showUsername(annotation)">
-      {{ annotation.username }}:
-    </span>
-    <span class="spacer"></span>
-    <span class="annotation-text">
-      {{ annotation.text }}
-    </span>
-  </div>
+<template lang="pug">
+  .annotation
+    .annotation-info
+      .username(v-if="showUsername(annotation)") {{ annotation.username }}
+      .time-ago {{ annotation.timeAgo() }}
+    .annotation-text {{ annotation.text }}
+
 </template>
 
 <script>
@@ -26,12 +23,23 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  .annotation-username {
-    font-weight: bold;
-  }
+<style lang="stylus" scoped>
+  .annotation
+    display block
 
-  .spacer {
-    width: 4px;
-  }
+  .annotation-info
+    display flex
+
+    .username
+      font-weight bold
+      font-size 12px
+
+    .time-ago
+      margin-left 10px
+      font-size 12px
+      opacity 0.4
+
+  .spacer
+    width 4px
+
 </style>

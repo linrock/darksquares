@@ -1,30 +1,26 @@
-<template>
-  <main id="game">
-    <sub-header>
-      <div>Game {{ id }}</div>
-    </sub-header>
+<template lang="pug">
+  main#game
+    sub-header
+      div Game {{ id }}
 
-    <div class="content" v-if="game">
-      <section class="left-side">
-        <mini-board-detailed :showHeaderInfo="false" :squareSize="55"/>
-        <hover-graph-clickable :width="443" :height="120" :game="game" :gameState="gameState"/>
-      </section>
+    .content(v-if="game")
+      section.left-side
+        mini-board-detailed(:showHeaderInfo="false" :squareSize="55")
+        hover-graph-clickable(:width="443" :height="120" :game="game" :gameState="gameState")
 
-      <section class="right-side">
-        <game-info :pgnHeaders="game.pgnHeaders"/>
-        <div class="annotations-filter"></div>
-        <move-list :game="game" :gameState="gameState"/>
-        <div class="game-actions"></div>
-      </section>
-    </div>
-  </main>
+      section.right-side
+        game-info(:pgnHeaders="game.pgnHeaders")
+        .annotations-filter
+        move-list(:game="game" :gameState="gameState")
+        .game-actions
+
 </template>
 
 <script>
   import Mousetrap from 'mousetrap'
+  import SubHeader from '../components/sub_header'
   import HoverGraphClickable from '../components/hover_graph_clickable.vue'
   import MiniBoardDetailed from '../components/mini_board_detailed.vue'
-  import SubHeader from '../components/sub_header'
   import GameInfo from '../components/game_info'
   import MoveList from '../components/move_list'
   import Game from '../models/game'
