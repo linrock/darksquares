@@ -10,10 +10,11 @@
                @click="toggleAnnotationInput(i)">
         </div>
       </div>
-      <annotation-text v-if="annotationMap[moveString(i)]"
-                       v-for="annotation in annotationMap[moveString(i)]"
-                       :key="annotation.id"
-                       :annotation="annotation"/>
+      <div class="annotations" v-if="annotationMap[moveString(i)]">
+        <annotation-text v-for="annotation in annotationMap[moveString(i)]"
+                         :key="annotation.id"
+                         :annotation="annotation"/>
+      </div>
       <form v-if="shouldShowAnnotationInput(i)" @submit="createAnnotation">
         <input class="annotation-input" type="text" :placeholder="annotationInputPlaceholder(i)"
                ref="annotationInput" v-focus/>
@@ -180,14 +181,20 @@
     }
   }
 
-  .annotation {
-    float: left;
+  .annotations {
     clear: left;
+    float: left;
+    margin: 10px 0 15px;
+    width: 600px;
+    border-radius: 2px;
+  }
+
+  .annotation {
+    background: rgba(0,0,0,0.03);
     color: rgba(0,0,0,0.8);
-    margin: 10px 0;
     font-size: 14px;
     line-height: 20px;
-    width: 600px;
+    padding: 10px;
 
     p {
       margin: 0;
