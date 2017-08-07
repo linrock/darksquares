@@ -28,4 +28,12 @@ export default class APIClient {
   get() {
     return this.httpClient.get(...arguments)
   }
+
+  delete() {
+    return this.httpClient.delete(...arguments)
+  }
+
+  patch() {
+    return this.httpClient.patch(...arguments)
+  }
 }

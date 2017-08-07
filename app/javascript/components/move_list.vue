@@ -11,21 +11,20 @@
         </div>
       </div>
       <div class="annotations" v-if="game.annotationsAt(i)">
-        <annotation-text v-for="annotation in game.annotationsAt(i)"
-                         :key="annotation.id"
-                         :annotation="annotation"/>
+        <annotation v-for="annotation in game.annotationsAt(i)"
+                    :key="annotation.id"
+                    :annotation="annotation"/>
       </div>
       <annotation-input v-if="annotationInputIndex === i"
                         :game="game" :moveString="game.moveString(i)"
                         @annotation-created="annotationInputIndex = -1"/>
-      </form>
     </template>
   </div>
 </template>
 
 <script>
+  import Annotation from './annotation.vue'
   import AnnotationInput from './annotation_input.vue'
-  import AnnotationText from './annotation_text.vue'
   import Game from '../models/game'
 
   export default {
@@ -73,8 +72,8 @@
     },
 
     components: {
+      Annotation,
       AnnotationInput,
-      AnnotationText
     }
   }
 </script>

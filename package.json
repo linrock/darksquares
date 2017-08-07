@@ -42,6 +42,7 @@
     "webpack-merge": "^4.1.0"
   },
   "devDependencies": {
+    "pug": "^2.0.0-rc.3",
     "stylus": "^0.54.5",
     "webpack-dev-server": "^2.6.1"
   }

@@ -3,6 +3,8 @@ import { setUsername } from '../store/local_storage'
 
 const api = new APIClient()
 
+// POST
+
 export const createGame = function(data) {
   return api.post(`/api/v1/games`, data)
 }
@@ -26,6 +28,8 @@ export const createUser = function(data) {
   })
 }
 
+// GET
+
 export const getGames = function() {
   return api.get(`/api/v1/games`)
 }
@@ -42,4 +46,10 @@ export const getUserInfo = function() {
   return api.get(`/api/v1/users/me`).then(response => {
     setUsername(response.data.username)
   })
+}
+
+// DELETE
+
+export const deleteAnnotation = function(id) {
+  return api.delete(`/api/v1/annotations/${id}`)
 }
