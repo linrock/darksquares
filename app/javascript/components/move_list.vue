@@ -4,7 +4,7 @@
       <div class="move-num" v-if="showMoveNum(i)">{{ moveNum(i) }}</div>
       <div class="move">
         <div class="move-san" :style="isHighlighted(i)"
-             @click="clickedMoveIndex(i)">{{ move.san }}</div>
+             @click="updateMoveIndex(i)">{{ move.san }}</div>
         <div class="move-actions">
           <img src="/assets/comment-bubble.svg" class="comment-bubble"
                @click="toggleAnnotationInput(i)">
@@ -15,25 +15,25 @@
                          :key="annotation.id"
                          :annotation="annotation"/>
       </div>
-      <form v-if="shouldShowAnnotationInput(i)" @submit="createAnnotation">
-        <input class="annotation-input" type="text" :placeholder="annotationInputPlaceholder(i)"
-               ref="annotationInput" v-focus/>
+      <annotation-input v-if="annotationInputIndex === i"
+                        :game="game" :moveString="moveString(i)"/>
       </form>
     </template>
   </div>
 </template>
 
 <script>
+  import AnnotationInput from './annotation_input.vue'
   import AnnotationText from './annotation_text.vue'
   import Game from '../models/game'
-  import Annotation from '../models/annotation'
-  import { createAnnotation } from '../api/requests'
-  import { getUsername } from '../store/local_storage'
   import { groupBy } from '../util'
 
   export default {
     props: {
-      game: Game,
+      game: {
+        type: Game,
+        required: true
+      },
       gameState: Object,
     },
 
@@ -53,37 +53,15 @@
       moveNum: function(i) {
         return `${~~(i / 2 + 1)}.${i % 2 === 0 ? '' : '..'}`
       },
-      shouldShowAnnotationInput: function(i) {
-        return i === this.annotationInputIndex
-      },
       toggleAnnotationInput: function(i) {
         this.annotationInputIndex = this.annotationInputIndex === i ? -1 : i
-        this.gameState.i = i + 1
-        if (this.annotationInputIndex > -1) {
-          setTimeout(() => this.$refs.annotationInput[0].focus(), 500)
-        }
-      },
-      annotationInputPlaceholder: function(i) {
-        return `Write an annotation for ${this.moveString(i)}`
+        this.updateMoveIndex(i)
       },
       moveString: function(i) {
         return `${this.moveNum(i)} ${this.game.moves[i].san}`
       },
-      clickedMoveIndex: function(i) {
+      updateMoveIndex: function(i) {
         this.gameState.i = i + 1
-      },
-      createAnnotation: function(ev) {
-        ev.preventDefault()
-        const annotationInput = this.$refs.annotationInput[0]
-        const annotation = new Annotation({
-          username: getUsername(),
-          move_string: this.moveString(this.annotationInputIndex),
-          text: annotationInput.value
-        })
-        this.game.annotations.push(annotation)
-        createAnnotation(this.game.id, annotation)
-        annotationInput.value = ''
-        this.annotationInputIndex = -1
       },
       isHighlighted: function(i) {
         if (i + 1 === this.gameState.i) {
@@ -110,6 +88,7 @@
     },
 
     components: {
+      AnnotationInput,
       AnnotationText
     }
   }
@@ -184,13 +163,5 @@
 
     p
       margin 0
-
-  .annotation-input
-    float left
-    clear left
-    margin 10px 0
-    font-size 14px
-    width 400px
-    padding 3px
 
 </style>
