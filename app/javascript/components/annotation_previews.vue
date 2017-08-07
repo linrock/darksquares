@@ -1,7 +1,7 @@
 <template>
   <div class="annotation-previews">
-    <div class="annotation-preview" v-for="(annotations, i) in annotationPreviews">
-      <annotation v-if="annotations[0]" :annotation="annotations[0]"/>
+    <div class="annotation-preview" v-for="(annotation, i) in annotationPreviews">
+      <annotation :annotation="annotation"/>
     </div>
   </div>
 </template>
