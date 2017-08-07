@@ -52,24 +52,20 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  .sub-header {
-    background: rgba(0,0,0,0.05);
-    padding: 10px 0 10px 80px;
-    width: 100%;
-  }
+<style lang="stylus" scoped>
+  .sub-header
+    background rgba(0,0,0,0.05)
+    padding 10px 0 10px 80px
+    width: 100%
 
-  .content {
-    display: flex;
-    width: 1000px;
-    margin-left: 80px;
-  }
+  .content
+    display flex
+    width 1200px
+    margin-left 80px
 
-  .game-info {
-    margin-bottom: 20px;
-  }
+  .game-info
+    margin-bottom 20px
 
-  .right-content {
-    margin-left: 80px;
-  }
+  .right-content
+    margin-left 80px
 </style>

@@ -30,6 +30,7 @@
     "sass-loader": "^6.0.6",
     "store": "^2.0.12",
     "style-loader": "^0.18.2",
+    "stylus-loader": "^3.0.1",
     "ts-loader": "^2.3.2",
     "typescript": "^2.4.2",
     "vue": "^2.4.2",
@@ -41,6 +42,7 @@
     "webpack-merge": "^4.1.0"
   },
   "devDependencies": {
+    "stylus": "^0.54.5",
     "webpack-dev-server": "^2.6.1"
   }
 }

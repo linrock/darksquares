@@ -7,7 +7,8 @@ module.exports = {
       js: 'babel-loader',
       file: 'file-loader',
       scss: 'vue-style-loader!css-loader!postcss-loader!sass-loader',
-      sass: 'vue-style-loader!css-loader!postcss-loader!sass-loader?indentedSyntax'
+      sass: 'vue-style-loader!css-loader!postcss-loader!sass-loader?indentedSyntax',
+      stylus: 'vue-style-loader!css-loader!postcss-loader!stylus-loader',
     }
   }
 }
