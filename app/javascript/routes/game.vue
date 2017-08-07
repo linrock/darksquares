@@ -23,13 +23,15 @@
   import MiniBoardDetailed from '../components/mini_board_detailed.vue'
   import GameInfo from '../components/game_info'
   import MoveList from '../components/move_list'
-  import Game from '../models/game'
   import { resetBoardState } from '../store/miniboard'
-  import { getGame } from '../api/requests'
+  import { getOrFetchGame } from '../store/games'
 
   export default {
     props: {
-      id: String
+      id: {
+        type: String,
+        required: true
+      }
     },
 
     data: function() {
@@ -43,9 +45,7 @@
 
     created() {
       resetBoardState()
-      getGame(this.id).then(response => {
-        this.game = new Game(response.data)
-      })
+      getOrFetchGame(this.id).then(game => this.game = game)
     },
 
     mounted() {

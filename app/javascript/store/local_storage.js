@@ -1,3 +1,5 @@
+// For data that's meant to persist across sessions on the client
+
 import store from 'store'
 
 const ACCESS_TOKEN_KEY = `access_token`

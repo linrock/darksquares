@@ -8,7 +8,7 @@
     annotation-previews(:annotations="game.annotations")
 
     router-link(:to="game.path")
-      .annotation-count( v-if="annotationsRemaining" )
+      .annotation-count(v-if="annotationsRemaining")
         | View {{ annotationsRemaining }} more annotations
 
 </template>
