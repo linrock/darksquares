@@ -115,98 +115,82 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  @mixin clearfix {
-    &:before, &:after {
-      display: table;
-      content: "";
-    }
+<style lang="stylus" scoped>
+  clearfix()
+    &:before, &:after
+      display table
+      content ""
+    &:after
+      clear both
 
-    &:after {
-      clear: both;
-    }
-  }
+  .move-list
+    font-size 14px
+    clear both
+    clearfix()
 
-  .move-list {
-    font-size: 14px;
-    clear: both;
-    @include clearfix;
-  }
+  .move-num
+    float left
+    font-weight bold
+    line-height 26px
+    width 30px
+    clear left
 
-  .move-num {
-    float: left;
-    font-weight: bold;
-    line-height: 26px;
-    width: 30px;
-    clear: left;
-  }
+  .move
+    float left
+    font-weight bold
+    line-height 26px
+    width 180px
 
-  .move {
-    float: left;
-    font-weight: bold;
-    line-height: 26px;
-    width: 180px;
+    &:hover .comment-bubble
+      opacity 0.5
 
-    &:hover .comment-bubble {
-      opacity: 0.5;
-    }
+    .move-san
+      float left
+      padding-left 20px
+      width 80px
 
-    .move-san {
-      float: left;
-      padding-left: 20px;
-      width: 80px;
+      &:hover
+        cursor pointer
 
-      &:hover {
-        cursor: pointer;
-      }
-    }
+    .move-actions
+      float left
+      padding-left 10px
+      width 60px
 
-    .move-actions {
-      float: left;
-      padding-left: 10px;
-      width: 60px;
-    }
+    .comment-bubble
+      width 16px
+      opacity 0
+      position relative
+      top 5px
+      transition opacity 0.15s ease
 
-    .comment-bubble {
-      width: 16px;
-      opacity: 0;
-      position: relative;
-      top: 5px;
-      transition: opacity 0.15s ease;
+      &:hover
+        cursor pointer
+        opacity 1
 
-      &:hover {
-        cursor: pointer;
-        opacity: 1;
-      }
-    }
-  }
+  .annotations
+    clear left
+    float left
+    margin 10px 0 15px
+    width 600px
+    border-radius 2px
 
-  .annotations {
-    clear: left;
-    float: left;
-    margin: 10px 0 15px;
-    width: 600px;
-    border-radius: 2px;
-  }
+  .annotation
+    background rgba(0,0,0,0.03)
+    color rgba(0,0,0,0.8)
+    font-size 14px
+    line-height 20px
+    padding 10px
 
-  .annotation {
-    background: rgba(0,0,0,0.03);
-    color: rgba(0,0,0,0.8);
-    font-size: 14px;
-    line-height: 20px;
-    padding: 10px;
+    p
+      margin 0
 
-    p {
-      margin: 0;
-    }
-  }
+  .annotation-input
+    float left
+    clear left
+    margin 10px 0
+    font-size 14px
+    width 400px
+    padding 3px
 
-  .annotation-input {
-    float: left;
-    clear: left;
-    margin: 10px 0;
-    font-size: 14px;
-    width: 400px;
-    padding: 3px;
-  }
 </style>
