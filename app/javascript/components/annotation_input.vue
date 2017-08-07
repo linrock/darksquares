@@ -1,7 +1,7 @@
-<template>
-  <form class="annotation-input" @submit="createAnnotation">
-    <input type="text" :placeholder="inputPlaceholder" ref="annotationInput" v-focus/>
-  </form>
+<template lang="pug">
+  form.annotation-input( @submit="createAnnotation" )
+    input( type="text" :placeholder="inputPlaceholder" ref="annotationInput" v-focus )
+
 </template>
 
 <script>
@@ -59,7 +59,7 @@
 
     input
       font-size 14px
-      width 400px
+      width 530px
       padding 3px
 
 </style>

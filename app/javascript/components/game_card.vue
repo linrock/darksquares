@@ -1,24 +1,20 @@
-<template>
-  <div class="game-card">
-    <div class="collapse-game-button"
-         @click="gameState.expanded = false" v-if="gameState.expanded">-</div>
-    <div class="graph-container" @mouseenter="setCurrentPgn">
-      <game-info :pgnHeaders="game.pgnHeaders"/>
-      <hover-graph-clickable :width="600" :height="150" :game="game" :gameState="gameState"/>
-    </div>
-    <annotation-previews :annotations="game.annotations" v-if="showAnnotationPreviews"/>
-    <move-list v-if="gameState.expanded"
-               :game="game" :gameState="gameState"/>
-    <game-ending :result="gameResult" v-if="gameState.expanded"/>
-  </div>
+<template lang="pug">
+  .game-card
+    .graph-container( @mouseenter="setCurrentPgn" )
+      game-info( :pgnHeaders="game.pgnHeaders" )
+      hover-graph-clickable( :width="600" :height="150" :game="game" :gameState="gameState" )
+
+    annotation-previews( :annotations="game.annotations" )
+
+    .annotation-count( v-if="annotationsRemaining" )
+      | View {{ annotationsRemaining }} more annotations
+
 </template>
 
 <script>
-  import AnnotationPreviews from './annotation_previews.vue'
   import GameInfo from './game_info.vue'
-  import GameEnding from './game_ending.vue'
-  import MoveList from './move_list.vue'
   import HoverGraphClickable from './hover_graph_clickable.vue'
+  import AnnotationPreviews from './annotation_previews.vue'
   import Game from '../models/game'
   import { state } from '../store/miniboard'
 
@@ -45,23 +41,18 @@
     },
 
     computed: {
-      showAnnotationPreviews: function() {
-        return !this.gameState.expanded
-      },
-      showMoveList: function() {
-        return this.gameState.expanded
-      },
-      gameResult: function() {
-        return this.game.pgnHeaders["Result"]
-      },
+      annotationsRemaining: function() {
+        const remaining = this.game.annotations.length - 3
+        if (remaining > 0) {
+          return remaining
+        }
+      }
     },
 
     components: {
-      AnnotationPreviews,
       GameInfo,
-      GameEnding,
       HoverGraphClickable,
-      MoveList,
+      AnnotationPreviews,
     }
   }
 </script>
@@ -78,5 +69,10 @@
 
     &:hover
       cursor pointer
+
+  .annotation-count
+    color rgba(58,137,201,0.8)
+    font-size 12px
+    margin-top 15px
 
 </style>

@@ -4,13 +4,10 @@
       span.username {{ annotation.username }}
       span.move-string {{ annotation.move_string }}
       span.text {{ annotation.text }}
-    </div>
-  </div>
+
 </template>
 
 <script>
-  import Annotation from './annotation_text.vue'
-
   export default {
     props: {
       annotations: Array
@@ -30,14 +27,10 @@
         return annotations
       }
     },
-
-    components: {
-      Annotation
-    }
   }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
   .preview
     font-size 12px
     overflow hidden
