@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: [:create]
       get "/users/me" => "users#me"
+      get "/users/me/games" => "users#games"
       resources :games, only: [:index, :show, :create, :destroy, :update] do
         resources :annotations, only: [:create, :destroy, :update]
       end

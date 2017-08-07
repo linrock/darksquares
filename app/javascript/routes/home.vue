@@ -54,7 +54,7 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   @mixin clearfix {
     &:before, &:after {
       display: table;
@@ -64,12 +64,6 @@
     &:after {
       clear: both;
     }
-  }
-
-  body {
-    margin: 0;
-    width: 100%;
-    height: 100%;
   }
 
   .shadowed {

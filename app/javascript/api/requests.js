@@ -30,6 +30,10 @@ export const getGames = function() {
   return api.get(`/api/v1/games`)
 }
 
+export const getMyGames = function() {
+  return api.get(`/api/v1/users/me/games`)
+}
+
 export const getUserInfo = function() {
   return api.get(`/api/v1/users/me`).then(response => {
     setUsername(response.data.username)

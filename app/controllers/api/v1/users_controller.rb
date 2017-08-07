@@ -22,6 +22,11 @@ class API::V1::UsersController < API::V1::BaseController
     }
   end
 
+  # GET /api/v1/users/me/games
+  def games
+    render json: current_user.games
+  end
+
   private
 
   def user_params
