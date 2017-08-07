@@ -1,4 +1,4 @@
-const state = {
+const initialState = {
   fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
   pgn: "",
   pgnHeaders: {},
@@ -9,4 +9,11 @@ const state = {
   highlights: [],
 }
 
-export { state }
+let state = Object.assign({}, initialState)
+
+const resetBoardState = () => state = Object.assign({}, initialState)
+
+export {
+  state,
+  resetBoardState
+}

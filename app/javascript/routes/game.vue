@@ -28,6 +28,7 @@
   import MoveList from '../components/move_list'
   import SubHeader from '../components/sub_header'
   import Game from '../models/game'
+  import { resetBoardState } from '../store/miniboard'
   import { getGame } from '../api/requests'
 
   export default {
@@ -45,6 +46,7 @@
     },
 
     created() {
+      resetBoardState()
       getGame(this.id).then(response => {
         this.game = new Game(response.data)
       })

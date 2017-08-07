@@ -66,19 +66,17 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  .game-card {
-    position: relative;
-  }
+<style lang="stylus" scoped>
+  .game-card
+    position relative
 
-  .collapse-game-button {
-    top: 5px;
-    right: 5px;
-    position: absolute;
-    z-index: 1;
+  .collapse-game-button
+    top 5px
+    right 5px
+    position absolute
+    z-index 1
 
-    &:hover {
-      cursor: pointer;
-    }
-  }
+    &:hover
+      cursor pointer
+
 </style>

@@ -12,21 +12,19 @@
 
   export default {
     props: {
-      gameIndex: Number,
       game: Game,
     }
   }
 </script>
 
-<style>
-  .game-card-header {
-    color: rgba(0,0,0,0.4);
-    font-size: 13px;
-    margin-bottom: 8px;
-    margin-left: 3px;
-  }
+<style lang="stylus">
+  .game-card-header
+    color rgba(0,0,0,0.4)
+    font-size 13px
+    margin-bottom 8px
+    margin-left 3px
 
-  .game-card-name {
-    font-weight: bold;
-  }
+  .game-card-name
+    font-weight bold
+
 </style>
