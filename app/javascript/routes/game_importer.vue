@@ -2,7 +2,7 @@
   <div id="game-importer">
     <div class="container">
       <div class="left-content">
-        <mini-board :fen="boardState.fen"/>
+        <chessboard :fen="boardState.fen"/>
       </div>
 
       <div class="right-content">
@@ -19,7 +19,7 @@
 <script>
   import Chess from 'chess.js'
   import { state } from '../store/miniboard'
-  import MiniBoard from '../components/mini_board.vue'
+  import Chessboard from '../components/chessboard.vue'
   import { createGame } from '../api/requests'
   import { getAccessToken } from '../store/local_storage'
 
@@ -58,7 +58,7 @@
     },
 
     components: {
-      MiniBoard
+      Chessboard
     }
   }
 </script>

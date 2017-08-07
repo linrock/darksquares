@@ -1,7 +1,9 @@
 <template>
   <div class="mini-board-view">
     <game-info :pgnHeaders="boardState.pgnHeaders" v-if="showHeaderInfo"/>
-    <mini-board :fen="boardState.fen" :highlights="boardState.highlights"/>
+    <chessboard :fen="boardState.fen"
+                :highlights="boardState.highlights"
+                :squareSize="squareSize"/>
     <div class="position-info">
       <game-position/>
       <position-evaluation/>
@@ -17,7 +19,7 @@
 
 <script>
   import GameInfo from './game_info.vue'
-  import MiniBoard from './mini_board.vue'
+  import Chessboard from './chessboard.vue'
   import GamePosition from './game_position.vue'
   import PositionEvaluation from './position_evaluation.vue'
   import PgnHeaders from './pgn_headers.vue'
@@ -37,6 +39,10 @@
         default: false,
         type: Boolean,
       },
+      squareSize: {
+        default: null,
+        type: Number,
+      }
     },
 
     data: function() {
@@ -54,7 +60,7 @@
     components: {
       GameInfo,
       GamePosition,
-      MiniBoard,
+      Chessboard,
       PgnHeaders,
       PositionEvaluation,
     },
@@ -63,10 +69,6 @@
 
 <style lang="scss" scoped>
   .mini-board-view {
-    .mini-board {
-      margin-top: 17px;
-    }
-
     .position-info {
       margin-top: 10px;
       display: flex;

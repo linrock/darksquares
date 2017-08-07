@@ -14,7 +14,7 @@
                        v-for="annotation in annotationMap[moveString(i)]"
                        :key="annotation.id"
                        :annotation="annotation"/>
-      <form v-if="annotationInputIndex === i" @submit="createAnnotation">
+      <form v-if="shouldShowAnnotationInput(i)" @submit="createAnnotation">
         <input class="annotation-input" type="text" :placeholder="annotationInputPlaceholder(i)"
                ref="annotationInput" v-focus/>
       </form>
@@ -44,16 +44,22 @@
 
     methods: {
       showMoveNum: function(i) {
-        return (i - 1) === this.annotationInputIndex || this.annotations[i - 1] || i % 2 === 0
+        if (i > 0 && this.annotationMap[this.moveString(i - 1)]) {
+          return true
+        }
+        return (i - 1) === this.annotationInputIndex || i % 2 === 0
       },
       moveNum: function(i) {
         return `${~~(i / 2 + 1)}.${i % 2 === 0 ? '' : '..'}`
+      },
+      shouldShowAnnotationInput: function(i) {
+        return i === this.annotationInputIndex
       },
       toggleAnnotationInput: function(i) {
         this.annotationInputIndex = this.annotationInputIndex === i ? -1 : i
         this.gameState.i = i + 1
         if (this.annotationInputIndex > -1) {
-          setTimeout(() => this.$refs.annotationInput[0].focus(), 50)
+          setTimeout(() => this.$refs.annotationInput[0].focus(), 500)
         }
       },
       annotationInputPlaceholder: function(i) {
@@ -138,7 +144,7 @@
     float: left;
     font-weight: bold;
     line-height: 26px;
-    width: 150px;
+    width: 180px;
 
     &:hover .comment-bubble {
       opacity: 0.5;
@@ -147,7 +153,7 @@
     .move-san {
       float: left;
       padding-left: 20px;
-      width: 60px;
+      width: 80px;
 
       &:hover {
         cursor: pointer;

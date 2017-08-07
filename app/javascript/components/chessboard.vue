@@ -1,7 +1,8 @@
 <template>
-  <div class="mini-board">
+  <div class="chessboard" :style="boardStyle">
     <div v-for="j in [0,1,2,3,4,5,6,7]" class="row">
-      <div v-for="i in [0,1,2,3,4,5,6,7]" :class="squareClass(i,j)" class="square">
+      <div v-for="i in [0,1,2,3,4,5,6,7]" class="square"
+           :class="squareClass(i,j)" :style="squareStyle">
         <template v-if="pieceAt(i,j)">
           <img :src="pieceImgSrc(i,j)">
         </template>
@@ -17,6 +18,7 @@
     props: {
       fen: String,
       highlights: Array,
+      squareSize: Number,
     },
 
     data: function() {
@@ -57,11 +59,31 @@
       pieceImgSrc(i,j) {
         return `/assets/pieces/${this.pieceAt(i,j)}.svg`
       }
+    },
+
+    computed: {
+      boardStyle: function() {
+        if (this.squareSize) {
+          const boardSize = this.squareSize * 8 + 2
+          return {
+            width: `${boardSize}px`,
+            height: `${boardSize}px`
+          }
+        }
+      },
+      squareStyle() {
+        if (this.squareSize) {
+          return {
+            width: `${this.squareSize}px`,
+            height: `${this.squareSize}px`
+          }
+        }
+      },
     }
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   $square-size: 42px;
 
   @mixin clearfix {
@@ -75,7 +97,7 @@
     }
   }
 
-  .mini-board {
+  .chessboard {
     border: 1px solid #938172;
     width: 8 * $square-size + 2px;
     height: 8 * $square-size + 2px;

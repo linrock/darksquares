@@ -6,7 +6,7 @@
 
     <div class="content">
       <div class="left-content">
-        <mini-board-detailed :showHeaderInfo="false"/>
+        <mini-board-detailed :showHeaderInfo="false" :squareSize="55"/>
       </div>
 
       <div class="right-content">
@@ -56,16 +56,20 @@
   .sub-header
     background rgba(0,0,0,0.05)
     padding 10px 0 10px 80px
-    width: 100%
+    width 100%
 
   .content
     display flex
     width 1200px
+    margin-top 30px
     margin-left 80px
 
   .game-info
     margin-bottom 20px
 
+  .left-content
+    position fixed
+
   .right-content
-    margin-left 80px
+    margin-left 510px
 </style>
