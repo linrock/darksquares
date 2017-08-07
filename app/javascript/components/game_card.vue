@@ -1,13 +1,15 @@
 <template lang="pug">
   .game-card
-    .graph-container( @mouseenter="setCurrentPgn" )
-      game-info( :pgnHeaders="game.pgnHeaders" )
-      hover-graph-clickable( :width="600" :height="150" :game="game" :gameState="gameState" )
+    .graph-container(@mouseenter="setCurrentPgn")
+      game-info(:pgnHeaders="game.pgnHeaders")
+      router-link(:to="game.path")
+        hover-graph-clickable(:width="600" :height="150" :game="game" :gameState="gameState")
 
-    annotation-previews( :annotations="game.annotations" )
+    annotation-previews(:annotations="game.annotations")
 
-    .annotation-count( v-if="annotationsRemaining" )
-      | View {{ annotationsRemaining }} more annotations
+    router-link(:to="game.path")
+      .annotation-count( v-if="annotationsRemaining" )
+        | View {{ annotationsRemaining }} more annotations
 
 </template>
 
@@ -38,6 +40,9 @@
         this.boardState.pgn = this.game.pgn
         this.boardState.pgnHeaders = this.game.pgnHeaders
       },
+      gamePath(id) {
+        return `/games/${id}`
+      }
     },
 
     computed: {
@@ -61,6 +66,12 @@
   .game-card
     position relative
 
+  a
+    text-decoration none
+
+    &:hover .annotation-count
+      opacity 0.9
+
   .collapse-game-button
     top 5px
     right 5px
@@ -71,7 +82,8 @@
       cursor pointer
 
   .annotation-count
-    color rgba(58,137,201,0.8)
+    color rgb(58,137,201)
+    opacity 0.8
     font-size 12px
     margin-top 15px
 

@@ -20,16 +20,17 @@ interface GameData {
 }
 
 export default class Game {
-  id: number
-  meta: GameMeta
-  pgn: string
-  pgnHeaders: object
-  positions: Array<string>
-  moves: Array<Move>
-  bestMoves: Array<object>
-  graphPoints: Array<Array<number>>
-  annotations: Array<Annotation>
-  annotationMap: object
+  public id: number
+  public meta: GameMeta
+  public pgn: string
+  public pgnHeaders: object
+  public positions: Array<string>
+  public moves: Array<Move>
+  public bestMoves: Array<object>
+  public graphPoints: Array<Array<number>>
+  public annotations: Array<Annotation>
+
+  private annotationMap: object
 
   public static loadGamesFromData(gameData): Array<Game> {
     return gameData.map(data => new Game(data))
@@ -52,12 +53,16 @@ export default class Game {
     this.computeAnnotationMap()
   }
 
-  public addAnnotation(annotation: Annotation) {
+  get path(): string {
+    return `/games/${this.id}`
+  }
+
+  public addAnnotation(annotation: Annotation): void {
     this.annotations.push(annotation)
     this.computeAnnotationMap()
   }
 
-  public removeAnnotation(annotation: Annotation) {
+  public removeAnnotation(annotation: Annotation): void {
     this.annotations = this.annotations.filter(a => a.id !== annotation.id)
     this.computeAnnotationMap()
   }

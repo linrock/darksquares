@@ -2,11 +2,9 @@
   <div class="game-list">
     <div class="game-submission" v-for="game in games">
       <game-card-header :game="game"/>
-      <router-link :to="gamePath(game.id)">
-        <div class="game-container shadowed">
-          <game-card :game="game"/>
-        </div>
-      </router-link>
+      <div class="game-container shadowed">
+        <game-card :game="game"/>
+      </div>
     </div>
   </div>
 </template>
@@ -20,12 +18,6 @@
       games: Array
     },
     
-    methods: {
-      gamePath(id) {
-        return `/games/${id}`
-      }
-    },
-
     components: {
       GameCard,
       GameCardHeader,
