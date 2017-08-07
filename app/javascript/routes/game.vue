@@ -22,6 +22,7 @@
 </template>
 
 <script>
+  import Mousetrap from 'mousetrap'
   import HoverGraphClickable from '../components/hover_graph_clickable.vue'
   import MiniBoardDetailed from '../components/mini_board_detailed.vue'
   import GameInfo from '../components/game_info'
@@ -50,6 +51,23 @@
       getGame(this.id).then(response => {
         this.game = new Game(response.data)
       })
+    },
+
+    mounted() {
+      Mousetrap.bind('left', () => {
+        if (this.gameState.i > 0) {
+          this.gameState.i -= 1
+        }
+      })
+      Mousetrap.bind('right', () => {
+        if (this.gameState.i < this.game.positions.length) {
+          this.gameState.i += 1
+        }
+      })
+    },
+
+    destroyed() {
+      Mousetrap.reset()
     },
 
     components: {

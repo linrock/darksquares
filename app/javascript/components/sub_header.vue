@@ -1,10 +1,9 @@
-<template>
-  <section id="sub-header">
-    <header class="sub-header">
-      <slot/>
-    </header>
-    <div class="sub-header-spacer"></div>
-  </section>
+<template lang="pug">
+  section#sub-header
+    header.sub-header
+      slot
+    .sub-header-spacer
+
 </template>
 
 <style lang="stylus" scoped>

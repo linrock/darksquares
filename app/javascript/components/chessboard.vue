@@ -1,14 +1,14 @@
-<template>
-  <div class="chessboard" :style="boardStyle">
-    <div v-for="j in [0,1,2,3,4,5,6,7]" class="row">
-      <div v-for="i in [0,1,2,3,4,5,6,7]" class="square"
-           :class="squareClass(i,j)" :style="squareStyle">
-        <template v-if="pieceAt(i,j)">
-          <img :src="pieceImgSrc(i,j)">
-        </template>
-      </div>
-    </div>
-  </div>
+<template lang="pug">
+  .chessboard(:style="boardStyle")
+    .row(v-for="j in [0,1,2,3,4,5,6,7]")
+      .square(
+        v-for="i in [0,1,2,3,4,5,6,7]"
+        :class="squareClass(i,j)"
+        :style="squareStyle"
+      )
+        template(v-if="pieceAt(i,j)")
+          img(:src="pieceImgSrc(i,j)")
+
 </template>
 
 <script>
