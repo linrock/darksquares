@@ -1,12 +1,12 @@
 <template>
-  <div id="sign_up">
+  <main id="sign_up">
     <form @submit="submitCredentials">
       <input type="text" placeholder="Username" ref="username"/>
       <input type="password" placeholder="Password" ref="password"/>
       <input type="password" placeholder="Confirm password" ref="password_confirmation"/>
       <input type="submit" value="Sign up"/>
     </form>
-  </div>
+  </main>
 </template>
 
 <script>
@@ -39,7 +39,3 @@
     },
   }
 </script>
-
-<style>
-
-</style>

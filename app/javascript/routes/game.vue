@@ -1,8 +1,9 @@
 <template>
-  <div id="game">
-    <header class="sub-header">
+  <main id="game">
+    <sub-header>
       <div>Game {{ id }}</div>
-    </header>
+    </sub-header>
+    <div class="sub-header-spacer"></div>
 
     <div class="content">
       <div class="left-content">
@@ -11,16 +12,19 @@
 
       <div class="right-content">
         <game-info v-if="game" :pgnHeaders="game.pgnHeaders"/>
+        <div class="annotations-filter"></div>
         <move-list v-if="game" :game="game" :gameState="gameState"/>
+        <div class="game-actions"></div>
       </div>
     </div>
-  </div>
+  </main>
 </template>
 
 <script>
   import MiniBoardDetailed from '../components/mini_board_detailed.vue'
   import GameInfo from '../components/game_info'
   import MoveList from '../components/move_list'
+  import SubHeader from '../components/sub_header'
   import Game from '../models/game'
   import { getGame } from '../api/requests'
 
@@ -45,6 +49,7 @@
     },
 
     components: {
+      SubHeader,
       GameInfo,
       MiniBoardDetailed,
       MoveList
@@ -53,23 +58,26 @@
 </script>
 
 <style lang="stylus" scoped>
-  .sub-header
-    background rgba(0,0,0,0.05)
-    padding 10px 0 10px 80px
-    width 100%
-
   .content
     display flex
     width 1200px
     margin-top 30px
     margin-left 80px
 
+    .left-content
+      position fixed
+
+    .right-content
+      margin-left 510px
+
   .game-info
     margin-bottom 20px
 
-  .left-content
-    position fixed
+  .annotations-filter
+    border-bottom 1px solid rgba(0,0,0,0.05)
+    margin-bottom 15px
 
-  .right-content
-    margin-left 510px
+  .game-actions
+    margin-bottom: 200px
+
 </style>

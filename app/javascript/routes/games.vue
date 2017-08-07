@@ -1,5 +1,5 @@
 <template>
-  <div id="games">
+  <main id="games">
     <div class="background">
       <div class="left-content shadowed">
         <mini-board-detailed :showPgn="true" :showHeaderInfo="false"/>
@@ -13,7 +13,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </main>
 </template>
 
 <script>

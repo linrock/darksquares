@@ -1,11 +1,11 @@
 <template>
-  <div id="login">
+  <main id="login">
     <form @submit="submitCredentials">
       <input type="text" ref="username" placeholder="Username"/>
       <input type="password" ref="password" placeholder="Password"/>
       <input type="submit" value="Log in"/>
     </form>
-  </div>
+  </main>
 </template>
 
 <script>
@@ -35,7 +35,3 @@
     },
   }
 </script>
-
-<style>
-
-</style>

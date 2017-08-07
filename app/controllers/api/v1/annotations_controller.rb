@@ -3,8 +3,8 @@ class API::V1::AnnotationsController < API::V1::BaseController
 
   # POST /api/v1/games/:game_id/annotations
   def create
-    game.annotations.create(annotation_params.merge(user_id: current_user.id))
-    render json: {}
+    annotation = game.annotations.create!(annotation_params.merge(user_id: current_user.id))
+    render json: annotation
   end
 
   # PATCH /api/v1/games/:game_id/annotations

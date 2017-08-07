@@ -1,9 +1,9 @@
 <template>
-  <div id="profile">
+  <main id="profile">
     My profile
 
     <a @click="signOut">sign out</a>
-  </div>
+  </main>
 </template>
 
 <script>
@@ -31,6 +31,3 @@
     }
   }
 </script>
-
-<style>
-</style>

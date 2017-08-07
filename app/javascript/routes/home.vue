@@ -1,5 +1,5 @@
 <template>
-  <article>
+  <main id="home">
     <div class="background">
       <div class="left-content shadowed">
         <mini-board-detailed :showPgn="true" :showHeaderInfo="false"/>
@@ -18,7 +18,7 @@
         </div>
       </div>
     </div>
-  </article>
+  </main>
 </template>
 
 <script>
