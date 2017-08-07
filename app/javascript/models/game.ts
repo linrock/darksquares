@@ -49,17 +49,17 @@ export default class Game {
         (<any>Object).assign({ gameId: options.id }, annotation)
       )
     })
-    this.annotationMap = groupBy(this.annotations, 'move_string')
+    this.computeAnnotationMap()
   }
 
   public addAnnotation(annotation: Annotation) {
     this.annotations.push(annotation)
-    this.annotationMap = groupBy(this.annotations, 'move_string')
+    this.computeAnnotationMap()
   }
 
   public removeAnnotation(annotation: Annotation) {
     this.annotations = this.annotations.filter(a => a.id !== annotation.id)
-    this.annotationMap = groupBy(this.annotations, 'move_string')
+    this.computeAnnotationMap()
   }
 
   public annotationsAt(i): Array<Annotation> {
@@ -72,5 +72,13 @@ export default class Game {
 
   public moveNum(i): string {
     return `${~~(i / 2 + 1)}.${i % 2 === 0 ? '' : '..'}`
+  }
+
+  private computeAnnotationMap(): void {
+    this.annotationMap = groupBy(this.annotations, 'move_string')
+    Object.keys(this.annotationMap).map((moveString, _i) => {
+      const annotations = this.annotationMap[moveString]
+      this.annotationMap[moveString] = annotations.sort((a,b) => a.id > b.id)
+    })
   }
 }
