@@ -30,6 +30,10 @@ export const getGames = function() {
   return api.get(`/api/v1/games`)
 }
 
+export const getGame = function(id) {
+  return api.get(`/api/v1/games/${id}`)
+}
+
 export const getMyGames = function() {
   return api.get(`/api/v1/users/me/games`)
 }

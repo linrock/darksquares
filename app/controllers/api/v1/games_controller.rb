@@ -9,6 +9,7 @@ class API::V1::GamesController < API::V1::BaseController
 
   # GET /api/v1/games/:id
   def show
+    render json: Game.find(params[:id])
   end
 
   # POST /api/v1/games

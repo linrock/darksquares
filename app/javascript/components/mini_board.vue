@@ -3,7 +3,7 @@
     <div v-for="j in [0,1,2,3,4,5,6,7]" class="row">
       <div v-for="i in [0,1,2,3,4,5,6,7]" :class="squareClass(i,j)" class="square">
         <template v-if="pieceAt(i,j)">
-          <img :src="pieceSrc(i,j)">
+          <img :src="pieceImgSrc(i,j)">
         </template>
       </div>
     </div>
@@ -54,7 +54,7 @@
         const piece = this.ch.get(this.squareName(i,j))
         return piece && `${piece.color}${piece.type}`
       },
-      pieceSrc(i,j) {
+      pieceImgSrc(i,j) {
         return `/assets/pieces/${this.pieceAt(i,j)}.svg`
       }
     }
