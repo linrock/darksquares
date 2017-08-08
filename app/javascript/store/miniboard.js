@@ -9,9 +9,11 @@ const initialState = {
   highlights: [],
 }
 
-let state = Object.assign({}, initialState)
+const blankState = () => Object.assign({}, initialState)
 
-const resetBoardState = () => state = Object.assign({}, initialState)
+let state = blankState()
+
+const resetBoardState = () => state = blankState()
 
 export {
   state,

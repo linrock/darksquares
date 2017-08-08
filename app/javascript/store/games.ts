@@ -4,9 +4,9 @@ import {
   getGames
 } from '../api/requests'
 
-const gamesMap = {}
+const gamesMap: Map<number, Game> = new Map()
 
-const getOrFetchGame = function(id): Promise<Game> {
+const getOrFetchGame = function(id: number): Promise<Game> {
   let game = gamesMap[id]
   if (game) {
     return Promise.resolve(game)
