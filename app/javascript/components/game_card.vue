@@ -5,7 +5,7 @@
       router-link(:to="gamePositionPath")
         hover-graph-clickable(:width="600" :height="150" :game="game" :gameState="gameState")
 
-    annotation-previews(:annotations="game.annotations")
+    annotation-previews(:game="game")
 
     router-link(:to="game.path")
       .annotation-count(v-if="annotationsRemaining")

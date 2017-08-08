@@ -1,19 +1,18 @@
-<template>
-  <div id="game-importer">
-    <div class="container">
-      <div class="left-content">
-        <chessboard :fen="boardState.fen"/>
-      </div>
+<template lang="pug">
+  main#game-importer
+    .content
+      section.left-side
+        chessboard(:fen="boardState.fen" :squareSize="55")
 
-      <div class="right-content">
-        <form @submit="importGame">
-          <textarea class="pgn-importer"></textarea>
-          <input type="submit" value="Import PGN"/>
-          <input type="checkbox"> Submit this game to the homepage
-        </form>
-      </div>
-    </div>
-  </div>
+      section.right-side
+        form(@submit="importGame")
+          textarea(class="pgn-importer")
+          .commands
+            input(type="submit" value="Import PGN")
+            .checkbox
+              input(type="checkbox")
+              | Submit this game to the homepage
+
 </template>
 
 <script>
@@ -63,27 +62,43 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  #game-importer {
-    display: flex;
-  }
+<style lang="stylus" scoped>
+  #game-importer
+    display: flex
 
-  .container {
-    width: 1040px;
-    margin: 0 auto;
-    display: flex;
-  }
+  textarea
+    width 500px
+    height 500px
+    font-size 16px
+    padding 10px
+    display block
 
-  textarea {
-    width: 500px;
-    height: 500px;
-    font-size: 16px;
-    padding: 10px;
-    display: block;
-  }
+  input[type="submit"]
+    color white
+    background rgb(58, 137, 201)
+    border none
+    border-radius 2px
+    font-size 18px
+    padding 7px 24px
 
-  input[type="submit"] {
-    color: white;
-    background: black;
-  }
+    &:hover
+      cursor pointer
+      opacity 0.9
+
+  .content
+    display flex
+    width 1200px
+    margin-left 80px
+    padding-top 30px
+
+    section.right-side
+      margin-left 40px
+
+      .commands
+        display flex
+        margin-top 20px
+
+      .checkbox
+        margin-left 10px
+
 </style>

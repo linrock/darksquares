@@ -1,9 +1,10 @@
-<template>
-  <main id="profile">
-    My profile
+<template lang="pug">
+  main#profile
+    .content
+      h1 My profile
 
-    <a @click="signOut">sign out</a>
-  </main>
+      a(@click="signOut") sign out
+
 </template>
 
 <script>
@@ -31,3 +32,12 @@
     }
   }
 </script>
+
+<style lang="stylus" scoped>
+  .content
+    display flex
+    width 1200px
+    margin-left 80px
+    padding-top 30px
+
+</style>

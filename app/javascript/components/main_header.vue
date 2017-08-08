@@ -1,25 +1,22 @@
-<template>
-  <div class="main-header">
-    <header class="main">
-      <div class="square"></div>
+<template lang="pug">
+  #main-header
+    header
+      .main
+        .square
 
-      <div class="left">
-        <router-link to="/">Dark Squares</router-link>
-      </div>
+        .left
+          router-link(to="/") Dark Squares
 
-      <div class="right">
-        <router-link to="/importer">Import game</router-link>
-        <router-link to="/games">Games</router-link>
-        <router-link to="/annotations">Annotations</router-link>
-      </div>
+        .right
+          router-link(to="/importer") Import game
+          router-link(to="/games") Games
+          router-link(to="/annotations") Annotations
 
-      <div class="far-right">
-        <router-link :to="userPath">{{ userLinkText }}</router-link>
-      </div>
-    </header>
+        .far-right
+          router-link(:to="userPath") {{ userLinkText }}
 
-    <div class="header-spacer"></div>
-  </div>
+    .header-spacer
+
 </template>
 
 <script>
@@ -42,53 +39,48 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  .main-header {
+<style lang="stylus" scoped>
+  header
+    background #333
+    color white
+    width 100%
+    height 40px
+    line-height 40px
+    position fixed
+    z-index 1
 
-  }
-  .main {
-    background: #333;
-    color: white;
-    width: 100%;
-    height: 40px;
-    line-height: 40px;
-    position: fixed;
-    display: flex;
-    z-index: 1;
+  .main
+    width 1200px
+    display flex
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    a
+      color inherit
+      text-decoration none
 
-    .square {
-      width: 40px;
-      height: 40px;
-      background: #222;
-    }
+    .square
+      width 40px
+      height 40px
+      background #222
 
-    .left {
-      width: 415px;
-      margin-left: 40px;
-    }
+    .left
+      width 415px
+      margin-left 40px
 
-    .right {
-      a {
-        color: rgba(255,255,255,0.6);
-        margin-right: 30px;
-      }
+    .right
+      font-size 14px
 
-      .router-link-exact-active {
-        color: white;
-      }
-    }
+      a
+        color rgba(255,255,255,0.6)
+        margin-right 30px
 
-    .far-right {
+      .router-link-exact-active
+        color white
 
-    }
-  }
+    .far-right
+      font-size 14px
+      margin-left auto
 
-  .header-spacer {
-    height: 40px;
-  }
+  .header-spacer
+    height 40px
+
 </style>
