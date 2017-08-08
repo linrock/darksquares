@@ -3,7 +3,7 @@
     <template v-for="(move, i) in game.moves">
       <div class="move-num" v-if="showMoveNum(i)">{{ game.moveNum(i) }}</div>
       <div class="move">
-        <div class="move-san" :style="isHighlighted(i)"
+        <div class="move-san" :class="highlight(i)"
              @click="updateMoveIndex(i)">{{ move.san }}</div>
         <div class="move-actions">
           <img src="/assets/comment-bubble.svg" class="comment-bubble"
@@ -57,9 +57,9 @@
       updateMoveIndex: function(i) {
         this.gameState.i = i + 1
       },
-      isHighlighted: function(i) {
+      highlight: function(i) {
         if (i + 1 === this.gameState.i) {
-          return `background: #ffff66`
+          return `highlighted`
         }
       },
     },
@@ -112,6 +112,9 @@
       float left
       padding-left 20px
       width 80px
+
+      &.highlighted
+        background #ffff66
 
       &:hover
         cursor pointer

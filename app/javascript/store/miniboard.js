@@ -11,11 +11,14 @@ const initialState = {
 
 const blankState = () => Object.assign({}, initialState)
 
-let state = blankState()
-
 const resetBoardState = () => state = blankState()
+
+const applyStateChange = (stateChange) => Object.assign(state, stateChange)
+
+let state = blankState()
 
 export {
   state,
-  resetBoardState
+  resetBoardState,
+  applyStateChange,
 }

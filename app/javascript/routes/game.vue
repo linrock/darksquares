@@ -23,10 +23,23 @@
   import MiniBoardDetailed from '../components/mini_board_detailed.vue'
   import GameInfo from '../components/game_info'
   import MoveList from '../components/move_list'
-  import { resetBoardState } from '../store/miniboard'
+  import { resetBoardState, applyStateChange } from '../store/miniboard'
   import { getOrFetchGame } from '../store/games'
 
+  let positionIndex = 0
+
   export default {
+    beforeRouteEnter: function(to, from, next) {
+      const hash = window.location.hash
+      if (hash) {
+        const i = Number(hash.replace(/#/, ''))
+        if (Number.isInteger(i)) {
+          positionIndex = i
+        }
+      }
+      next()
+    },
+
     props: {
       id: {
         type: String,
@@ -38,14 +51,17 @@
       return {
         game: null,
         gameState: {
-          i: 0
+          i: positionIndex
         }
       }
     },
 
     created() {
       resetBoardState()
-      getOrFetchGame(this.id).then(game => this.game = game)
+      getOrFetchGame(this.id).then(game => {
+        applyStateChange(game.stateAtPositionIndex(positionIndex))
+        this.game = game
+      })
     },
 
     mounted() {

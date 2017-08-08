@@ -57,6 +57,16 @@ export default class Game {
     return `/games/${this.id}`
   }
 
+  get scores(): Array<number> {
+    return this.graphPoints[this.graphPoints.length - 1]
+  }
+
+  get nPoints(): number {
+    return this.graphPoints[0].length
+  }
+
+  // annotations
+
   public addAnnotation(annotation: Annotation): void {
     this.annotations.push(annotation)
     this.computeAnnotationMap()
@@ -71,12 +81,44 @@ export default class Game {
     return this.annotationMap[this.moveString(i)]
   }
 
+  // moves
+
   public moveString(i): string {
     return `${this.moveNum(i)} ${this.moves[i].san}`
   }
 
   public moveNum(i): string {
     return `${~~(i / 2 + 1)}.${i % 2 === 0 ? '' : '..'}`
+  }
+
+  public stateAtPositionIndex(i): object {
+    const fen = this.positions[i]
+    const state = <any>{}
+    if (fen) {
+      state.fen = fen
+    }
+    if (i === 0) {
+      state.score = ""
+      state.bestMove = ""
+    } else {
+      const score = this.scores[i]
+      if (score !== undefined) {
+        state.score = score
+      }
+      if (this.bestMoves[i]) {
+        state.bestMove = this.bestMoves[i]
+      }
+      const j = i - 1
+      const move = this.moves[j]
+      if (move) {
+        state.move = this.moveString(j)
+        state.highlights = [move.from, move.to]
+      } else {
+        state.move = ``
+        state.highlights = []
+      }
+    }
+    return state
   }
 
   private computeAnnotationMap(): void {

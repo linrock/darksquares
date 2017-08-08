@@ -1,20 +1,14 @@
-<template>
-  <div class="mini-board-view">
-    <game-info :pgnHeaders="boardState.pgnHeaders" v-if="showHeaderInfo"/>
-    <chessboard :fen="boardState.fen"
-                :highlights="boardState.highlights"
-                :squareSize="squareSize"/>
-    <div class="position-info">
-      <game-position/>
-      <position-evaluation/>
-    </div>
-    <div class="position-annotations" v-if="showAnnotations">
-      <div class="annotation" v-for="annotation in positionAnnotations">
-        {{ annotation }}
-      </div>
-    </div>
-    <pgn-headers v-if="showPgn"/>
-  </div>
+<template lang="pug">
+  section.mini-board-view
+    game-info(:pgnHeaders="boardState.pgnHeaders" v-if="showHeaderInfo")
+    chessboard(:fen="boardState.fen"
+               :highlights="boardState.highlights"
+               :squareSize="squareSize")
+    .position-info
+      game-position
+      position-evaluation
+    pgn-headers(v-if="showPgn")
+
 </template>
 
 <script>
@@ -28,20 +22,16 @@
   export default {
     props: {
       showHeaderInfo: {
-        default: true,
         type: Boolean,
+        default: true,
       },
       showPgn: {
-        default: false,
         type: Boolean,
-      },
-      showAnnotations: {
         default: false,
-        type: Boolean,
       },
       squareSize: {
-        default: null,
         type: Number,
+        default: null,
       }
     },
 
@@ -52,31 +42,29 @@
     },
 
     computed: {
-      positionAnnotations() {
-        return this.boardState.annotations
-      },
+      fen: function() {
+        return this.boardState.fen
+      }
     },
 
     components: {
       GameInfo,
-      GamePosition,
       Chessboard,
-      PgnHeaders,
+      GamePosition,
       PositionEvaluation,
+      PgnHeaders,
     },
   }
 </script>
 
-<style lang="scss" scoped>
-  .mini-board-view {
-    .position-info {
-      margin-top: 10px;
-      display: flex;
-      justify-content: flex-end;
+<style lang="stylus" scoped>
+  .mini-board-view
+    .position-info
+      margin-top 10px
+      display flex
+      justify-content flex-end
 
-      .game-position {
-        margin-right: auto;
-      }
-    }
-  }
+      .game-position
+        margin-right auto
+
 </style>

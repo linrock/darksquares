@@ -1,13 +1,13 @@
 <template lang="pug">
   .chessboard(:style="boardStyle")
-    .row(v-for="j in [0,1,2,3,4,5,6,7]")
+    .row(v-for="j in 8")
       .square(
-        v-for="i in [0,1,2,3,4,5,6,7]"
-        :class="squareClass(i,j)"
+        v-for="i in 8"
+        :class="squareClass(i - 1, j - 1)"
         :style="squareStyle"
       )
-        template(v-if="pieceAt(i,j)")
-          img(:src="pieceImgSrc(i,j)")
+        template(v-if="pieceAt(i - 1, j - 1)")
+          img(:src="pieceImgSrc(i - 1, j - 1)")
 
 </template>
 
@@ -29,14 +29,24 @@
       }
     },
 
+    mounted: function() {
+      if (!this.fen) {
+        return
+      }
+      this.renderFen(this.fen)
+    },
+
     watch: {
       fen: function() {
-        this.ch.load(this.fen)
-        this.$forceUpdate()
+        this.renderFen(this.fen)
       }
     },
 
     methods: {
+      renderFen(fen) {
+        this.ch.load(this.fen)
+        this.$forceUpdate()
+      },
       squareClass(i,j) {
         const sqName = this.squareName(i,j)
         if (this.highlights) {
@@ -83,55 +93,45 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  $square-size: 42px;
+<style lang="stylus" scoped>
+  square-size = 42px
 
-  @mixin clearfix {
-    &:before, &:after {
-      content: "";
-      display: table;
-    }
+  clearfix()
+    &:before, &:after
+      content ""
+      display table
 
-    &:after {
-      clear: both;
-    }
-  }
+    &:after
+      clear both
 
-  .chessboard {
-    border: 1px solid #938172;
-    width: 8 * $square-size + 2px;
-    height: 8 * $square-size + 2px;
-    @include clearfix;
+  .chessboard
+    border 1px solid #938172
+    width 8 * square-size + 2px
+    height 8 * square-size + 2px
+    clearfix()
 
-    .row {
-      @include clearfix;
-    }
+    .row
+      clearfix()
 
-    .square {
-      float: left;
-      width: $square-size;
-      height: $square-size;
+    .square
+      float left
+      width square-size
+      height square-size
 
-      &.light {
-        background: #f3e4cf;
-      }
+      &.light
+        background #f3e4cf
 
-      &.dark {
-        background: #ceb3a2;
-      }
+      &.dark
+        background #ceb3a2
 
-      &.highlight-0 {
-        background: rgb(255, 255, 204);
-      }
+      &.highlight-0
+        background rgb(255, 255, 204)
 
-      &.highlight-1 {
-        background: rgb(255, 255, 102);
-      }
+      &.highlight-1
+        background rgb(255, 255, 102)
 
-      img {
-        width: 100%;
-        height: 100%;
-      }
-    }
-  }
+      img
+        width 100%
+        height 100%
+
 </style>
