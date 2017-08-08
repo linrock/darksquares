@@ -26,20 +26,11 @@
   import { resetBoardState, applyStateChange } from '../store/miniboard'
   import { getOrFetchGame } from '../store/games'
 
-  let positionIndex = 0
+  const gameState = {
+    i: 0
+  }
 
   export default {
-    beforeRouteEnter: function(to, from, next) {
-      const hash = window.location.hash
-      if (hash) {
-        const i = Number(hash.replace(/#/, ''))
-        if (Number.isInteger(i)) {
-          positionIndex = i
-        }
-      }
-      next()
-    },
-
     props: {
       id: {
         type: String,
@@ -50,16 +41,21 @@
     data: function() {
       return {
         game: null,
-        gameState: {
-          i: positionIndex
-        }
+        gameState
       }
     },
 
     created() {
+      const hash = window.location.hash
+      if (hash) {
+        const i = Number(hash.replace(/#/, ''))
+        if (Number.isInteger(i)) {
+          gameState.i = i
+        }
+      }
       resetBoardState()
       getOrFetchGame(this.id).then(game => {
-        applyStateChange(game.stateAtPositionIndex(positionIndex))
+        applyStateChange(game.stateAtPositionIndex(gameState.i))
         this.game = game
       })
     },

@@ -2,7 +2,7 @@
   .game-card
     .graph-container(@mouseenter="setCurrentPgn")
       game-info(:pgnHeaders="game.pgnHeaders")
-      router-link(:to="game.path")
+      router-link(:to="gamePositionPath")
         hover-graph-clickable(:width="600" :height="150" :game="game" :gameState="gameState")
 
     annotation-previews(:annotations="game.annotations")
@@ -40,9 +40,6 @@
         this.boardState.pgn = this.game.pgn
         this.boardState.pgnHeaders = this.game.pgnHeaders
       },
-      gamePath(id) {
-        return `/games/${id}`
-      }
     },
 
     computed: {
@@ -51,6 +48,9 @@
         if (remaining > 0) {
           return remaining
         }
+      },
+      gamePositionPath: function() {
+        return `${this.game.path}#${this.gameState.i}`
       }
     },
 

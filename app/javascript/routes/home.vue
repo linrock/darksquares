@@ -1,24 +1,18 @@
-<template>
-  <main id="home">
-    <div class="background">
-      <div class="left-content shadowed">
-        <mini-board-detailed :showPgn="true" :showHeaderInfo="false"/>
+<template lang="pug">
+  main#home
+    .background
+      .left-content.shadowed
+        mini-board-detailed(:showPgn="true" :showHeaderInfo="false")
 
-        <div class="container">
-          <header class="shadowed">
-            <h1>Annotated games</h1>
+        .container
+          header.shadowed
+            h1 Annotated games
+            .instructions
+              | Hover over the graphs to explore positions.
+              | Click to view the move list and annotations.
 
-            <div class="instructions">
-              Hover over the graphs to explore positions.
-              Click to view the move list and annotations.
-            </div>
-          </header>
+          game-list(:games="games")
 
-          <game-list :games="games"/>
-        </div>
-      </div>
-    </div>
-  </main>
 </template>
 
 <script>
