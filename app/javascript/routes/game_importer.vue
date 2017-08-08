@@ -17,20 +17,15 @@
 
 <script>
   import Chess from 'chess.js'
+  import requireLogin from './guards/require_login'
   import { state } from '../store/miniboard'
   import Chessboard from '../components/chessboard.vue'
   import { createGame } from '../api/requests'
-  import { getAccessToken } from '../store/local_storage'
 
   export default {
-    beforeRouteEnter: function(to, from, next) {
-      if (getAccessToken()) {
-        next()
-      } else {
-        next({ path: "/login" })
-      }
-    },
-    data: function() {
+    beforeRouteEnter: requireLogin,
+
+    data() {
       return {
         boardState: state
       }

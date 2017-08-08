@@ -42,6 +42,10 @@ export const getMyGames = function() {
   return api.get(`/api/v1/users/me/games`)
 }
 
+export const getMyAnnotations = function() {
+  return api.get(`/api/v1/users/me/annotations`)
+}
+
 export const getUserInfo = function() {
   return api.get(`/api/v1/users/me`).then(response => {
     setUsername(response.data.username)

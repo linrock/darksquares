@@ -10,17 +10,12 @@
 </template>
 
 <script>
+  import requireAnonymous from './guards/require_anonymous'
   import { createUser, getUserInfo } from '../api/requests'
-  import { getAccessToken } from '../store/local_storage'
 
   export default {
-    beforeRouteEnter: function(to, from, next) {
-      if (getAccessToken()) {
-        next({ path: "/" })
-      } else {
-        next()
-      }
-    },
+    beforeRouteEnter: requireAnonymous,
+
     methods: {
       submitCredentials: function(e) {
         e.preventDefault()

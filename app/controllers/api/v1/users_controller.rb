@@ -27,6 +27,11 @@ class API::V1::UsersController < API::V1::BaseController
     render json: current_user.games
   end
 
+  # GET /api/v1/users/me/annotations
+  def annotations
+    render json: current_user.annotations.order('id DESC')
+  end
+
   private
 
   def user_params

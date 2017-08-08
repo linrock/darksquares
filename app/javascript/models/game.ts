@@ -47,7 +47,7 @@ export default class Game {
     this.graphPoints = options.graph_points
     this.annotations = options.annotations.map(annotation => {
       return new Annotation(
-        (<any>Object).assign({ gameId: options.id }, annotation)
+        (<any>Object).assign({ game_id: options.id }, annotation)
       )
     })
     this.computeAnnotationMap()

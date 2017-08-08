@@ -2,7 +2,7 @@ import * as moment from 'moment'
 
 interface AnnotationData {
   id: number
-  gameId: number
+  game_id: number
   username: string
   move_string: string
   created_at: string
@@ -19,7 +19,7 @@ export default class Annotation {
 
   public constructor(options: AnnotationData) {
     this.id = options.id
-    this.gameId = options.gameId
+    this.gameId = options.game_id
     this.username = options.username
     this.move_string = options.move_string
     this.text = options.text
