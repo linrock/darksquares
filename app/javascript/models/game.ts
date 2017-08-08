@@ -100,6 +100,8 @@ export default class Game {
     if (i === 0) {
       state.score = ""
       state.bestMove = ""
+      state.move = ""
+      state.highlights = []
     } else {
       const score = this.scores[i]
       if (score !== undefined) {

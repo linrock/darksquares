@@ -3,7 +3,7 @@
     <template v-for="(move, i) in game.moves">
       <div class="move-num" v-if="showMoveNum(i)">{{ game.moveNum(i) }}</div>
       <div class="move">
-        <div class="move-san" :class="highlight(i)"
+        <div class="move-san" :class="highlight(i)" :id="moveId(i)"
              @click="updateMoveIndex(i)">{{ move.san }}</div>
         <div class="move-actions">
           <img src="/assets/comment-bubble.svg" class="comment-bubble"
@@ -14,7 +14,8 @@
         <annotation v-for="annotation in game.annotationsAt(i)"
                     :key="annotation.id"
                     :annotation="annotation"
-                    :game="game"/>
+                    :game="game"
+                    @edit-annotation="console.log('editing lol')"/>
       </div>
       <annotation-input v-if="annotationInputIndex === i"
                         :game="game" :moveString="game.moveString(i)"
@@ -61,6 +62,9 @@
         if (i + 1 === this.gameState.i) {
           return `highlighted`
         }
+      },
+      moveId: function(i) {
+        return `move-${i}`
       },
     },
 

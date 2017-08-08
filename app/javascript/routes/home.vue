@@ -1,15 +1,15 @@
 <template lang="pug">
   main#home
     .background
-      .left-content.shadowed
+      .left-content
         mini-board-detailed(:showPgn="true" :showHeaderInfo="false")
 
         .container
-          header.shadowed
-            h1 Annotated games
+          header
+            h1 Recent games
             .instructions
-              | Hover over the graphs to explore positions.
-              | Click to view the move list and annotations.
+              | Hover over the graphs to explore game positions.
+              | Click to view the position in depth.
 
           game-list(:games="games")
 

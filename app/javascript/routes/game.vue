@@ -6,7 +6,13 @@
     .content(v-if="game")
       section.left-side
         mini-board-detailed(:showHeaderInfo="false" :squareSize="55")
-        hover-graph-clickable(:width="443" :height="120" :game="game" :gameState="gameState")
+        hover-graph-clickable(
+          :width="443"
+          :height="120"
+          :game="game"
+          :gameState="gameState"
+          :clickedGraph="scrollToMove"
+        )
 
       section.right-side
         game-info(:pgnHeaders="game.pgnHeaders")
@@ -75,6 +81,13 @@
 
     destroyed() {
       Mousetrap.reset()
+    },
+
+    methods: {
+      scrollToMove(i) {
+        const offsetTop = this.$el.querySelector(`#move-${i}`).offsetTop
+        window.scrollTo(0, offsetTop - 100)
+      }
     },
 
     components: {

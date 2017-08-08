@@ -2,7 +2,7 @@
   <div class="hover-graph-clickable">
     <div @mousemove="setIndex"
          @mouseenter="shouldShowLine = true" @mouseleave="shouldShowLine = false"
-         @click="clickedGraph"
+         @click="handleClick"
          class="hover-graph">
       <stacked-graph :width="width" :height="height" :listOfPoints="game.graphPoints"/>
       <hover-indicator :width="width" :height="height" :i="gameState.i"
@@ -55,6 +55,9 @@
       setIndex: function(e) {
         this.gameState.i = ~~(this.game.nPoints * e.offsetX / this.width)
       },
+      handleClick: function() {
+        this.clickedGraph(this.i)
+      }
     },
 
     computed: {

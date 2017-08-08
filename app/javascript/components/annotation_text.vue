@@ -12,7 +12,10 @@
 
   export default {
     props: {
-      annotation: Annotation
+      annotation: {
+        type: Annotation,
+        required: true
+      }
     },
 
     methods: {

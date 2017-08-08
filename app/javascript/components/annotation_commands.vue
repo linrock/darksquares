@@ -1,6 +1,6 @@
 <template>
   <div class="annotation-commands">
-    <div @click="editAnnotation"></div>
+    <div class="edit-annotation" @click="editAnnotation"></div>
     <div class="delete-annotation" @click="deleteAnnotation">x</div>
   </div>
 </template>
@@ -25,6 +25,8 @@
     methods: {
       editAnnotation: function() {
         // make annotation input show up with text inside
+        // console.log('editing')
+        // this.$emit("edit-annotation", 'whoa')
       },
       deleteAnnotation: function() {
         if (this.annotation.id) {

@@ -1,6 +1,6 @@
 <template lang="pug">
-  form.annotation-input( @submit="createAnnotation" )
-    input( type="text" :placeholder="inputPlaceholder" ref="annotationInput" "v-focus"="" )
+  form.annotation-input(@submit="createAnnotation")
+    input(type="text" :placeholder="inputPlaceholder" ref="annotationInput" v-focus="")
 
 </template>
 

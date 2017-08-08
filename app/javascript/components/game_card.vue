@@ -71,6 +71,7 @@
 
     &:hover .annotation-count
       opacity 0.9
+      text-decoration underline
 
   .collapse-game-button
     top 5px
