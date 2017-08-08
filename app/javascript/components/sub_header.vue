@@ -15,6 +15,7 @@
     height 36px
     line-height 36px
     position fixed
+    z-index 1
 
   .sub-header-spacer
     height 36px

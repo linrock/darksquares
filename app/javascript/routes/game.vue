@@ -31,6 +31,7 @@
   import MoveList from '../components/move_list'
   import { resetBoardState, applyStateChange } from '../store/miniboard'
   import { getOrFetchGame } from '../store/games'
+  import { isElementInViewport } from '../util'
 
   const gameState = {
     i: 0
@@ -68,13 +69,17 @@
 
     mounted() {
       Mousetrap.bind('left', () => {
-        if (this.gameState.i > 0) {
+        const i = this.gameState.i
+        if (i > 0) {
           this.gameState.i -= 1
+          this.scrollToMoveIfFar(i)
         }
       })
       Mousetrap.bind('right', () => {
-        if (this.gameState.i < this.game.positions.length) {
+        const i = this.gameState.i
+        if (i < this.game.positions.length) {
           this.gameState.i += 1
+          this.scrollToMoveIfFar(i)
         }
       })
     },
@@ -84,9 +89,18 @@
     },
 
     methods: {
+      moveEl(i) {
+        return this.$el.querySelector(`#move-${i}`)
+      },
       scrollToMove(i) {
-        const offsetTop = this.$el.querySelector(`#move-${i}`).offsetTop
-        window.scrollTo(0, offsetTop - 100)
+        const offsetTop = this.moveEl(i).offsetTop
+        window.scrollTo(0, offsetTop - 150)
+      },
+      scrollToMoveIfFar(i) {
+        if (isElementInViewport(this.moveEl(i))) {
+          return
+        }
+        this.scrollToMove(i)
       }
     },
 

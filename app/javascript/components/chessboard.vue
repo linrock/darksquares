@@ -117,6 +117,7 @@
       float left
       width square-size
       height square-size
+      transition background 0.15s ease
 
       &.light
         background #f3e4cf
