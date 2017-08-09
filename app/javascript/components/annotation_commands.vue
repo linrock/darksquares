@@ -40,8 +40,10 @@
 
 <style lang="stylus" scoped>
   .annotation-commands
+    position absolute
+    top 2px
+    right 5px
     display none
-    margin-left auto
 
     div:hover
       cursor pointer

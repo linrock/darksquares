@@ -1,23 +1,14 @@
+import * as Chess from 'chess.js'
 import { groupBy, timeAgo } from '../util'
 import Move from './move'
 import Annotation from './annotation'
+
+const cjs = new Chess()
 
 interface GameMetadataOptions {
   name: string
   submitter: string
   submitted_at: string
-}
-
-interface GameOptions {
-  id: number
-  metadata: GameMetadataOptions
-  pgn: string
-  pgn_headers: object
-  positions: Array<string>
-  moves: Array<object>
-  best_moves: Array<object>
-  graph_points: Array<Array<number>>
-  annotations: Array<any>
 }
 
 class GameMetadata {
@@ -34,6 +25,18 @@ class GameMetadata {
   public timeAgo(): string {
     return timeAgo(this.submittedAt)
   }
+}
+
+interface GameOptions {
+  id: number
+  metadata: GameMetadataOptions
+  pgn: string
+  pgn_headers: object
+  positions: Array<string>
+  moves: Array<object>
+  best_moves: Array<object>
+  graph_points: Array<Array<number>>
+  annotations: Array<any>
 }
 
 export default class Game {
@@ -64,7 +67,7 @@ export default class Game {
     this.graphPoints = options.graph_points
     this.annotations = options.annotations.map(annotation => {
       return new Annotation(
-        (<any>Object).assign({ game_id: options.id }, annotation)
+        (<any>Object).assign({ game: this }, annotation)
       )
     })
     this.computeAnnotationMap()
@@ -138,6 +141,18 @@ export default class Game {
       }
     }
     return state
+  }
+
+  // positions
+
+  public getFenAfterMoveString(i: number, moveString: string): string {
+    cjs.load(this.positions[i])
+    cjs.move(moveString.replace(/\d\.+/, ''))
+    return cjs.fen()
+  }
+
+  public static moveStringToPositionIndex(moveString: string): number {
+    return parseInt(moveString) * 2 - (moveString.indexOf("...") > 0 ? 0 : 1)
   }
 
   private computeAnnotationMap(): void {

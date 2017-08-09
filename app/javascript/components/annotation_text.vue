@@ -1,10 +1,5 @@
 <template lang="pug">
-  .annotation
-    .annotation-info
-      .username(v-if="showUsername(annotation)") {{ annotation.username }}
-      .time-ago {{ annotation.timeAgo() }}
-    .annotation-text {{ annotation.text }}
-
+  .annotation-text(@mouseenter="renderMoveStrings") {{ annotation.text }}
 </template>
 
 <script>
@@ -18,31 +13,25 @@
       }
     },
 
+    data() {
+      return {
+        checkedForMoveStrings: false,
+        moveStrings: []
+      }
+    },
+
     methods: {
-      showUsername: function(annotation) {
-        return annotation.username && annotation.username !== ``
+      renderMoveStrings: function() {
+        if (this.checkedForMoveStrings) {
+          return
+        }
+        this.annotation.mapMoveStringsToPositions()
+        this.checkedForMoveStrings = true
       }
     }
   }
 </script>
 
 <style lang="stylus" scoped>
-  .annotation
-    display block
-
-  .annotation-info
-    display flex
-
-    .username
-      font-weight bold
-      font-size 12px
-
-    .time-ago
-      margin-left 10px
-      font-size 12px
-      opacity 0.4
-
-  .spacer
-    width 4px
 
 </style>

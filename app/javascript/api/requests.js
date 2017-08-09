@@ -55,5 +55,5 @@ export const getUserInfo = function() {
 // DELETE
 
 export const deleteAnnotation = function(annotation) {
-  return api.delete(`/api/v1/games/${annotation.gameId}/annotations/${annotation.id}`)
+  return api.delete(`/api/v1/games/${annotation.game.id}/annotations/${annotation.id}`)
 }

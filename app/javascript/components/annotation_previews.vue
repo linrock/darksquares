@@ -33,8 +33,7 @@
 
     methods: {
       gamePositionPath: function(moveString) {
-        const j = parseInt(moveString) * 2 - (moveString.indexOf("...") > 0 ? 0 : 1)
-        console.log(`${moveString} - ${j}`)
+        const j = Game.moveStringToPositionIndex(moveString)
         return `${this.game.path}#${j}`
       }
     }

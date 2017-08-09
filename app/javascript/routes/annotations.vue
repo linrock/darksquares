@@ -5,7 +5,7 @@
       .annotation-list(v-if="annotations")
         .annotation-card(v-for="annotation in annotations")
           .move-string {{ annotation.move_string }}
-          annotation-text(:annotation="annotation")
+          annotation-content(:annotation="annotation")
 
 </template>
 
@@ -13,7 +13,7 @@
   import requireLogin from './guards/require_login'
   import { getMyAnnotations } from '../api/requests'
   import Annotation from '../models/annotation'
-  import AnnotationText from '../components/annotation_text'
+  import AnnotationContent from '../components/annotation_content'
 
   export default {
     beforeRouteEnter: requireLogin,
@@ -31,7 +31,7 @@
     },
 
     components: {
-      AnnotationText
+      AnnotationContent
     }
   }
 </script>
