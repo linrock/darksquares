@@ -1,15 +1,16 @@
-import { groupBy } from '../util'
+import { groupBy, timeAgo } from '../util'
 import Move from './move'
 import Annotation from './annotation'
 
-interface GameMeta {
+interface GameMetadataOptions {
   name: string
   submitter: string
+  submitted_at: string
 }
 
-interface GameData {
+interface GameOptions {
   id: number
-  meta: GameMeta
+  metadata: GameMetadataOptions
   pgn: string
   pgn_headers: object
   positions: Array<string>
@@ -19,9 +20,25 @@ interface GameData {
   annotations: Array<any>
 }
 
+class GameMetadata {
+  public name: string
+  public submitter: string
+  public submittedAt: string
+
+  public constructor(options: GameMetadataOptions) {
+    this.name = options.name
+    this.submitter = options.submitter
+    this.submittedAt = options.submitted_at
+  }
+
+  public timeAgo(): string {
+    return timeAgo(this.submittedAt)
+  }
+}
+
 export default class Game {
   public id: number
-  public meta: GameMeta
+  public metadata: GameMetadata
   public pgn: string
   public pgnHeaders: object
   public positions: Array<string>
@@ -36,9 +53,9 @@ export default class Game {
     return gameData.map(data => new Game(data))
   }
 
-  public constructor(options: GameData) {
+  public constructor(options: GameOptions) {
     this.id = options.id
-    this.meta = options.meta
+    this.metadata = new GameMetadata(options.metadata)
     this.pgn = options.pgn
     this.pgnHeaders = options.pgn_headers
     this.positions = options.positions

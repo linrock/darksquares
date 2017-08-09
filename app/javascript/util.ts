@@ -1,3 +1,5 @@
+import * as moment from 'moment'
+
 export const groupBy = function(xs, key) {
   return xs.reduce(function(rv, x) {
     (rv[x[key]] = rv[x[key]] || []).push(x)
@@ -5,7 +7,7 @@ export const groupBy = function(xs, key) {
   }, {})
 }
 
-export const isElementInViewport = function(el) {
+export const isElementInViewport = function(el): boolean {
   const rect = el.getBoundingClientRect()
   return (
     rect.top >= 0 &&
@@ -13,4 +15,8 @@ export const isElementInViewport = function(el) {
     rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
     rect.right <= (window.innerWidth || document.documentElement.clientWidth)
   )
+}
+
+export const timeAgo = function(dateString: string): string {
+  return `${moment(dateString).toNow(true)} ago`
 }

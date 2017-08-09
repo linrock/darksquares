@@ -1,10 +1,13 @@
-<template>
-  <div class="game-card-header" v-if="game.meta">
-    <span class="game-card-name">{{ game.meta.name }}</span>
-    <span class="game-card-submitter" v-if="game.meta.submitter">
-      &nbsp;&ndash;&nbsp; submitted by {{ game.meta.submitter }}
-    </span>
-  </div>
+<template lang="pug">
+  .game-card-header(v-if="metadata")
+    span(v-if="metadata.name")
+      span.game-card-name {{ metadata.name }}
+      .separator &ndash;
+    span(v-if="metadata.submitter")
+      | submitted by
+      span.game-submitter {{ metadata.submitter }}
+      span.time-ago {{ metadata.timeAgo() }}
+
 </template>
 
 <script>
@@ -12,17 +15,33 @@
 
   export default {
     props: {
-      game: Game,
+      game: {
+        type: Game,
+        required: true
+      }
+    },
+
+    computed: {
+      metadata: function() {
+        return this.game.metadata
+      }
     }
   }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
   .game-card-header
     color rgba(0,0,0,0.4)
-    font-size 13px
+    font-size 12px
     margin-bottom 8px
     margin-left 3px
+
+  .separator
+    margin 0 5px
+
+  .game-submitter
+    font-weight bold
+    margin 0 5px
 
   .game-card-name
     font-weight bold

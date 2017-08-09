@@ -1,4 +1,4 @@
-import * as moment from 'moment'
+import { timeAgo } from '../util'
 
 interface AnnotationData {
   id: number
@@ -27,6 +27,6 @@ export default class Annotation {
   }
 
   public timeAgo(): string {
-    return `${moment(this.createdAt).toNow(true)} ago`
+    return timeAgo(this.createdAt)
   }
 }

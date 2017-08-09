@@ -1,12 +1,10 @@
-<template>
-  <div class="game-list">
-    <div class="game-submission" v-for="game in games">
-      <game-card-header :game="game"/>
-      <div class="game-container shadowed">
-        <game-card :game="game"/>
-      </div>
-    </div>
-  </div>
+<template lang="pug">
+  .game-list
+    .game-submission(v-for="game in games")
+      game-card-header(:game="game")
+      .game-container.shadowed
+        game-card(:game="game")
+
 </template>
 
 <script>
