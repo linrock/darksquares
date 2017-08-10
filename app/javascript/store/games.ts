@@ -6,6 +6,11 @@ import {
 
 const gamesMap: Map<number, Game> = new Map()
 
+const gameLists = {
+  home: [],
+  myGames: [],
+}
+
 const getOrFetchGame = function(id: number): Promise<Game> {
   let game = gamesMap[id]
   if (game) {
@@ -19,5 +24,6 @@ const getOrFetchGame = function(id: number): Promise<Game> {
 }
 
 export {
-  getOrFetchGame
+  getOrFetchGame,
+  gameLists,
 }

@@ -8,7 +8,7 @@
           header.shadowed
             h1 My games
 
-          game-list(:games="games")
+          game-list(:games="gameLists.myGames")
 
 </template>
 
@@ -17,6 +17,7 @@
   import MiniBoardDetailed from '../components/mini_board_detailed.vue'
   import GameList from '../components/game_list.vue'
   import Game from '../models/game'
+  import { gameLists } from '../store/games'
   import { getMyGames } from '../api/requests'
 
   export default {
@@ -24,16 +25,16 @@
 
     data: function() {
       return {
-        games: []
+        gameLists
       }
     },
 
     created() {
-      if (this.games.length > 0) {
+      if (gameLists.myGames.length) {
         return
       }
       getMyGames().then(response => {
-        this.games = Game.loadGamesFromData(response.data)
+        gameLists.myGames = Game.loadGamesFromData(response.data)
       })
     },
 

@@ -11,7 +11,7 @@
               | Hover over the graphs to explore game positions.
               | Click to view the position in depth.
 
-          game-list(:games="games")
+          game-list(:games="gameLists.home")
 
 </template>
 
@@ -20,25 +20,29 @@
   import MiniBoardDetailed from '../components/mini_board_detailed.vue'
   import GameList from '../components/game_list.vue'
   import Game from '../models/game'
+  import { gameLists } from '../store/games'
   import { getGames } from '../api/requests'
 
   window.Chess = Chess
 
   export default {
-    data: function() {
+    data() {
       return {
-        games: window.data ? Game.loadGamesFromData(window.data) : []
+        gameLists
       }
     },
 
     created() {
-      if (this.games.length > 0) {
+      if (gameLists.home.length) {
         return
       }
-      getGames().then(response => {
-        window.data = response.data
-        this.games = Game.loadGamesFromData(window.data)
-      })
+      if (window.data) {
+        gameLists.home = Game.loadGamesFromData(window.data)
+      } else {
+        getGames().then(response => {
+          gameLists.home = Game.loadGamesFromData(response.data)
+        })
+      }
     },
 
     components: {
@@ -103,7 +107,7 @@
   }
 
   .container {
-    width: 800px;
+    width: 700px;
     margin-left: 450px;
     border-left: 1px solid #eee;
 
