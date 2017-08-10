@@ -1,20 +1,12 @@
-<template>
-  <div class="game-info">
-    <div>
-      {{ line1 }}
-    </div>
-    <div class="line-2">
-      {{ line2 }}
-    </div>
-    <div class="line-3">
-      {{ line3 }}
-    </div>
-  </div>
+<template lang="pug">
+  .game-info
+    .line-1 {{ line1 }}
+    .line-2 {{ line2 }}
+    .line-3 {{ line3 }}
+
 </template>
 
 <script>
-  import Chess from 'chess.js'
-
   export default {
     props: {
       pgnHeaders: Object
@@ -75,21 +67,18 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  .game-info {
-    font-size: 13px;
-    line-height: 17px;
-    height: 3 * 17px;
-    color: #222;
-  }
+<style lang="stylus" scoped>
+  .game-info
+    font-size 13px
+    line-height 17px
+    color #222
 
-  .line-2 {
-    font-weight: bold;
-  }
+  .line-2
+    font-weight bold
 
-  .line-3 {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
+  .line-3
+    overflow hidden
+    text-overflow ellipsis
+    white-space nowrap
+
 </style>

@@ -6,7 +6,7 @@
         hover-graph-clickable(:width="600" :height="150"
                               :game="game" :gameState="gameState")
 
-    .annotations-container
+    .annotations-container(v-if="game.annotations.length")
       annotation-previews(:game="game")
       router-link(:to="game.path")
         .annotation-count(v-if="annotationsRemaining")
