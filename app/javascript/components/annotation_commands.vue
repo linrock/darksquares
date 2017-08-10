@@ -1,7 +1,7 @@
 <template>
   <div class="annotation-commands">
     <div class="edit-annotation" @click="editAnnotation"></div>
-    <div class="delete-annotation" @click="deleteAnnotation">x</div>
+    <div class="delete-annotation" @click="deleteAnnotation">×</div>
   </div>
 </template>
 
@@ -42,10 +42,15 @@
   .annotation-commands
     position absolute
     top 2px
-    right 5px
+    right 8px
     display none
 
-    div:hover
-      cursor pointer
+    div
+      opacity 0.3
+      transition opacity 0.15s ease
+
+      &:hover
+        opacity 0.5
+        cursor pointer
 
 </style>

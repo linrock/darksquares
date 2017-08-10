@@ -25,6 +25,9 @@ const getOrFetchGame = function(id: number): Promise<Game> {
 }
 
 const loadHomeGames = function() {
+  if (gameIdLists.home.length) {
+    return
+  }
   getGames().then(response => {
     const games = Game.loadGamesFromData(response.data)
     games.forEach(game => gamesMap[game.id] = game)
@@ -33,6 +36,9 @@ const loadHomeGames = function() {
 }
 
 const loadMyGames = function() {
+  if (gameIdLists.myGames.length) {
+    return
+  }
   getMyGames().then(response => {
     const games = Game.loadGamesFromData(response.data)
     games.forEach(game => gamesMap[game.id] = game)

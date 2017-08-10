@@ -1,6 +1,8 @@
 <template lang="pug">
   .game-list
-    .game-submission(v-for="game in games")
+    .game-submission(v-for="game in gamesList")
+      .commands(v-if="source")
+        span.delete(@click="deleteGame(game)") ×
       game-card-header(:game="game")
       .game-container.shadowed
         game-card(:game="game")
@@ -10,15 +12,45 @@
 <script>
   import GameCardHeader from '../components/game_card_header.vue'
   import GameCard from '../components/game_card.vue'
+  import { gameIdLists, gamesMap } from '../store/games'
+  import { deleteGame } from '../api/requests'
 
   export default {
     props: {
-      games: Array
+      games: {
+        type: Array,
+      },
+      source: {
+        type: String,
+      }
     },
-    
+
+    data() {
+      return {
+        gameIdLists
+      }
+    },
+
+    methods: {
+      deleteGame(game) {
+        console.log('deleting game')
+        // deleteGame(game)
+        this.sourceGameIds.splice(this.sourceGameIds.findIndex(id => id === game.id), 1)
+      }
+    },
+
+    computed: {
+      sourceGameIds() {
+        return this.gameIdLists[this.source]
+      },
+      gamesList() {
+        return this.source ? this.sourceGameIds.map(id => gamesMap[id]) : this.games
+      }
+    },
+
     components: {
-      GameCard,
       GameCardHeader,
+      GameCard,
     }
   }
 </script>
@@ -33,6 +65,18 @@
 
   .game-submission
     margin 25px 0
+
+    .commands
+      float right
+      opacity 0.3
+
+      .delete
+        opacity 0.3
+        transition opacity 0.15s ease
+
+        &:hover
+          opacity 0.5
+          cursor pointer
 
     a
       text-decoration none

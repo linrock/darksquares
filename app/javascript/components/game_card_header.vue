@@ -7,8 +7,6 @@
       | submitted by
       span.game-submitter {{ metadata.submitter }}
       span.time-ago {{ metadata.timeAgo() }}
-    span.commands
-      span.delete(@click="deleteGame") x
 
 </template>
 
@@ -20,12 +18,6 @@
       game: {
         type: Game,
         required: true
-      }
-    },
-
-    methods: {
-      deleteGame() {
-        deleteGame(this.game)
       }
     },
 
@@ -53,8 +45,5 @@
 
   .game-card-name
     font-weight bold
-
-  .commands
-    text-align right
 
 </style>
