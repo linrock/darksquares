@@ -1,14 +1,15 @@
 import Game from '../models/game'
 import {
   getGame,
-  getGames
+  getGames,
+  getMyGames
 } from '../api/requests'
 
 const gamesMap: Map<number, Game> = new Map()
 
-const gameLists = {
+const gameIdLists = {
   home: [],
-  myGames: [],
+  myGames: []
 }
 
 const getOrFetchGame = function(id: number): Promise<Game> {
@@ -23,7 +24,26 @@ const getOrFetchGame = function(id: number): Promise<Game> {
   })
 }
 
+const loadHomeGames = function() {
+  getGames().then(response => {
+    const games = Game.loadGamesFromData(response.data)
+    games.forEach(game => gamesMap[game.id] = game)
+    gameIdLists.home = games.map(game => game.id)
+  })
+}
+
+const loadMyGames = function() {
+  getMyGames().then(response => {
+    const games = Game.loadGamesFromData(response.data)
+    games.forEach(game => gamesMap[game.id] = game)
+    gameIdLists.myGames = games.map(game => game.id)
+  })
+}
+
 export {
+  loadHomeGames,
+  loadMyGames,
   getOrFetchGame,
-  gameLists,
+  gameIdLists,
+  gamesMap,
 }
