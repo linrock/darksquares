@@ -1,32 +1,93 @@
-<template>
-  <main id="login">
-    <form @submit="submitCredentials">
-      <input type="text" ref="username" placeholder="Username"/>
-      <input type="password" ref="password" placeholder="Password"/>
-      <input type="submit" value="Log in"/>
-    </form>
-  </main>
+<template lang="pug">
+  main#login
+    h1 Log in
+    form(@submit="submitCredentials")
+      input(type="text" ref="username" placeholder="Username"
+            @keyup="hideError")
+      input(type="password" ref="password" placeholder="Password"
+            @keyup="hideError")
+      div
+        input(type="submit" value="Log in")
+        .error(v-if="showError") Invalid username or password
+
 </template>
 
 <script>
+  import router from '../router'
   import requireAnonymous from './guards/require_anonymous'
   import { createSession, getUserInfo } from '../api/requests'
 
   export default {
     beforeRouteEnter: requireAnonymous,
 
+    data() {
+      return {
+        showError: false,
+      }
+    },
+
     methods: {
-      submitCredentials: function(e) {
+      hideError() {
+        this.showError = false
+      },
+      submitCredentials(e) {
         e.preventDefault()
         const credentials = {
-          username: this.$refs.username.value,
-          password: this.$refs.password.value
+          username: this.$refs.username.value.trim(),
+          password: this.$refs.password.value.trim()
+        }
+        if (!credentials.username || !credentials.password) {
+          return
         }
         createSession(credentials).then(() => {
           getUserInfo()
-          window.location = "/"
+          router.push({ path: '/' })
+        }).catch(() => {
+          this.showError = true
         })
       }
     },
   }
 </script>
+
+<style lang="stylus" scoped>
+  main#login
+    margin 100px auto
+    width 600px
+
+  h1
+    font-size 20px
+    margin-bottom 30px
+
+  div
+    display flex
+    align-items center
+
+  input
+    display block
+    font-size 18px
+
+    &[type="text"], &[type="password"]
+      border-radius 2px
+      border 1px solid #e0e0e0
+      padding 7px 14px
+      margin 15px 0
+      width 320px
+
+    &[type="submit"]
+      color white
+      background rgb(58, 137, 201)
+      border none
+      border-radius 2px
+      font-size 18px
+      padding 7px 24px
+
+      &:hover
+        opacity 0.9
+        cursor pointer
+
+  .error
+    color orange
+    margin-left 20px
+
+</style>
