@@ -3,13 +3,14 @@
     .graph-container(@mouseenter="setCurrentPgn")
       game-info(:pgnHeaders="game.pgnHeaders")
       router-link(:to="gamePositionPath")
-        hover-graph-clickable(:width="600" :height="150" :game="game" :gameState="gameState")
+        hover-graph-clickable(:width="600" :height="150"
+                              :game="game" :gameState="gameState")
 
-    annotation-previews(:game="game")
-
-    router-link(:to="game.path")
-      .annotation-count(v-if="annotationsRemaining")
-        | View {{ annotationsRemaining }} more annotations
+    .annotations-container
+      annotation-previews(:game="game")
+      router-link(:to="game.path")
+        .annotation-count(v-if="annotationsRemaining")
+          | View {{ annotationsRemaining }} more annotations
 
 </template>
 
@@ -87,5 +88,12 @@
     opacity 0.8
     font-size 12px
     margin-top 15px
+
+  .graph-container
+    padding 15px 20px 5px
+
+  .annotations-container
+    background rgba(0,0,0,0.02)
+    padding 15px 20px
 
 </style>

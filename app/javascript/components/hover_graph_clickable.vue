@@ -81,6 +81,9 @@
   .hover-graph
     position relative
 
+    &:hover
+      cursor pointer
+
   .hover-indicator
     position absolute
     left 0

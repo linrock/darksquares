@@ -40,7 +40,6 @@
   .game-container
     @include clearfix
     border-radius 1px
-    padding 15px 20px
     width 640px
     border-bottom 1px solid #eee
     background white
