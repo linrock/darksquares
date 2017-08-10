@@ -20,3 +20,7 @@ export const isElementInViewport = function(el): boolean {
 export const timeAgo = function(dateString: string): string {
   return `${moment(dateString).toNow(true)} ago`
 }
+
+export const flatten = function(list: Array<any>): Array<any> {
+  return list.reduce((a, b) => a.concat(Array.isArray(b) ? flatten(b) : b), [])
+}

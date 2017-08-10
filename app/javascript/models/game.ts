@@ -147,8 +147,10 @@ export default class Game {
 
   public getFenAfterMoveString(i: number, moveString: string): string {
     cjs.load(this.positions[i])
-    cjs.move(moveString.replace(/\d\.+/, ''))
-    return cjs.fen()
+    const move = cjs.move(moveString.replace(/\d\.+\s*/, ''))
+    if (move) {
+      return cjs.fen()
+    }
   }
 
   public static moveStringToPositionIndex(moveString: string): number {

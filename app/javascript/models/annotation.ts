@@ -1,5 +1,5 @@
 import Game from './game'
-import { timeAgo } from '../util'
+import { flatten, timeAgo } from '../util'
 
 interface AnnotationOptions {
   id: number
@@ -40,15 +40,39 @@ export default class Annotation {
   public mapMoveStringsToPositions(): Map<string, string> {
     const moveStringMap = new Map()
     this.findMoveStrings().forEach(moveString => {
-      let i = Game.moveStringToPositionIndex(moveString)
-      if (i === this.positionIndex) {
-        moveStringMap[moveString] = this.game.getFenAfterMoveString(i - 1, moveString)
-      } else if (i === this.positionIndex + 1) {
-        moveStringMap[moveString] = this.game.getFenAfterMoveString(i, moveString)
+      const i = Game.moveStringToPositionIndex(moveString)
+      const newFen = this.game.getFenAfterMoveString(i - 1, moveString)
+      if (newFen) {
+        moveStringMap[moveString] = newFen
       }
     })
     console.log(JSON.stringify(moveStringMap))
     return moveStringMap
+  }
+
+  get fragments(): Array<string|object> {
+    let textArray = [this.text]
+    const map = this.mapMoveStringsToPositions()
+    Object.keys(map).forEach(moveString => {
+      const temp = textArray.map(element => {
+        if (typeof element === "string") {
+          const tmp2 = []
+          const fragments = element.split(moveString)
+          fragments.forEach(fragment => {
+            tmp2.push(fragment)
+            tmp2.push({
+              text: moveString,
+              fen: map[moveString],
+            })
+          })
+          return tmp2.slice(0, -1)
+        } else {
+          return element
+        }
+      })
+      textArray = flatten(temp)
+    })
+    return textArray
   }
 
   public timeAgo(): string {

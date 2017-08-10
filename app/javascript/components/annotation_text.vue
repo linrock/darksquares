@@ -1,8 +1,15 @@
 <template lang="pug">
-  .annotation-text(@mouseenter="renderMoveStrings") {{ annotation.text }}
+  .annotation-text(@mouseenter="renderMoveStrings")
+    span(v-for="fragment in annotationFragments")
+      span.text(v-if="typeof fragment === 'string'") {{ fragment }}
+      hover-move(v-if="typeof fragment === 'object'"
+                :moveString="fragment.text"
+                :fen="fragment.fen")
+
 </template>
 
 <script>
+  import HoverMove from '../components/hover_move'
   import Annotation from '../models/annotation'
 
   export default {
@@ -16,7 +23,7 @@
     data() {
       return {
         checkedForMoveStrings: false,
-        moveStrings: []
+        annotationFragments: [this.annotation.text],
       }
     },
 
@@ -25,13 +32,22 @@
         if (this.checkedForMoveStrings) {
           return
         }
-        this.annotation.mapMoveStringsToPositions()
+        this.annotationFragments = this.annotation.fragments
         this.checkedForMoveStrings = true
       }
+    },
+
+    components: {
+      HoverMove
     }
   }
 </script>
 
 <style lang="stylus" scoped>
+  .hover-move
+    text-decoration underline
+
+    &:hover
+      cursor crosshair
 
 </style>
