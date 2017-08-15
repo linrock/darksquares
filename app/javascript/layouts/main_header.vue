@@ -30,10 +30,10 @@
     },
     computed: {
       userPath: function() {
-        return this.username ? "/profile" : "/login"
+        return this.username ? `/u/${this.username}` : `/login`
       },
       userLinkText: function() {
-        return this.username ? this.username : "Log in"
+        return this.username ? this.username : `Log in`
       }
     }
   }

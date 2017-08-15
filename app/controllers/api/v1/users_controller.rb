@@ -24,12 +24,37 @@ class API::V1::UsersController < API::V1::BaseController
 
   # GET /api/v1/users/me/games
   def games
-    render json: current_user.games
+    render json: {
+      games: current_user.games.map {|game|
+        game.as_json.merge({
+          annotations: game.annotations
+        })
+      }
+    }
   end
 
   # GET /api/v1/users/me/annotations
   def annotations
-    render json: current_user.annotations.order('id DESC')
+    annotations = current_user.annotations.order('id DESC').limit(10)
+    render json: {
+      annotations: annotations
+    }
+  end
+
+  # GET /api/v1/users/:username
+  def profile
+    user = User.find_by(username: params[:username])
+    render json: {
+      user: {
+        username: user.username,
+        games: user.games.map {|game|
+          game.as_json.merge({
+            annotations: game.annotations
+          })
+        },
+        annotations: user.annotations
+      }
+    }
   end
 
   private

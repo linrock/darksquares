@@ -24,8 +24,7 @@ class Game < ApplicationRecord
       metadata: {
         submitter: user.username,
         submitted_at: created_at,
-      },
-      annotations: annotations
+      }
     })
   end
 

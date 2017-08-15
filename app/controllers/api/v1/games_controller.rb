@@ -4,12 +4,23 @@ class API::V1::GamesController < API::V1::BaseController
   # GET /api/v1/games
   def index
     games = Game.order('id DESC').all
-    render json: games
+    render json: {
+      games: games.includes(:user, :annotations).map {|game|
+        game.as_json.merge({
+          annotations: game.annotations.includes(:user)
+        })
+      }
+    }
   end
 
   # GET /api/v1/games/:id
   def show
-    render json: Game.find(params[:id])
+    game = Game.find(params[:id])
+    render json: {
+      game: game.as_json.merge({
+        annotations: game.annotations.includes(:user)
+      })
+    }
   end
 
   # POST /api/v1/games

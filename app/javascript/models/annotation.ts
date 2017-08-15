@@ -1,5 +1,5 @@
 import Game from './game'
-import { flatten, timeAgo } from '../util'
+import { flatten, parseDate, timeAgo } from '../util'
 
 interface AnnotationOptions {
   id: number
@@ -16,7 +16,7 @@ export default class Annotation {
   public username: string
   public move_string: string
   public text: string
-  public createdAt: string
+  public createdAt: Date
 
   public constructor(options: AnnotationOptions) {
     this.id = options.id
@@ -24,7 +24,7 @@ export default class Annotation {
     this.username = options.username
     this.move_string = options.move_string
     this.text = options.text
-    this.createdAt = options.created_at
+    this.createdAt = parseDate(options.created_at)
   }
 
   get positionIndex(): number {

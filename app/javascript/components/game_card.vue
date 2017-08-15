@@ -26,7 +26,7 @@
       game: Game,
     },
 
-    data: function() {
+    data() {
       return {
         boardState: state,
         gameState: {
@@ -37,20 +37,20 @@
     },
 
     methods: {
-      setCurrentPgn: function() {
+      setCurrentPgn() {
         this.boardState.pgn = this.game.pgn
         this.boardState.pgnHeaders = this.game.pgnHeaders
       },
     },
 
     computed: {
-      annotationsRemaining: function() {
+      annotationsRemaining() {
         const remaining = this.game.annotations.length - 3
         if (remaining > 0) {
           return remaining
         }
       },
-      gamePositionPath: function() {
+      gamePositionPath() {
         return `${this.game.path}#${this.gameState.i}`
       }
     },
@@ -65,7 +65,9 @@
 
 <style lang="stylus" scoped>
   .game-card
+    background white
     position relative
+    width 640px
 
   a
     text-decoration none

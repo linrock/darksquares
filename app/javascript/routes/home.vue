@@ -1,24 +1,23 @@
 <template lang="pug">
   main#home
-    .background
-      .left-content
-        mini-board-detailed(:showPgn="true" :showHeaderInfo="false")
+    .left-content
+      mini-board-detailed(:showPgn="true" :showHeaderInfo="false")
 
-        .container
-          header
-            h1 Recent games
-            .instructions
-              | Hover over the graphs to explore game positions.
-              | Click to view the position in depth.
+      .container
+        header
+          h1 Recent games
+          .instructions
+            | Hover over the graphs to explore game positions.
+            | Click to view the position in depth.
 
-          game-list(source="home")
+        card-list(gameSource="home")
 
 </template>
 
 <script>
   import Chess from 'chess.js'
   import MiniBoardDetailed from '../components/mini_board_detailed.vue'
-  import GameList from '../components/game_list.vue'
+  import CardList from '../components/card_list.vue'
   import Game from '../models/game'
   import { loadHomeGames } from '../store/games'
 
@@ -28,7 +27,7 @@
     created: () => loadHomeGames(),
 
     components: {
-      GameList,
+      CardList,
       MiniBoardDetailed,
     }
   }
@@ -43,25 +42,22 @@
     &:after
       clear both
 
-  .shadowed
-    box-shadow 0 0 5px rgba(0,0,0,0.15)
-
-  .background
+  main#home
     background #eee
     width 100%
     height 100%
     min-height 1000px
 
-    .left-content
-      background white
-      width 420px
-      height 100%
-      min-height 1000px
+  .left-content
+    background white
+    width 420px
+    height 100%
+    min-height 1000px
 
   .mini-board-view
     position fixed
     top 70px
-    left 35px
+    left 40px
     width 338px
 
     .game-info

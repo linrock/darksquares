@@ -1,5 +1,5 @@
 import * as Chess from 'chess.js'
-import { groupBy, timeAgo } from '../util'
+import { groupBy, parseDate, timeAgo } from '../util'
 import Move from './move'
 import Annotation from './annotation'
 
@@ -14,12 +14,12 @@ interface GameMetadataOptions {
 class GameMetadata {
   public name: string
   public submitter: string
-  public submittedAt: string
+  public submittedAt: Date
 
   public constructor(options: GameMetadataOptions) {
     this.name = options.name
     this.submitter = options.submitter
-    this.submittedAt = options.submitted_at
+    this.submittedAt = parseDate(options.submitted_at)
   }
 
   public timeAgo(): string {
@@ -37,6 +37,7 @@ interface GameOptions {
   best_moves: Array<object>
   graph_points: Array<Array<number>>
   annotations: Array<any>
+  created_at: string
 }
 
 export default class Game {
@@ -49,6 +50,7 @@ export default class Game {
   public bestMoves: Array<object>
   public graphPoints: Array<Array<number>>
   public annotations: Array<Annotation>
+  public createdAt: Date
 
   private annotationMap: object
 
@@ -70,6 +72,7 @@ export default class Game {
         (<any>Object).assign({ game: this }, annotation)
       )
     })
+    this.createdAt = parseDate(options.created_at)
     this.computeAnnotationMap()
   }
 

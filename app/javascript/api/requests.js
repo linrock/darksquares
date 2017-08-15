@@ -46,6 +46,10 @@ export const getMyAnnotations = function() {
   return api.get(`/api/v1/users/me/annotations`)
 }
 
+export const getUserProfile = function(username) {
+  return api.get(`/api/v1/users/${username}`)
+}
+
 export const getUserInfo = function() {
   return api.get(`/api/v1/users/me`).then(response => {
     setUsername(response.data.username)

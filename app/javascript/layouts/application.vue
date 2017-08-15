@@ -6,7 +6,7 @@
 </template>
 
 <script>
-  import MainHeader from '../components/main_header'
+  import MainHeader from './main_header'
 
   export default {
     components: {

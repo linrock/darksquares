@@ -18,7 +18,7 @@ const getOrFetchGame = function(id: number): Promise<Game> {
     return Promise.resolve(game)
   }
   return getGame(id).then(response => {
-    game = new Game(response.data)
+    game = new Game(response.data.game)
     gamesMap[id] = game
     return game
   })
@@ -29,7 +29,7 @@ const loadHomeGames = function() {
     return
   }
   getGames().then(response => {
-    const games = Game.loadGamesFromData(response.data)
+    const games = Game.loadGamesFromData(response.data.games)
     games.forEach(game => gamesMap[game.id] = game)
     gameIdLists.home = games.map(game => game.id)
   })
@@ -40,7 +40,7 @@ const loadMyGames = function() {
     return
   }
   getMyGames().then(response => {
-    const games = Game.loadGamesFromData(response.data)
+    const games = Game.loadGamesFromData(response.data.games)
     games.forEach(game => gamesMap[game.id] = game)
     gameIdLists.myGames = games.map(game => game.id)
   })

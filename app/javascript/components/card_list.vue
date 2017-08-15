@@ -1,15 +1,21 @@
 <template lang="pug">
-  .game-list
-    .game-submission(v-for="game in gamesList")
-      .commands(v-if="source")
-        span.delete(@click="deleteGame(game)") ×
-      game-card-header(:game="game")
-      .game-container.shadowed
-        game-card(:game="game")
+  .card-list
+    .card(v-for="card in cardList")
+
+      .annotation-card-container(v-if="card.text")
+        annotation-card(:annotation="card")
+
+      .game-card-container(v-if="card.pgn")
+        .commands(v-if="gameSource")
+          span.delete(@click="deleteGame(card)") ×
+        game-card-header(:game="card")
+        .game-container
+          game-card(:game="card")
 
 </template>
 
 <script>
+  import AnnotationCard from '../components/annotation_card.vue'
   import GameCardHeader from '../components/game_card_header.vue'
   import GameCard from '../components/game_card.vue'
   import { gameIdLists, gamesMap } from '../store/games'
@@ -20,7 +26,10 @@
       games: {
         type: Array,
       },
-      source: {
+      annotations: {
+        type: Array,
+      },
+      gameSource: {
         type: String,
       }
     },
@@ -41,14 +50,23 @@
 
     computed: {
       sourceGameIds() {
-        return this.gameIdLists[this.source]
+        return this.gameIdLists[this.gameSource]
       },
-      gamesList() {
-        return this.source ? this.sourceGameIds.map(id => gamesMap[id]) : this.games
+      cardList() {
+        if (this.gameSource) {
+          return this.sourceGameIds.map(id => gamesMap[id])
+        } else if (this.games && this.annotations) {
+          return this.games.concat(this.annotations).sort((a,b) => a.createdAt < b.createdAt)
+        } else if (this.annotations) {
+          return this.annotations
+        } else if (this.games) {
+          return this.games
+        }
       }
     },
 
     components: {
+      AnnotationCard,
       GameCardHeader,
       GameCard,
     }
@@ -63,7 +81,13 @@
     &:after
       clear both
 
-  .game-submission
+  .card-list
+    padding-top 10px
+
+  .annotation-card-container
+    margin 25px 0
+
+  .game-card-container
     margin 25px 0
 
     .commands
@@ -95,15 +119,6 @@
     .game-info
       opacity 0.8
       transition opacity 0.25s ease
-
-  .annotation-preview
-    font-size 12px
-    overflow hidden
-    white-space nowrap
-    text-overflow ellipsis
-    margin 5px 0
-    color #005F2F
-    opacity 0.9
 
   .game-summary
     float left

@@ -17,8 +17,12 @@ export const isElementInViewport = function(el): boolean {
   )
 }
 
-export const timeAgo = function(dateString: string): string {
-  return `${moment(dateString).toNow(true)} ago`
+export const parseDate = function(dateString: string): Date {
+  return moment(dateString).toDate()
+}
+
+export const timeAgo = function(date: Date): string {
+  return `${moment(date).toNow(true)} ago`
 }
 
 export const flatten = function(list: Array<any>): Array<any> {

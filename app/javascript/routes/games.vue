@@ -1,21 +1,21 @@
 <template lang="pug">
   main#games
     .background
-      .left-content.shadowed
+      .left-content
         mini-board-detailed(:showPgn="true" :showHeaderInfo="false")
 
         .container
           header.shadowed
             h1 My games
 
-          game-list(source="myGames")
+          card-list(gameSource="myGames")
 
 </template>
 
 <script>
   import requireLogin from './guards/require_login'
   import MiniBoardDetailed from '../components/mini_board_detailed.vue'
-  import GameList from '../components/game_list.vue'
+  import CardList from '../components/card_list.vue'
   import Game from '../models/game'
   import { loadMyGames } from '../store/games'
 
@@ -25,7 +25,7 @@
     created: () => loadMyGames(),
 
     components: {
-      GameList,
+      CardList,
       MiniBoardDetailed,
     }
   }

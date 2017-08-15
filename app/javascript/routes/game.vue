@@ -24,7 +24,7 @@
 
 <script>
   import Mousetrap from 'mousetrap'
-  import SubHeader from '../components/sub_header'
+  import SubHeader from '../layouts/sub_header'
   import HoverGraphClickable from '../components/hover_graph_clickable.vue'
   import MiniBoardDetailed from '../components/mini_board_detailed.vue'
   import GameInfo from '../components/game_info'
