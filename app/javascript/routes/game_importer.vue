@@ -6,7 +6,7 @@
 
       section.right-side
         form(@submit="importGame")
-          textarea(class="pgn-importer")
+          textarea(ref="pgn" class="pgn-importer")
           .commands
             input(type="submit" value="Import PGN")
             .checkbox
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+  import router from '../router'
   import Chess from 'chess.js'
   import requireLogin from './guards/require_login'
   import { state } from '../store/miniboard'
@@ -34,7 +35,7 @@
     methods: {
       importGame: function(e) {
         e.preventDefault()
-        const pgn = this.$el.querySelector(`.pgn-importer`).value
+        const pgn = this.$refs.pgn.value
         const cjs = new Chess()
         if (cjs.load_pgn(pgn)) {
           const data = {
@@ -43,7 +44,7 @@
             }
           }
           createGame(data).then(response => {
-            console.log("yay, game uploaded!")
+            router.push({ path: `/games/${response.data.game.id}` })
           })
         } else {
           console.log("pgn is invalid!")

@@ -4,11 +4,14 @@ class Game < ApplicationRecord
   belongs_to :user
   has_many :annotations
 
-  def calculate_game_data!
+  def cache_moves_and_positions!
     self.pgn_headers = pgn_loader.pgn_headers
     self.moves = pgn_loader.moves
     self.positions = pgn_loader.positions
     self.save!
+  end
+
+  def calculate_game_data!
     self.analysis = GameAnalyzer.new(self.positions).analyze!
     self.best_moves = self.analysis.map {|position| position["bestmove"]["san"] }
     self.graph_points = GraphPointsCalculator.new(self.analysis).calculate!.values[0].values

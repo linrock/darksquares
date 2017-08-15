@@ -2,14 +2,13 @@
   main#home
     .left-content
       mini-board-detailed(:showPgn="true" :showHeaderInfo="false")
-
-      .container
-        header
-          h1 Recent games
-          .instructions
-            | Hover over the graphs to explore game positions.
-            | Click to view the position in depth.
-
+    .right-content
+      header
+        h1 Recent games
+        .instructions
+          | Hover over the graphs to explore chess games.
+          | Click to annotate a position.
+      .content
         card-list(gameSource="home")
 
 </template>
@@ -42,8 +41,7 @@
     &:after
       clear both
 
-  main#home
-    background #eee
+  main
     width 100%
     height 100%
     min-height 1000px
@@ -53,55 +51,48 @@
     width 420px
     height 100%
     min-height 1000px
-
-  .mini-board-view
     position fixed
-    top 70px
-    left 40px
-    width 338px
 
-    .game-info
-      margin-bottom 17px
+    .mini-board-view
+      margin-top 30px
+      margin-left 40px
+      width 338px
 
-    .position-info
-      margin-top 10px
-      clearfix()
+      .game-info
+        margin-bottom 17px
 
-      .game-position
-        float left
+      .position-info
+        margin-top 10px
+        clearfix()
 
-      .position-evaluation
-        float right
+        .game-position
+          float left
 
-  .container
-    width 642px // TODO
-    margin-left 450px
-    border-left 1px solid #eee
+        .position-evaluation
+          float right
+
+  .right-content
+    width 100%
+    height 100%
 
     header
-      padding-left 25px
-      border-bottom 1px solid #eee
-      width 640px
-      background white
+      background #4e4e4e
+      padding 30px 0 20px 450px
 
-  h1
-    color #292929
-    font-size 20px
-    padding 60px 0 10px
-    margin 0
+      h1
+        color white
+        font-size 20px
+        margin 0
 
-  .description
-    font-size 14px
-    line-height 20px
-    width 640px
+      .instructions
+        color #cacaca
+        font-size 12px
+        margin 10px 0
 
-    .contender
-      margin 30px 0
-
-  .instructions
-    font-size 12px
-    margin 10px 0 20px
-    font-weight bold
-    color rgba(0,0,0,0.3)
+    .content
+      background #F1F1F1
+      padding-left 30px + 420px
+      min-height 1000px
+      height 100%
 
 </style>

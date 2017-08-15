@@ -3,7 +3,7 @@ class API::V1::GamesController < API::V1::BaseController
 
   # GET /api/v1/games
   def index
-    games = Game.order('id DESC').all
+    games = Game.order('id DESC').limit(10)
     render json: {
       games: games.includes(:user, :annotations).map {|game|
         game.as_json.merge({
@@ -25,9 +25,12 @@ class API::V1::GamesController < API::V1::BaseController
 
   # POST /api/v1/games
   def create
-    game = Game.create(game_params.merge(user_id: current_user.id))
+    game = Game.create!(game_params.merge(user_id: current_user.id))
+    game.cache_moves_and_positions!
     GameDataCalculatorJob.perform_later game
-    render json: {}
+    render json: {
+      game: game.as_json
+    }
   end
 
   # PATCH /api/v1/games/:id

@@ -6,6 +6,8 @@
             @keyup="hideError")
       input(type="password" ref="password" placeholder="Password"
             @keyup="hideError")
+      input(type="password" ref="password_confirmation" placeholder="Confirm password"
+            @keyup="hideError")
       div
         input(type="submit" value="Sign up")
         .error(v-if="showError") Invalid username or password
@@ -13,6 +15,7 @@
 </template>
 
 <script>
+  import router from '../router'
   import requireAnonymous from './guards/require_anonymous'
   import { createUser, getUserInfo } from '../api/requests'
 

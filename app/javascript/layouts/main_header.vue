@@ -63,7 +63,7 @@
       background #222
 
     .left
-      width 415px
+      width 371px
       margin-left 40px
 
     .right
