@@ -83,6 +83,7 @@
 
   .card-list
     padding-top 10px
+    width 640px
 
   .annotation-card-container
     margin 25px 0

@@ -74,10 +74,12 @@
   .right-content
     width 100%
     height 100%
+    padding-left 420px
+    background #F1F1F1
 
     header
       background #4e4e4e
-      padding 30px 0 20px 450px
+      padding 30px 0 20px 30px
 
       h1
         color white
@@ -90,8 +92,7 @@
         margin 10px 0
 
     .content
-      background #F1F1F1
-      padding-left 30px + 420px
+      margin-left 30px
       min-height 1000px
       height 100%
 

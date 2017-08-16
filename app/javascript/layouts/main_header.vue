@@ -50,7 +50,7 @@
     z-index 1
 
   .main
-    width 1200px
+    width 1090px
     display flex
 
     a
