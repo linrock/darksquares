@@ -100,11 +100,12 @@
   .right-content
     width 100%
     height 100%
+    padding-left 420px
 
     header
       background #4e4e4e
       height 70px
-      padding-left 30px + 420px
+      padding-left 30px
 
       h1
         color white
@@ -114,14 +115,16 @@
 
     nav
       background #E3E3E3
-      padding-left 30px + 420px
+      padding-left 30px
       height 45px
-      line-height 45px
+      line-height 49px
       display flex
+      font-weight bold
 
       a
         color #1A1A1A
         display block
+        opacity 0.5
         font-size 14px
         text-decoration none
         text-transform uppercase
@@ -131,11 +134,11 @@
           text-decoration underline
 
       .router-link-exact-active
-        font-weight bold
+        opacity 1
 
     .content
       background #F1F1F1
-      padding-left 30px + 420px
+      padding-left 30px
       min-height 1000px
       height 100%
 
