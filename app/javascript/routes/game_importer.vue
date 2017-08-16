@@ -73,7 +73,7 @@
     font-size 16px
     padding 15px
     display block
-    border 1px solid #555
+    border 1px solid rgba(0,0,0,0.15)
     border-radius 2px
 
     &::placeholder

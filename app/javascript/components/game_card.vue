@@ -3,8 +3,11 @@
     .graph-container(@mouseenter="setCurrentPgn")
       game-info(:pgnHeaders="game.pgnHeaders")
       router-link(:to="gamePositionPath")
-        hover-graph-clickable(:width="600" :height="150"
+        hover-graph-clickable(v-if="game.scores.length"
+                              :width="600" :height="150"
                               :game="game" :gameState="gameState")
+        .loading(v-if="!game.scores.length")
+          | Analysis in progress...
 
     .annotations-container(v-if="game.annotations.length")
       annotation-previews(:game="game")
@@ -70,20 +73,17 @@
     width 640px
 
   a
+    color inherit
     text-decoration none
 
     &:hover .annotation-count
       opacity 0.9
       text-decoration underline
 
-  .collapse-game-button
-    top 5px
-    right 5px
-    position absolute
-    z-index 1
-
-    &:hover
-      cursor pointer
+  .loading
+    font-size 14px
+    color rgba(0,0,0,0.4)
+    padding 5px 0 12px
 
   .annotation-count
     color rgb(58,137,201)

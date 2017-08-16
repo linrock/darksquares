@@ -81,10 +81,12 @@ export default class Game {
   }
 
   get scores(): Array<number> {
+    if (!this.graphPoints) return []
     return this.graphPoints[this.graphPoints.length - 1]
   }
 
   get nPoints(): number {
+    if (!this.graphPoints) return 0
     return this.graphPoints[0].length
   }
 
@@ -100,21 +102,21 @@ export default class Game {
     this.computeAnnotationMap()
   }
 
-  public annotationsAt(i): Array<Annotation> {
+  public annotationsAt(i: number): Array<Annotation> {
     return this.annotationMap[this.moveString(i)]
   }
 
   // moves
 
-  public moveString(i): string {
+  public moveString(i: number): string {
     return `${this.moveNum(i)} ${this.moves[i].san}`
   }
 
-  public moveNum(i): string {
+  public moveNum(i: number): string {
     return `${~~(i / 2 + 1)}.${i % 2 === 0 ? '' : '..'}`
   }
 
-  public stateAtPositionIndex(i): object {
+  public stateAtPositionIndex(i: number): object {
     const fen = this.positions[i]
     const state = <any>{}
     if (fen) {
@@ -130,7 +132,7 @@ export default class Game {
       if (score !== undefined) {
         state.score = score
       }
-      if (this.bestMoves[i]) {
+      if (this.bestMoves && this.bestMoves[i]) {
         state.bestMove = this.bestMoves[i]
       }
       const j = i - 1

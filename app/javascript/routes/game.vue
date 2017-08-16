@@ -7,6 +7,7 @@
       section.left-side
         mini-board-detailed(:showHeaderInfo="false" :squareSize="55")
         hover-graph-clickable(
+          v-if="game.scores.length"
           :width="443"
           :height="120"
           :game="game"
