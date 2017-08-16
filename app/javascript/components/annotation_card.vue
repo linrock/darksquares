@@ -14,6 +14,7 @@
 </template>
 
 <script>
+  import Game from '../models/game'
   import Annotation from '../models/annotation'
   import { state } from '../store/miniboard'
 
@@ -35,7 +36,8 @@
         return `/u/${this.annotation.username}`
       },
       gamePath() {
-        return `/games/${this.annotation.gameId}`
+        const i = Game.moveStringToPositionIndex(this.annotation.move_string)
+        return `/games/${this.annotation.gameId}#${i}`
       }
     }
   }
