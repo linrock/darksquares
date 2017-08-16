@@ -8,12 +8,13 @@
           router-link(to="/") Dark Squares
 
         .right
-          router-link(to="/importer") Import game
-          router-link(to="/games") Games
-          router-link(to="/annotations") Annotations
+          router-link(to="/importer")
+            | Import game
 
         .far-right
-          router-link(:to="userPath") {{ userLinkText }}
+          router-link(:to="userPath")
+            img(src="/assets/user.svg")
+            | {{ userLinkText }}
 
     .header-spacer
 
@@ -50,6 +51,7 @@
     z-index 1
 
   .main
+    font-size 14px
     width 1090px
     display flex
 
@@ -67,8 +69,6 @@
       margin-left 40px
 
     .right
-      font-size 14px
-
       a
         color rgba(255,255,255,0.6)
         margin-right 30px
@@ -77,8 +77,13 @@
         color white
 
     .far-right
-      font-size 14px
       margin-left auto
+
+      img
+        width 18px
+        position relative
+        top 4px
+        margin-right 5px
 
   .header-spacer
     height 40px

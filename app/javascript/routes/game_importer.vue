@@ -1,12 +1,18 @@
 <template lang="pug">
   main#game-importer
+    sub-header
+      div New Game
+
     .content
       section.left-side
         chessboard(:fen="boardState.fen" :squareSize="55")
 
       section.right-side
+        h1 Import Game
+        .description
+          | Enter a PGN or move the pieces on the board
         form(@submit="importGame")
-          textarea(ref="pgn" class="pgn-importer")
+          textarea(ref="pgn" class="pgn-importer" placeholder="1.d4 d5 2.c4 e6 3.Nf3 c6")
           .commands
             input(type="submit" value="Import PGN")
             .checkbox
@@ -16,8 +22,9 @@
 </template>
 
 <script>
-  import router from '../router'
   import Chess from 'chess.js'
+  import router from '../router'
+  import SubHeader from '../layouts/sub_header'
   import requireLogin from './guards/require_login'
   import { state } from '../store/miniboard'
   import Chessboard from '../components/chessboard.vue'
@@ -53,21 +60,24 @@
     },
 
     components: {
+      SubHeader,
       Chessboard
     }
   }
 </script>
 
 <style lang="stylus" scoped>
-  #game-importer
-    display: flex
-
   textarea
     width 500px
-    height 500px
+    height 388px
     font-size 16px
-    padding 10px
+    padding 15px
     display block
+    border 1px solid #555
+    border-radius 2px
+
+    &::placeholder
+      color rgba(0,0,0,0.3)
 
   input[type="submit"]
     color white
@@ -87,14 +97,27 @@
     margin-left 80px
     padding-top 30px
 
-    section.right-side
-      margin-left 40px
+  section.right-side
+    margin-left 40px
 
-      .commands
-        display flex
-        margin-top 20px
+    h1
+      font-size 16px
+      font-weight bold
 
-      .checkbox
-        margin-left 10px
+    .description
+      color #2D2D2D
+      font-size 14px
+      margin 8px 0 16px
+
+    .commands
+      display flex
+      align-items center
+      margin-top 20px
+
+    .checkbox
+      margin-left 20px
+
+      input
+        margin-right 10px
 
 </style>

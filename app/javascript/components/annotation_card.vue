@@ -38,12 +38,16 @@
   .annotation-card
     background white
     font-size 14px
+    line-height 18px
     padding 15px 20px
     position relative
     width 640px
 
-  .move-string
-    font-weight bold
-    margin-bottom 18px
+    .move-string
+      font-weight bold
+      margin-bottom 12px
+
+    .text
+      color rgba(0,0,0,0.7)
 
 </style>
