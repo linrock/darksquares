@@ -1,7 +1,7 @@
 <template lang="pug">
   .annotation-previews
     .preview(v-for="(annotation, i) in annotationPreviews")
-      span.username {{ annotation.username }}
+      router-link(:to="userPath(annotation.username)").username {{ annotation.username }}
       router-link(:to="gamePositionPath(annotation.move_string)")
         span.move-string {{ annotation.move_string }}
       span.text {{ annotation.text }}
@@ -35,6 +35,9 @@
       gamePositionPath: function(moveString) {
         const j = Game.moveStringToPositionIndex(moveString)
         return `${this.game.path}#${j}`
+      },
+      userPath: function(username) {
+        return `/u/${username}`
       }
     }
   }

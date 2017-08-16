@@ -2,7 +2,8 @@
   .annotation-card-container
     header
       span annotated by
-      span.annotator {{ annotation.username }}
+      span.annotator
+        router-link(:to="userPath") {{ annotation.username }}
       span {{ annotation.timeAgo() }}
 
     .annotation-card
@@ -17,6 +18,12 @@
   export default {
     props: {
       annotation: Annotation
+    },
+
+    computed: {
+      userPath: function() {
+        return `/u/${this.annotation.username}`
+      }
     }
   }
 </script>
@@ -34,6 +41,13 @@
   .annotator
     font-weight bold
     margin 0 5px
+
+    a
+      color inherit
+      text-decoration none
+
+      &:hover
+        text-decoration underline
 
   .annotation-card
     background white
