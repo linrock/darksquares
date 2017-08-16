@@ -6,9 +6,10 @@
         router-link(:to="userPath") {{ annotation.username }}
       span {{ annotation.timeAgo() }}
 
-    .annotation-card(@mouseenter="previewAnnotatedGame")
-      .move-string {{ annotation.move_string }}
-      .text {{ annotation.text }}
+    router-link.linked-card(:to="gamePath")
+      .annotation-card(@mouseenter="previewAnnotatedGame")
+        .move-string {{ annotation.move_string }}
+        .text {{ annotation.text }}
 
 </template>
 
@@ -30,8 +31,11 @@
     },
 
     computed: {
-      userPath: function() {
+      userPath() {
         return `/u/${this.annotation.username}`
+      },
+      gamePath() {
+        return `/games/${this.annotation.gameId}`
       }
     }
   }
@@ -57,6 +61,13 @@
 
       &:hover
         text-decoration underline
+
+  .linked-card
+    color inherit
+    text-decoration none
+
+    &:hover .annotation-card
+      background #fafafa
 
   .annotation-card
     background white
