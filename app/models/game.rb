@@ -31,6 +31,10 @@ class Game < ApplicationRecord
     })
   end
 
+  def position_index_from_move_string(move_string)
+    move_string[/^\d+/, 0].to_i * 2 - (move_string.include?('...') ? 0 : 1)
+  end
+
   private
 
   def pgn_loader

@@ -38,7 +38,9 @@ CREATE TABLE annotations (
     move_string character varying NOT NULL,
     text character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    fen character varying,
+    move jsonb
 );
 
 
@@ -551,6 +553,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170806004506'),
 ('20170806011551'),
 ('20170806012646'),
-('20170807095726');
+('20170807095726'),
+('20170816193641'),
+('20170816195324');
 
 

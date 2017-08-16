@@ -6,7 +6,7 @@
         router-link(:to="userPath") {{ annotation.username }}
       span {{ annotation.timeAgo() }}
 
-    .annotation-card
+    .annotation-card(@mouseenter="previewAnnotatedGame")
       .move-string {{ annotation.move_string }}
       .text {{ annotation.text }}
 
@@ -14,10 +14,19 @@
 
 <script>
   import Annotation from '../models/annotation'
+  import { state } from '../store/miniboard'
 
   export default {
     props: {
       annotation: Annotation
+    },
+
+    methods: {
+      previewAnnotatedGame() {
+        state.fen = this.annotation.fen
+        state.highlights = [this.annotation.move.from, this.annotation.move.to]
+        state.move = this.annotation.move_string
+      }
     },
 
     computed: {

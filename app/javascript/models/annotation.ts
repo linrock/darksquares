@@ -4,7 +4,9 @@ import { flatten, parseDate, timeAgo } from '../util'
 interface AnnotationOptions {
   id: number
   game: Game
+  fen: string
   username: string
+  move: object
   move_string: string
   created_at: string
   text: string
@@ -13,7 +15,9 @@ interface AnnotationOptions {
 export default class Annotation {
   public id: number
   public game: Game
+  public fen: string
   public username: string
+  public move: object
   public move_string: string
   public text: string
   public createdAt: Date
@@ -21,7 +25,9 @@ export default class Annotation {
   public constructor(options: AnnotationOptions) {
     this.id = options.id
     this.game = options.game
+    this.fen = options.fen
     this.username = options.username
+    this.move = options.move
     this.move_string = options.move_string
     this.text = options.text
     this.createdAt = parseDate(options.created_at)
