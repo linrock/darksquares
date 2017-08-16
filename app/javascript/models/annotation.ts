@@ -15,6 +15,7 @@ interface AnnotationOptions {
 
 export default class Annotation {
   public id: number
+  public gameId: number
   public game: Game
   public fen: string
   public username: string
