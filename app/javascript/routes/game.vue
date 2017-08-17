@@ -108,7 +108,7 @@
       },
       scrollToMove(i) {
         const offsetTop = this.moveEl(i).offsetTop
-        window.scrollTo(0, offsetTop - 150)
+        window.scrollTo(0, offsetTop - 250)
       },
       scrollToMoveIfFar(i) {
         if (isElementInViewport(this.moveEl(i))) {
