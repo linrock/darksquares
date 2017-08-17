@@ -2,16 +2,15 @@ class API::V1::UsersController < API::V1::BaseController
 
   # POST /api/v1/users
   def create
-    user = User.create!(user_params)
-    access_token = Doorkeeper::AccessToken.create!(
-      application_id: nil,
-      resource_owner_id: user.id,
-      scopes: 'public'
-    )
-    render json: {
-      access_token: access_token.token,
-      token_type: "bearer",
-    }
+    user = User.create(user_params)
+    if user.errors
+      render json: { error: user.error_message_upon_creation }, status: 400
+    else
+      render json: {
+        access_token: user.create_access_token!.token,
+        token_type: "bearer",
+      }
+    end
   end
 
   # GET /api/v1/users/me

@@ -10,7 +10,7 @@
             @keyup="hideError")
       div
         input(type="submit" value="Sign up")
-        .error(v-if="showError") Invalid username or password
+        .error(v-if="showError") {{ errorMessage }}
 
 </template>
 
@@ -25,6 +25,7 @@
     data() {
       return {
         showError: false,
+        errorMessage: ""
       }
     },
 
@@ -44,7 +45,8 @@
         createUser(credentials).then(() => {
           getUserInfo()
           router.push({ path: '/' })
-        }).catch(() => {
+        }).catch((error) => {
+          this.errorMessage = error.response.data.error
           this.showError = true
         })
       }
