@@ -20,7 +20,7 @@ const routes = [
     component: Home
   },
   {
-    path: '/importer',
+    path: '/import',
     component: GameImporter
   },
   {

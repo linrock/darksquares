@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   root to: "application#home"
 
-  get "/importer"     => "application#index"
+  get "/import"       => "application#index"
   get "/games"        => "application#index"
   get "/games/:id"    => "application#index"
   get "/annotations"  => "application#index"

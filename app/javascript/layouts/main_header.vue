@@ -3,19 +3,19 @@
     header
       .main
         .square
-
         .left
           router-link(to="/") Dark Squares
-
         .right
-          router-link(to="/importer")
+          router-link(to="/import")
             | Import game
-
+          router-link(to="/submit")
+            | Submit game
+          router-link(to="/about")
+            | About
         .far-right
           router-link(:to="userPath")
             img(src="/assets/user.svg")
             | {{ userLinkText }}
-
     .header-spacer
 
 </template>
@@ -65,7 +65,7 @@
       background #222
 
     .left
-      width 371px
+      width 149px
       margin-left 40px
 
     .right
