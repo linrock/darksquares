@@ -1,4 +1,6 @@
 class Game < ApplicationRecord
+  before_validation :classify_opening
+
   validates_presence_of :pgn
 
   belongs_to :user
@@ -16,6 +18,13 @@ class Game < ApplicationRecord
     self.best_moves = self.analysis.map {|position| position["bestmove"]["san"] }
     self.graph_points = GraphPointsCalculator.new(self.analysis).calculate!.values[0].values
     self.save!
+  end
+
+  def classify_opening
+    return if self.pgn_headers["ECO"] || self.pgn_headers["Opening"]
+    opening = $opening_tree.get_opening_from_pgn self.pgn
+    self.pgn_headers["ECO"] = opening.base_eco
+    self.pgn_headers["Opening"] = opening.name
   end
 
   def async_calculate_game_data
