@@ -49,18 +49,13 @@
     data: function() {
       return {
         game: null,
-        gameState
+        gameState,
+        scrolledToMove: false
       }
     },
 
     created() {
-      const hash = window.location.hash
-      if (hash) {
-        const i = Number(hash.replace(/#/, ''))
-        if (Number.isInteger(i)) {
-          gameState.i = i
-        }
-      }
+      gameState.i = this.currentMoveIndex()
       resetBoardState()
       getOrFetchGame(this.id).then(game => {
         applyStateChange(game.stateAtPositionIndex(gameState.i))
@@ -69,6 +64,7 @@
     },
 
     mounted() {
+      window.scrollTo(0, 0)
       Mousetrap.bind('left', () => {
         const i = this.gameState.i
         if (i > 0) {
@@ -85,11 +81,28 @@
       })
     },
 
+    updated() {
+      if (!this.scrolledToMove) {
+        this.scrollToMoveIfFar(this.currentMoveIndex())
+        this.scrolledToMove = true
+      }
+    },
+
     destroyed() {
       Mousetrap.reset()
     },
 
     methods: {
+      currentMoveIndex() {
+        const hash = window.location.hash
+        if (hash) {
+          const i = Number(hash.replace(/#/, ''))
+          if (Number.isInteger(i)) {
+            return i
+          }
+        }
+        return 0
+      },
       moveEl(i) {
         return this.$el.querySelector(`#move-${i}`)
       },
