@@ -61,7 +61,13 @@
 
     a
       color inherit
+      display flex
+      height 100%
+      opacity 0.85
       text-decoration none
+
+      &:hover
+        opacity 1
 
     .square
       width 40px
@@ -76,10 +82,9 @@
       display flex
 
       a
-        color rgba(255,255,255,0.6)
+        color rgba(255,255,255,0.8)
         display flex
         margin-right 30px
-        height 100%
 
         img
           width 18px
@@ -88,16 +93,13 @@
           opacity 0.4
 
         .import
-          position relative
           top 2px
 
         .submit
-          position relative
           top 1px
           width 17px
 
         .about
-          position relative
           top 1px
           width 16px
 
@@ -111,11 +113,9 @@
       margin-left auto
 
       img
+        opacity 0.4
         width 18px
-        position relative
-        top 4px
         margin-right 5px
-        background #222
 
   .header-spacer
     height 40px

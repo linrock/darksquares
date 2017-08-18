@@ -1,7 +1,7 @@
 <template lang="pug">
   main#profile
     .left-content
-      mini-board-detailed(:showPgn="true" :showHeaderInfo="false")
+      mini-board-detailed(:showPgn="true")
     .right-content
       header
         h1(v-if="headerText") {{ headerText }}

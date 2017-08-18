@@ -2,7 +2,7 @@
   main#games
     .background
       .left-content
-        mini-board-detailed(:showPgn="true" :showHeaderInfo="false")
+        mini-board-detailed(:showPgn="true")
 
         .container
           header.shadowed

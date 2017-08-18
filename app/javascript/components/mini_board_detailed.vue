@@ -1,6 +1,5 @@
 <template lang="pug">
   section.mini-board-view
-    game-info(:pgnHeaders="boardState.pgnHeaders" v-if="showHeaderInfo")
     chessboard(:fen="boardState.fen"
                :highlights="boardState.highlights"
                :squareSize="squareSize")
@@ -12,7 +11,6 @@
 </template>
 
 <script>
-  import GameInfo from './game_info.vue'
   import Chessboard from './chessboard.vue'
   import GamePosition from './game_position.vue'
   import PositionEvaluation from './position_evaluation.vue'
@@ -21,10 +19,6 @@
 
   export default {
     props: {
-      showHeaderInfo: {
-        type: Boolean,
-        default: true,
-      },
       showPgn: {
         type: Boolean,
         default: false,
@@ -48,7 +42,6 @@
     },
 
     components: {
-      GameInfo,
       Chessboard,
       GamePosition,
       PositionEvaluation,

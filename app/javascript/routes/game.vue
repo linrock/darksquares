@@ -5,7 +5,7 @@
 
     .content(v-if="game")
       section.left-side
-        mini-board-detailed(:showHeaderInfo="false" :squareSize="55")
+        mini-board-detailed(:squareSize="55")
         hover-graph-clickable(
           v-if="game.scores.length"
           :width="443"
