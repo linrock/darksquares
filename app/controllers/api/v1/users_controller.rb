@@ -43,17 +43,21 @@ class API::V1::UsersController < API::V1::BaseController
   # GET /api/v1/users/:username
   def profile
     user = User.find_by(username: params[:username])
-    render json: {
-      user: {
-        username: user.username,
-        games: user.games.map {|game|
-          game.as_json.merge({
-            annotations: game.annotations
-          })
-        },
-        annotations: user.annotations
+    if !user
+      render json: {}, status: 404
+    else
+      render json: {
+        user: {
+          username: user.username,
+          games: user.games.map {|game|
+            game.as_json.merge({
+              annotations: game.annotations
+            })
+          },
+          annotations: user.annotations
+        }
       }
-    }
+    end
   end
 
   private

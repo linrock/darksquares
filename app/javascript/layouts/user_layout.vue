@@ -4,11 +4,12 @@
       mini-board-detailed(:showPgn="true" :showHeaderInfo="false")
     .right-content
       header
-        h1 {{ user.username }}
+        h1(v-if="headerText") {{ headerText }}
       nav
-        router-link(:to="overviewLink") Overview
-        router-link(:to="gamesLink") {{ user.games.length }} Games
-        router-link(:to="annotationsLink") {{ user.annotations.length }} Annotations
+        template(v-if="user.username")
+          router-link(:to="overviewLink") Overview
+          router-link(:to="gamesLink") {{ user.games.length }} Games
+          router-link(:to="annotationsLink") {{ user.annotations.length }} Annotations
       .content
         router-view(:user="user")
 
@@ -30,6 +31,7 @@
 
     data() {
       return {
+        headerText: null,
         user: new User()
       }
     },
@@ -37,6 +39,10 @@
     created() {
       getUserProfile(this.username).then(response => {
         this.user = new User(response.data.user)
+        this.headerText = this.user.username
+      }).catch(error => {
+        const statusCode = error.response.status
+        this.headerText = statusCode === 404 && "User not found" || `Error statusCode`
       })
     },
 
