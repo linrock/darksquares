@@ -1,7 +1,7 @@
 <template lang="pug">
   main#game-importer
     sub-header
-      div New Game
+      div Import Game
 
     .content
       section.left-side
@@ -12,12 +12,11 @@
         .description
           | Enter a PGN or move the pieces on the board
         form(@submit="importGame")
-          textarea(ref="pgn" class="pgn-importer" placeholder="1.d4 d5 2.c4 e6 3.Nf3 c6")
+          textarea(ref="pgn" class="pgn-importer" placeholder="1.d4 d5 2.c4 e6 3.Nf3 c6"
+                   @keyup="clearError")
           .commands
-            input(type="submit" value="Import PGN")
-            .checkbox
-              input(type="checkbox")
-              | Submit this game to the homepage
+            input(type="submit" :value="buttonText" :disabled="isSubmitting")
+            .error-message {{ errorMessage }}
 
 </template>
 
@@ -35,28 +34,43 @@
 
     data() {
       return {
-        boardState: state
+        boardState: state,
+        errorMessage: ``,
+        isSubmitting: false,
+      }
+    },
+
+    computed: {
+      buttonText() {
+        return this.isSubmitting ? "Importing..." : "Import PGN"
       }
     },
 
     methods: {
-      importGame: function(e) {
+      importGame(e) {
         e.preventDefault()
         const pgn = this.$refs.pgn.value
         const cjs = new Chess()
-        if (cjs.load_pgn(pgn)) {
-          const data = {
-            game: {
-              pgn: pgn
-            }
-          }
-          createGame(data).then(response => {
-            router.push({ path: `/games/${response.data.game.id}` })
-          })
-        } else {
-          console.log("pgn is invalid!")
+        if (!cjs.load_pgn(pgn)) {
+          this.errorMessage = "Import failed. PGN is invalid!"
+          return
         }
+        this.isSubmitting = true
+        const data = {
+          game: {
+            pgn: pgn
+          }
+        }
+        createGame(data).then(response => {
+          router.push({ path: `/games/${response.data.game.id}` })
+          this.isSubmitting = false
+        }).catch(error => {
+          this.isSubmitting = false
+        })
       },
+      clearError() {
+        this.errorMessage = ``
+      }
     },
 
     components: {
@@ -85,11 +99,19 @@
     border none
     border-radius 2px
     font-size 18px
-    padding 7px 24px
+    padding 7px 0
+    text-align center
+    width 150px
 
     &:hover
       cursor pointer
       opacity 0.9
+
+    &:disabled
+      opacity 0.1
+
+      &:hover
+        cursor disabled
 
   .content
     display flex
@@ -114,10 +136,8 @@
       align-items center
       margin-top 20px
 
-    .checkbox
-      margin-left 20px
-
-      input
-        margin-right 10px
+      .error-message
+        color orange
+        margin-left 30px
 
 </style>

@@ -26,7 +26,6 @@ class API::V1::GamesController < API::V1::BaseController
   # POST /api/v1/games
   def create
     game = Game.create!(game_params.merge(user_id: current_user.id))
-    game.cache_moves_and_positions!
     GameDataCalculatorJob.perform_later game
     render json: {
       game: game.as_json

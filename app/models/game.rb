@@ -1,16 +1,20 @@
 class Game < ApplicationRecord
+  before_validation :calculate_moves_and_positions
   before_validation :classify_opening
 
   validates_presence_of :pgn
+  validates_presence_of :pgn_headers
+  validates_presence_of :moves
+  validates_presence_of :positions
 
   belongs_to :user
   has_many :annotations
 
-  def cache_moves_and_positions!
+  def calculate_moves_and_positions
+    return if pgn_headers.present? && moves.present? && positions.present?
     self.pgn_headers = pgn_loader.pgn_headers
     self.moves = pgn_loader.moves
     self.positions = pgn_loader.positions
-    self.save!
   end
 
   def calculate_game_data!

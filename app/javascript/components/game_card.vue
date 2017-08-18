@@ -83,7 +83,7 @@
   .loading
     font-size 14px
     color rgba(0,0,0,0.4)
-    padding 5px 0 12px
+    padding 12px 0
 
   .annotation-count
     color rgb(58,137,201)

@@ -7,10 +7,13 @@
           router-link(to="/") Dark Squares
         .right
           router-link(to="/import")
+            img(src="/assets/import.svg" class="import")
             | Import game
           router-link(to="/submit")
+            img(src="/assets/submit.svg" class="submit")
             | Submit game
           router-link(to="/about")
+            img(src="/assets/about.svg" class="about")
             | About
         .far-right
           router-link(:to="userPath")
@@ -53,6 +56,7 @@
   .main
     font-size 14px
     width 1090px
+    height 100%
     display flex
 
     a
@@ -69,12 +73,39 @@
       margin-left 40px
 
     .right
+      display flex
+
       a
         color rgba(255,255,255,0.6)
+        display flex
         margin-right 30px
+        height 100%
+
+        img
+          width 18px
+          position relative
+          margin-right 6px
+          opacity 0.4
+
+        .import
+          position relative
+          top 2px
+
+        .submit
+          position relative
+          top 1px
+          width 17px
+
+        .about
+          position relative
+          top 1px
+          width 16px
 
       .router-link-exact-active
         color white
+
+        img
+          opacity 0.8
 
     .far-right
       margin-left auto
@@ -84,6 +115,7 @@
         position relative
         top 4px
         margin-right 5px
+        background #222
 
   .header-spacer
     height 40px
