@@ -14,6 +14,8 @@
           :gameState="gameState"
           :clickedGraph="scrollToMove"
         )
+        .loading(v-if="!game.scores.length")
+          | Analysis in progress...
 
       section.right-side
         game-info(:pgnHeaders="game.pgnHeaders")
@@ -140,6 +142,11 @@
 
     .hover-graph-clickable
       margin-top 25px
+
+    .loading
+      font-size 16px
+      color rgba(0,0,0,0.4)
+      padding-top 12px
 
   section.right-side
     padding 30px 0 0 40px

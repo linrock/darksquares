@@ -54,7 +54,13 @@ class API::V1::UsersController < API::V1::BaseController
               annotations: game.annotations
             })
           },
-          annotations: user.annotations
+          annotations: user.annotations.map {|annotation|
+            annotation.as_json.merge({
+              game: {
+                pgn_headers: annotation.game.pgn_headers
+              }
+            })
+          }
         }
       }
     end

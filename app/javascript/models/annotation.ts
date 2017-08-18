@@ -27,7 +27,9 @@ export default class Annotation {
   public constructor(options: AnnotationOptions) {
     this.id = options.id
     this.gameId = options.game_id
-    this.game = options.game
+    if (options.game) {
+      this.game = new Game(options.game)
+    }
     this.fen = options.fen
     this.username = options.username
     this.move = options.move

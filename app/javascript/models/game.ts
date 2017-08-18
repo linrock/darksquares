@@ -60,20 +60,28 @@ export default class Game {
 
   public constructor(options: GameOptions) {
     this.id = options.id
-    this.metadata = new GameMetadata(options.metadata)
+    if (options.metadata) {
+      this.metadata = new GameMetadata(options.metadata)
+    }
     this.pgn = options.pgn
     this.pgnHeaders = options.pgn_headers
     this.positions = options.positions
-    this.moves = options.moves.map(move => new Move(move))
+    if (options.moves) {
+      this.moves = options.moves.map(move => new Move(move))
+    }
     this.bestMoves = options.best_moves
     this.graphPoints = options.graph_points
-    this.annotations = options.annotations.map(annotation => {
-      return new Annotation(
-        (<any>Object).assign({ game: this }, annotation)
-      )
-    })
-    this.createdAt = parseDate(options.created_at)
-    this.computeAnnotationMap()
+    if (options.annotations) {
+      this.annotations = options.annotations.map(annotation => {
+        return new Annotation(
+          (<any>Object).assign({ game: this }, annotation)
+        )
+      })
+      this.computeAnnotationMap()
+    }
+    if (options.created_at) {
+      this.createdAt = parseDate(options.created_at)
+    }
   }
 
   get path(): string {

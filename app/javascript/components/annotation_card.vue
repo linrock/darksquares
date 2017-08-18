@@ -28,6 +28,7 @@
         state.fen = this.annotation.fen
         state.highlights = [this.annotation.move.from, this.annotation.move.to]
         state.move = this.annotation.move_string
+        state.pgnHeaders = this.annotation.game.pgnHeaders || {}
       }
     },
 
