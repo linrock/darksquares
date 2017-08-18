@@ -4,7 +4,10 @@
       div Submit Game
 
     .content
-      | Choose from this list of games you haven't submitted yet
+      div Choose from this list of games you haven't submitted yet
+      div Import a game to your personal game library
+      div Submit a game you've imported to share it with the community
+
 </template>
 
 <script>

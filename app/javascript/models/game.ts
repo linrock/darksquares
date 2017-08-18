@@ -27,7 +27,7 @@ class GameMetadata {
   }
 }
 
-interface GameOptions {
+export interface GameOptions {
   id: number
   metadata: GameMetadataOptions
   pgn: string

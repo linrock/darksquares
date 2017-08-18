@@ -1,10 +1,11 @@
 import Game from './game'
+import { GameOptions } from './game'
 import { flatten, parseDate, timeAgo } from '../util'
 
 interface AnnotationOptions {
   id: number
   game_id: number
-  game: Game
+  game: GameOptions
   fen: string
   username: string
   move: object

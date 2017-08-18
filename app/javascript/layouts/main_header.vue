@@ -103,11 +103,12 @@
           top 1px
           width 16px
 
-      .router-link-exact-active
-        color white
+    a.router-link-exact-active
+      color white
+      opacity 1
 
-        img
-          opacity 0.8
+      img
+        opacity 0.8
 
     .far-right
       margin-left auto

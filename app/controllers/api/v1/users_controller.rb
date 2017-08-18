@@ -49,12 +49,12 @@ class API::V1::UsersController < API::V1::BaseController
       render json: {
         user: {
           username: user.username,
-          games: user.games.map {|game|
+          games: user.games.order('id DESC').map {|game|
             game.as_json.merge({
               annotations: game.annotations
             })
           },
-          annotations: user.annotations.map {|annotation|
+          annotations: user.annotations.order('id DESC').map {|annotation|
             annotation.as_json.merge({
               game: {
                 pgn_headers: annotation.game.pgn_headers
