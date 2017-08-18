@@ -78,8 +78,8 @@ class OpeningTree
     search_for_opening(move_list)[:opening]
   end
 
-  def get_opening_from_pgn(pgn)
-    get_opening pgn.gsub(/\d+\./, '').gsub(/\*/, '').strip.split(/\s+/)
+  def get_opening_from_pgn_movetext(movetext)
+    get_opening movetext.gsub(/\d+\./, '').gsub(/\*/, '').strip.split(/\s+/)
   end
 
   def inspect

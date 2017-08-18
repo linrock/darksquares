@@ -22,13 +22,21 @@ class Game < ApplicationRecord
 
   def classify_opening
     return if self.pgn_headers["ECO"] || self.pgn_headers["Opening"]
-    opening = $opening_tree.get_opening_from_pgn self.pgn
+    opening = $opening_tree.get_opening_from_pgn_movetext pgn_movetext
     self.pgn_headers["ECO"] = opening.base_eco
     self.pgn_headers["Opening"] = opening.name
   end
 
   def async_calculate_game_data
     GameDataCalculator.perform_later self
+  end
+
+  def position_index_from_move_string(move_string)
+    move_string[/^\d+/, 0].to_i * 2 - (move_string.include?('...') ? 0 : 1)
+  end
+
+  def pgn_movetext
+    pgn.gsub(/.*\]/, '').strip
   end
 
   def as_json(options = {})
@@ -38,10 +46,6 @@ class Game < ApplicationRecord
         submitted_at: created_at,
       }
     })
-  end
-
-  def position_index_from_move_string(move_string)
-    move_string[/^\d+/, 0].to_i * 2 - (move_string.include?('...') ? 0 : 1)
   end
 
   private
