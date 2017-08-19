@@ -82,8 +82,8 @@
 
 <style lang="stylus" scoped>
   textarea
-    width 500px
-    height 388px
+    width 530px
+    height 338px
     font-size 16px
     padding 15px
     display block
@@ -117,6 +117,7 @@
     display flex
     width 1200px
     margin-left 80px
+    margin-bottom 30px
     padding-top 30px
 
   section.right-side
@@ -134,7 +135,7 @@
     .commands
       display flex
       align-items center
-      margin 20px 0
+      margin-top 15px
 
       .error-message
         color orange
