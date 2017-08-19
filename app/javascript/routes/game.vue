@@ -5,17 +5,18 @@
 
     .content(v-if="game")
       section.left-side
-        mini-board-detailed(:squareSize="55")
-        hover-graph-clickable(
-          v-if="game.scores.length"
-          :width="443"
-          :height="120"
-          :game="game"
-          :gameState="gameState"
-          :clickedGraph="scrollToMove"
-        )
-        .loading(v-if="!game.scores.length")
-          | Analysis in progress...
+        .left-side-inner
+          mini-board-detailed(:squareSize="55")
+          hover-graph-clickable(
+            v-if="game.scores.length"
+            :width="443"
+            :height="120"
+            :game="game"
+            :gameState="gameState"
+            :clickedGraph="scrollToMove"
+          )
+          .loading(v-if="!game.scores.length")
+            | Analysis in progress...
 
       section.right-side
         game-info(:pgnHeaders="game.pgnHeaders")
@@ -138,15 +139,23 @@
 
   section.left-side
     position fixed
-    padding-top 30px
+    top 0
+    padding-top 30px + 76px
+    padding-bottom 15px
+    width 480px
+    height 100%
+    overflow-y auto
 
-    .hover-graph-clickable
-      margin-top 25px
+    .left-side-inner
+      width 443px
 
-    .loading
-      font-size 16px
-      color rgba(0,0,0,0.4)
-      padding-top 12px
+      .hover-graph-clickable
+        margin-top 25px
+
+      .loading
+        font-size 16px
+        color rgba(0,0,0,0.4)
+        padding-top 12px
 
   section.right-side
     padding 30px 0 0 40px
