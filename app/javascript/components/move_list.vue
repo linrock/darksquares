@@ -35,7 +35,10 @@
         type: Game,
         required: true
       },
-      gameState: Object,
+      gameState: {
+        type: Object,
+        required: true
+      }
     },
 
     data: function() {

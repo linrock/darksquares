@@ -1,7 +1,7 @@
-<template>
-  <svg class="d3-line-graph" :style="svgStyle">
-    <path ref="path" :style="pathStyle"></path>
-  </svg>
+<template lang="pug">
+  svg.d3-line-graph(:style="svgStyle")
+    path(ref="path" :style="pathStyle")
+
 </template>
 
 <script>
@@ -16,22 +16,21 @@
       height: Number
     },
 
-    data: function() {
+    data() {
       return {
         yRange: [-5, 5]
       }
     },
 
-    mounted: function() {
+    mounted() {
       this.plotPoints()
     },
 
     methods: {
-      plotPoints: function() {
+      plotPoints() {
         const linePoints = line()
           .x(d => this.xValues(d.x))
           .y(d => this.yValues(d.y))
-
         select(this.$refs.path)
           .data([this.dataPoints])
           .attr(`d`, linePoints)
@@ -39,20 +38,20 @@
     },
 
     computed: {
-      xValues: function() {
+      xValues() {
         return scaleTime().range([0, this.width]).domain(extent(this.dataPoints, d => d.x))
       },
-      yValues: function() {
+      yValues() {
         return scaleLinear().range([this.height, 0]).domain(this.yRange)
       },
-      svgStyle: function() {
+      svgStyle() {
         return `width: ${this.width}px; height: ${this.height}px;`
       },
-      pathStyle: function() {
+      pathStyle() {
         return `fill: none; stroke: ${this.color}; stroke-width: ${this.strokeWidth}`
       },
-      dataPoints: function() {
-        return this.points.map((y,i) => { return { x: i, y: y } })
+      dataPoints() {
+        return this.points.map((y,i) => ({ x: i, y: y }))
       }
     },
   }

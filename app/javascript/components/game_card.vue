@@ -23,7 +23,7 @@
   import HoverGraphClickable from './hover_graph_clickable.vue'
   import AnnotationPreviews from './annotation_previews.vue'
   import Game from '../models/game'
-  import { state } from '../store/miniboard'
+  import { boardState } from '../store/miniboard'
 
   export default {
     props: {
@@ -32,7 +32,7 @@
 
     data() {
       return {
-        boardState: state,
+        boardState,
         gameState: {
           expanded: false,
           i: 0,

@@ -2,6 +2,7 @@
   .annotation
     annotation-content(:annotation="annotation")
     annotation-commands(:game="game" :annotation="annotation")
+
 </template>
 
 <script>

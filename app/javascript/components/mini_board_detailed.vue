@@ -6,7 +6,7 @@
     .position-info
       game-position
       position-evaluation
-    pgn-headers(v-if="showPgn")
+    pgn-headers(v-if="showPgn" :pgnHeaders="boardState.pgnHeaders")
 
 </template>
 
@@ -15,7 +15,7 @@
   import GamePosition from './game_position.vue'
   import PositionEvaluation from './position_evaluation.vue'
   import PgnHeaders from './pgn_headers.vue'
-  import { state } from '../store/miniboard'
+  import { boardState } from '../store/miniboard'
 
   export default {
     props: {
@@ -31,7 +31,7 @@
 
     data: function() {
       return {
-        boardState: state,
+        boardState,
       }
     },
 

@@ -1,12 +1,14 @@
-<template>
-  <div>
-    <div class="stacked-graphs" :style="style">
-      <div class="graph" v-for="(points, i) in listOfPoints">
-        <d3-line-graph :points="points" :color="getColor(i)" :width="width" :height="height" :strokeWidth="1"/>
-        <d3-area-graph v-if="i === nLines - 1" :points="points" :color="getColor(i)" :width="width" :height="height"/>
-      </div>
-    </div>
-  </div>
+<template lang="pug">
+  .stacked-graphs(:style="style")
+    .graph(v-for="(points, i) in listOfPoints")
+      d3-line-graph(
+        :points="points" :color="getColor(i)" :width="width" :height="height" :strokeWidth="1"
+      )
+      d3-area-graph(
+        v-if="i === nLines - 1"
+        :points="points" :color="getColor(i)" :width="width" :height="height"
+      )
+
 </template>
 
 <script>
@@ -97,14 +99,13 @@
   }
 </script>
 
-<style lang="scss">
-  .stacked-graphs {
-    position: relative;
+<style lang="stylus" scoped>
+  .stacked-graphs
+    position relative
 
-    .d3-line-graph, .d3-area-graph {
-      position: absolute;
-      left: 0;
-      top: 0;
-    }
-  }
+    .d3-line-graph, .d3-area-graph
+      position absolute
+      left 0
+      top 0
+
 </style>

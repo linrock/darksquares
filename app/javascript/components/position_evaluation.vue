@@ -1,38 +1,38 @@
-<template>
-  <div class="position-evaluation">
-    <span class="score" :style="style">{{ scoreStr }}</span>
-    <span class="best-move" v-if="bestMove">
-      - {{ bestMove }}
-    </span>
-  </div>
+<template lang="pug">
+  .position-evaluation
+    span.score(:style="scoreStyle") {{ scoreStr }}
+    span.best-move(v-if="bestMove") &nbsp;- {{ bestMove }}
+
 </template>
 
 <script>
-  import { state } from '../store/miniboard'
+  import { boardState } from '../store/miniboard'
 
   export default {
     data: function() {
       return {
-        globalState: state
+        boardState
       }
     },
     computed: {
-      score: function() {
-        return this.globalState.score
+      score() {
+        return this.boardState.score
       },
-      bestMove: function() {
-        return this.globalState.bestMove
+      bestMove() {
+        return this.boardState.bestMove
       },
-      scoreStr: function() {
-        if (this.score === 0) {
-          return `Even`
+      scoreStr() {
+        let score = this.score
+        if (score === 0) {
+          score = `Even`
+        } else if (score > 0) {
+          score = `+${score}`
+        } else if (!this.score) {
+          score = ``
         }
-        if (!this.score) {
-          return ``
-        }
-        return this.score < 0 ? this.score : `+${this.score}`
+        return score
       },
-      style: function() {
+      scoreStyle() {
         if (this.score >= -0.5 && this.score <= 0.5) {
           return `color: rgba(0,0,0,0.7)`
         } else if (this.score > 0.5) {
@@ -45,10 +45,10 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  .position-evaluation {
-    font-size: 16px;
-    font-weight: bold;
-    height: 18px;
-  }
+<style lang="stylus" scoped>
+  .position-evaluation
+    font-size 16px
+    font-weight bold
+    height 18px
+
 </style>

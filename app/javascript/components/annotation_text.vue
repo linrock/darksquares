@@ -28,7 +28,7 @@
     },
 
     methods: {
-      renderMoveStrings: function() {
+      renderMoveStrings() {
         if (this.checkedForMoveStrings) {
           return
         }

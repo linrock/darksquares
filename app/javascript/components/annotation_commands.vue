@@ -1,8 +1,8 @@
-<template>
-  <div class="annotation-commands">
-    <div class="edit-annotation" @click="editAnnotation"></div>
-    <div class="delete-annotation" @click="deleteAnnotation">×</div>
-  </div>
+<template lang="pug">
+  .annotation-commands
+    .edit-annotation(@click="editAnnotation")
+    .delete-annotation(@click="deleteAnnotation") ×
+
 </template>
 
 <script>

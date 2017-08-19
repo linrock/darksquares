@@ -1,8 +1,8 @@
-<template>
-  <div class="hover-indicator">
-    <d3-vertical-line :width="width" :height="height" :x="x"/>
-    <d3-dot :width="width" :height="height" :x="x" :y="points[i]"/>
-  </div>
+<template lang="pug">
+  .hover-indicator
+    d3-vertical-line(:width="width" :height="height" :x="x")
+    d3-dot(:width="width" :height="height" :x="x" :y="points[i]")
+
 </template>
 
 <script>

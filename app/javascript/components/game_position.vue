@@ -1,30 +1,30 @@
-<template>
-  <div class="game-position">
-    <div class="move-name">{{ move }}</div>
-  </div>
+<template lang="pug">
+  .game-position
+    .move-name {{ move }}
+
 </template>
 
 <script>
-  import { state } from '../store/miniboard'
+  import { boardState } from '../store/miniboard'
 
   export default {
-    data: function() {
+    data() {
       return {
-        globalState: state
+        boardState
       }
     },
     computed: {
-      move: function() {
-        return this.globalState.move
+      move() {
+        return this.boardState.move
       }
     }
   }
 </script>
 
-<style lang="scss" scoped>
-  .move-name {
-    font-size: 16px;
-    font-weight: bold;
-    height: 18px;
-  }
+<style lang="stylus" scoped>
+  .move-name
+    font-size 16px
+    font-weight bold
+    height 18px
+
 </style>

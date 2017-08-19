@@ -11,7 +11,8 @@
 <script>
   import StackedGraph from './stacked_graph'
   import HoverIndicator from './hover_indicator'
-  import { state } from '../store/miniboard'
+  import Game from '../models/game'
+  import { boardState } from '../store/miniboard'
 
   export default {
     props: {
@@ -25,24 +26,23 @@
 
     data: function() {
       return {
-        globalState: state,
         i: 0,
         shouldShowLine: false
       }
     },
 
-    // global state changes - fen, move, score, highlights
+    // global boardState changes - fen, move, score, highlights
     //
     watch: {
       i: function(i) {
         const position = this.positions[i]
         if (position) {
-          state.fen = position
+          boardState.fen = position
         }
         if (i === 0) {
-          state.score = ""
+          boardState.score = ""
         } else if (this.scores[i] !== undefined) {
-          state.score = this.scores[i]
+          boardState.score = this.scores[i]
         }
         if (this.moves) {
           const j = i - 1
@@ -50,15 +50,15 @@
           if (move) {
             const moveNum = `${~~(1 + j/2)}${j % 2 === 0 ? `.` : `...`}`
             const moveSan = move.san
-            state.move = `${moveNum} ${moveSan}`
-            state.highlights = [move.from, move.to]
+            boardState.move = `${moveNum} ${moveSan}`
+            boardState.highlights = [move.from, move.to]
           } else {
-            state.move = ``
-            state.highlights = []
+            boardState.move = ``
+            boardState.highlights = []
           }
         }
         if (this.annotations) {
-          state.annotations = this.annotations[i] ? this.annotations[i] : ""
+          boardState.annotations = this.annotations[i] ? this.annotations[i] : ""
         }
       }
     },

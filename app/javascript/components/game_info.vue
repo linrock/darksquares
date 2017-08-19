@@ -9,7 +9,10 @@
 <script>
   export default {
     props: {
-      pgnHeaders: Object
+      pgnHeaders: {
+        type: Object,
+        required: true
+      }
     },
 
     computed: {

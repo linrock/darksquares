@@ -16,7 +16,7 @@
 <script>
   import Game from '../models/game'
   import Annotation from '../models/annotation'
-  import { state } from '../store/miniboard'
+  import { boardState } from '../store/miniboard'
 
   export default {
     props: {
@@ -25,10 +25,10 @@
 
     methods: {
       previewAnnotatedGame() {
-        state.fen = this.annotation.fen
-        state.highlights = [this.annotation.move.from, this.annotation.move.to]
-        state.move = this.annotation.move_string
-        state.pgnHeaders = this.annotation.game.pgnHeaders || {}
+        boardState.fen = this.annotation.fen
+        boardState.highlights = [this.annotation.move.from, this.annotation.move.to]
+        boardState.move = this.annotation.move_string
+        boardState.pgnHeaders = this.annotation.game.pgnHeaders || {}
       }
     },
 

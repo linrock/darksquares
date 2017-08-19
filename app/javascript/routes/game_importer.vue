@@ -25,7 +25,7 @@
   import router from '../router'
   import SubHeader from '../layouts/sub_header'
   import requireLogin from './guards/require_login'
-  import { state } from '../store/miniboard'
+  import { boardState } from '../store/miniboard'
   import Chessboard from '../components/chessboard.vue'
   import { createGame } from '../api/requests'
 
@@ -34,7 +34,7 @@
 
     data() {
       return {
-        boardState: state,
+        boardState,
         errorMessage: ``,
         isSubmitting: false,
       }
@@ -134,7 +134,7 @@
     .commands
       display flex
       align-items center
-      margin-top 20px
+      margin 20px 0
 
       .error-message
         color orange
