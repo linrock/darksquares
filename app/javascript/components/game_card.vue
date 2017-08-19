@@ -5,7 +5,8 @@
       router-link(:to="gamePositionPath")
         hover-graph-clickable(v-if="game.scores.length"
                               :width="600" :height="150"
-                              :game="game" :gameState="gameState")
+                              :game="game" :gameState="gameState"
+                              :shouldModifyBoard="true")
         .loading(v-if="!game.scores.length")
           | Analysis in progress...
 

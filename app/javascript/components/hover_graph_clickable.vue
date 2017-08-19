@@ -1,6 +1,6 @@
 <template>
   <div class="hover-graph-clickable">
-    <div @mousemove="setIndex"
+    <div @mousemove="setPositionIndex"
          @mouseenter="shouldShowLine = true" @mouseleave="shouldShowLine = false"
          @click="handleClick"
          class="hover-graph">
@@ -33,6 +33,10 @@
         type: Function,
         default: function() {}
       },
+      shouldModifyBoard: {
+        type: Boolean,
+        default: false
+      },
       width: Number,
       height: Number
     },
@@ -45,15 +49,12 @@
 
     // global state changes - fen, move, score, highlights, annotations
     //
-    watch: {
-      i: function(i) {
-        applyStateChange(this.game.stateAtPositionIndex(i))
-      }
-    },
-
     methods: {
-      setIndex: function(e) {
+      setPositionIndex: function(e) {
         this.gameState.i = ~~(this.game.nPoints * e.offsetX / this.width)
+        if (this.shouldModifyBoard) {
+          applyStateChange(this.game.stateAtPositionIndex(this.gameState.i))
+        }
       },
       handleClick: function() {
         this.clickedGraph(this.i)
@@ -61,9 +62,6 @@
     },
 
     computed: {
-      i: function() {
-        return this.gameState.i
-      },
       indicatorStyle: function() {
         return this.shouldShowLine ? `display: block` : `display: none`
       },

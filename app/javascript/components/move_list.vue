@@ -63,8 +63,8 @@
           return `highlighted`
         }
       },
-      moveId: function(i) {
-        return `move-${i}`
+      moveId: function(positionIndex) {
+        return `move-${positionIndex + 1}`
       },
     },
 

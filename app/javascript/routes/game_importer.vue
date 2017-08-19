@@ -49,7 +49,7 @@
     methods: {
       importGame(e) {
         e.preventDefault()
-        const pgn = this.$refs.pgn.value
+        const pgn = this.$refs.pgn.value.trim()
         const cjs = new Chess()
         if (!cjs.load_pgn(pgn)) {
           this.errorMessage = "Import failed. PGN is invalid!"

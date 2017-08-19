@@ -16,7 +16,7 @@
             :clickedGraph="scrollToMove"
           )
           .loading(v-if="!game.scores.length")
-            | Analysis in progress...
+            | Game analysis in progress...
 
       section.right-side
         game-info(:pgnHeaders="game.pgnHeaders")
@@ -58,7 +58,7 @@
     },
 
     created() {
-      gameState.i = this.currentMoveIndex()
+      gameState.i = this.initialMoveIndex()
       resetBoardState()
       getOrFetchGame(this.id).then(game => {
         applyStateChange(game.stateAtPositionIndex(gameState.i))
@@ -72,21 +72,19 @@
         const i = this.gameState.i
         if (i > 0) {
           this.gameState.i -= 1
-          this.scrollToMoveIfFar(i)
         }
       })
       Mousetrap.bind('right', () => {
         const i = this.gameState.i
-        if (i < this.game.positions.length) {
+        if (i < this.game.positions.length - 1) {
           this.gameState.i += 1
-          this.scrollToMoveIfFar(i)
         }
       })
     },
 
     updated() {
       if (!this.scrolledToMove) {
-        this.scrollToMoveIfFar(this.currentMoveIndex())
+        this.scrollToMoveIfFar(this.initialMoveIndex())
         this.scrolledToMove = true
       }
     },
@@ -95,8 +93,24 @@
       Mousetrap.reset()
     },
 
+    watch: {
+      i: function() {
+        if (!this.scrolledToMove) {
+          return
+        }
+        this.scrollToMoveIfFar(this.i)
+        applyStateChange(this.game.stateAtPositionIndex(this.i))
+      }
+    },
+
+    computed: {
+      i: function() {
+        return this.gameState.i
+      },
+    },
+
     methods: {
-      currentMoveIndex() {
+      initialMoveIndex() {
         const hash = window.location.hash
         if (hash) {
           const i = Number(hash.replace(/#/, ''))
@@ -114,6 +128,10 @@
         window.scrollTo(0, offsetTop - 250)
       },
       scrollToMoveIfFar(i) {
+        if (i === 0) {
+          window.scrollTo(0, 0)
+          return
+        }
         if (isElementInViewport(this.moveEl(i))) {
           return
         }
@@ -132,6 +150,9 @@
 </script>
 
 <style lang="stylus" scoped>
+  main
+    overflow-x hidden
+
   .content
     display flex
     width 1200px
@@ -155,7 +176,7 @@
       .loading
         font-size 16px
         color rgba(0,0,0,0.4)
-        padding-top 12px
+        margin-top 30px
 
   section.right-side
     padding 30px 0 0 40px
