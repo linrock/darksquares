@@ -1,5 +1,5 @@
 <template lang="pug">
-  .pgn-info
+  section.pgn-headers
     .pgn-header(v-for="(value, header) in pgnHeaders" v-if="validValue(value)")
       .header {{ header }}
       .value {{ value }}
@@ -26,15 +26,13 @@
   .pgn-header
     font-size 14px
     line-height 18px
-    margin-top 30px
+    display flex
 
   .header
-    float left
     font-weight bold
     width 120px
 
   .value
-    float left
     width 190px
 
 </style>

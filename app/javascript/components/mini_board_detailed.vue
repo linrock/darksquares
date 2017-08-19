@@ -60,4 +60,7 @@
       .game-position
         margin-right auto
 
+    .pgn-headers
+      margin-top 25px
+
 </style>

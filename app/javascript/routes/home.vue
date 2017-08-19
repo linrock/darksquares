@@ -1,7 +1,8 @@
 <template lang="pug">
   main#home
     .left-content
-      mini-board-detailed(:showPgn="true")
+      .left-inner
+        mini-board-detailed(:showPgn="true")
     .right-content
       header
         h1 Recent games
@@ -50,26 +51,29 @@
     background white
     width 420px
     height 100%
-    min-height 1000px
     position fixed
+    top 0
+    padding 40px 0 20px
+    overflow-y scroll
 
-    .mini-board-view
-      margin-top 30px
-      margin-left 40px
-      width 338px
+    .left-inner
+      .mini-board-view
+        margin-top 30px
+        margin-left 40px
+        width 338px
 
-      .game-info
-        margin-bottom 17px
+        .game-info
+          margin-bottom 17px
 
-      .position-info
-        margin-top 10px
-        clearfix()
+        .position-info
+          margin-top 10px
+          clearfix()
 
-        .game-position
-          float left
+          .game-position
+            float left
 
-        .position-evaluation
-          float right
+          .position-evaluation
+            float right
 
   .right-content
     width 100%
