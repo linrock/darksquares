@@ -182,6 +182,7 @@
     padding 30px 0 0 40px
     margin-left 480px
     border-left 1px solid rgba(0,0,0,0.07)
+    width 530px
 
     .game-info
       margin-bottom 20px

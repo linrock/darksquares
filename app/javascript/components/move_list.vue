@@ -146,7 +146,7 @@
     clear left
     float left
     margin 10px 0 15px
-    width 600px
+    width 100%
     border-radius 2px
 
   .annotation
