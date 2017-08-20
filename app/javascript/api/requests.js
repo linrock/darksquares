@@ -56,6 +56,12 @@ export const getUserInfo = function() {
   })
 }
 
+// PATCH
+
+export const patchGame = function(game, data) {
+  return api.patch(`/api/v1/games/${game.id}`, data)
+}
+
 // DELETE
 
 export const deleteGame = function(game) {

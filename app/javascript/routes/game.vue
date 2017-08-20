@@ -20,9 +20,12 @@
 
       section.right-side
         game-info(:pgnHeaders="game.pgnHeaders")
-        .game-actions(v-if="!gameState.isDeleting")
-          .delete-game(v-if="showGameActions" @click="showDeleteGamePrompt") Delete game
-        move-list(:game="game" :gameState="gameState" v-if="!gameState.isDeleting")
+        .game-actions(v-if="canTakeActions && !gameState.isSubmitting && !gameState.isDeleting")
+          .submit-game(@click="showSubmitGamePrompt") Submit game
+          .edit-pgn-headers(@click="showEditPgnHeadersPrompt") Edit PGN headers
+          .delete-game(@click="showDeleteGamePrompt") Delete game
+        move-list(:game="game" :gameState="gameState" v-if="!gameState.isSubmitting && !gameState.isDeleting")
+        game-submit-prompt(:game="game" :gameState="gameState" v-if="gameState.isSubmitting")
         game-delete-prompt(:game="game" :gameState="gameState" v-if="gameState.isDeleting")
 
 </template>
@@ -34,6 +37,7 @@
   import MiniBoardDetailed from '../components/mini_board_detailed.vue'
   import GameInfo from '../components/game_info'
   import MoveList from '../components/move_list'
+  import GameSubmitPrompt from '../components/game_submit_prompt'
   import GameDeletePrompt from '../components/game_delete_prompt'
   import { getUsername } from '../store/local_storage'
   import { resetBoardState, applyStateChange } from '../store/miniboard'
@@ -53,7 +57,8 @@
         game: null,
         gameState: {
           i: this.initialMoveIndex() || 0,
-          isDeleting: false
+          isSubmitting: false,
+          isDeleting: false,
         },
         scrolledToMove: false,
       }
@@ -108,9 +113,9 @@
       i() {
         return this.gameState.i
       },
-      showGameActions() {
+      canTakeActions() {
         return this.game.metadata.submitter === getUsername()
-      }
+      },
     },
 
     methods: {
@@ -141,6 +146,15 @@
         }
         this.scrollToMove(i)
       },
+      showingPrompt() {
+        return this.gameState.isSubmitting || this.gameState.isDeleting
+      },
+      showSubmitGamePrompt() {
+        this.gameState.isSubmitting = true
+      },
+      showEditPgnHeadersPrompt() {
+        this.gameState.isEditing = true
+      },
       showDeleteGamePrompt() {
         this.gameState.isDeleting = true
       }
@@ -152,6 +166,7 @@
       MoveList,
       HoverGraphClickable,
       MiniBoardDetailed,
+      GameSubmitPrompt,
       GameDeletePrompt,
     }
   }
@@ -200,12 +215,22 @@
       padding-top 12px
       font-size 12px
       margin-bottom 36px
+      display flex
 
       div
+        margin-right 25px
         opacity 0.5
 
         &:hover
           cursor pointer
           opacity 0.7
+
+      .submit-game
+        color rgb(58,137,201)
+        font-weight bold
+        opacity 0.9
+
+        &:hover
+          opacity 1
 
 </style>

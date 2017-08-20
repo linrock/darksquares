@@ -1,16 +1,18 @@
 <template lang="pug">
-  .game-delete-prompt
-    .prompt-text Are you sure you want to delete this game?
+  .game-submit-prompt
+    .prompt-text Give your game a name if you'd like.
+
+    input(type="text" placeholder="Name (optional)" ref="name")
 
     .actions  
-      button.confirm(@click="deleteGame") Delete game
-      button.cancel(@click="cancelDelete") Cancel
+      button.confirm(@click="submitGame") Submit game
+      button.cancel(@click="cancel") Cancel
 
 </template>
 
 <script>
   import router from '../router'
-  import { deleteGame } from '../api/requests'
+  import { patchGame } from '../api/requests'
   import { gameIdLists } from '../store/games'
   import Game from '../models/game'
 
@@ -26,21 +28,29 @@
       }
     },
     methods: {
-      deleteGame() {
-        deleteGame(this.game)
-        gameIdLists.home.splice(gameIdLists.home.findIndex(id => id === game.id), 1)
-        gameIdLists.myGames.splice(gameIdLists.myGames.findIndex(id => id === game.id), 1)
-        router.go(-1) || router.replace({ path: '/' })
-        this.gameState.isDeleting = false
+      submitGame() {
+        patchGame(this.game, {
+          game: {
+            submit: true,
+            name: this.$refs.name.value.trim(),
+          }
+        })
+        router.push({ path: '/' })
+        this.gameState.isSubmitting = false
       },
-      cancelDelete() {
-        this.gameState.isDeleting = false
+      cancel() {
+        this.gameState.isSubmitting = false
       }
     }
   }
 </script>
 
 <style lang="stylus" scoped>
+  input[type="text"]
+    font-size 18px
+    padding 5px 12px
+    width 400px
+
   button
     border none
     border-radius 2px
@@ -62,11 +72,14 @@
     background rgb(200, 200, 200)
     width 120px
 
-  .game-delete-prompt
+  .game-submit-prompt
     margin-top 50px
 
+    .prompt-text
+      margin-bottom 20px
+
   .actions
-    margin-top 20px
+    margin-top 40px
 
     .confirm
       margin-right 20px
