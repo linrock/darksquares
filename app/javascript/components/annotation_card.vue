@@ -4,7 +4,7 @@
       span annotated by
       span.annotator
         router-link(:to="userPath") {{ annotation.username }}
-      span {{ annotation.timeAgo() }}
+      span {{ annotation.timeAgo }}
 
     router-link.linked-card(:to="gamePath")
       .annotation-card(@mouseenter="previewAnnotatedGame")

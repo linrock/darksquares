@@ -22,7 +22,7 @@ class GameMetadata {
     this.submittedAt = parseDate(options.submitted_at)
   }
 
-  public timeAgo(): string {
+  get timeAgo(): string {
     return timeAgo(this.submittedAt)
   }
 }

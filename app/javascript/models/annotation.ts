@@ -87,7 +87,7 @@ export default class Annotation {
     return textArray
   }
 
-  public timeAgo(): string {
+  get timeAgo(): string {
     return timeAgo(this.createdAt)
   }
 }

@@ -6,7 +6,7 @@
         annotation-card(:annotation="card")
 
       .game-card-container(v-if="card.pgn")
-        .commands(v-if="gameSource")
+        // .commands(v-if="gameSource")
           span.delete(@click="deleteGame(card)") ×
         game-card-header(:game="card")
         .game-container

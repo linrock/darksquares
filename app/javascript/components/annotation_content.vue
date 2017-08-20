@@ -2,7 +2,7 @@
   .annotation
     .annotation-info
       .username(v-if="showUsername(annotation)") {{ annotation.username }}
-      .time-ago {{ annotation.timeAgo() }}
+      .time-ago {{ annotation.timeAgo }}
     annotation-text(:annotation="annotation")
 
 </template>
