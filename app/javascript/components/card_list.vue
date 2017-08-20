@@ -58,7 +58,7 @@
             map(id => gamesMap[id]).
             filter(game => game.graphPoints && game.graphPoints.length > 0)
         } else if (this.games && this.annotations) {
-          return this.games.concat(this.annotations).sort((a,b) => a.createdAt < b.createdAt)
+          return this.games.concat(this.annotations).sort((a,b) => b.createdAt - a.createdAt)
         } else if (this.annotations) {
           return this.annotations
         } else if (this.games) {
