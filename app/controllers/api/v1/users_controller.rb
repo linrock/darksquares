@@ -55,9 +55,11 @@ class API::V1::UsersController < API::V1::BaseController
             })
           },
           annotations: user.annotations.order('id DESC').map {|annotation|
+            # TODO deal with deleted games later
+            pgn_headers = annotation.game && annotation.game.pgn_headers || { "Deleted" => "Game" }
             annotation.as_json.merge({
               game: {
-                pgn_headers: annotation.game.pgn_headers
+                pgn_headers: pgn_headers
               }
             })
           }
