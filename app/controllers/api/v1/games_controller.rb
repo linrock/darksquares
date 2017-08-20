@@ -38,6 +38,8 @@ class API::V1::GamesController < API::V1::BaseController
 
   # DELETE /api/v1/games/:id
   def destroy
+    current_user.games.find(params[:id]).destroy!
+    render json: {}
   end
 
   private

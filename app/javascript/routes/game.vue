@@ -20,9 +20,10 @@
 
       section.right-side
         game-info(:pgnHeaders="game.pgnHeaders")
-        .annotations-filter
-        move-list(:game="game" :gameState="gameState")
-        .game-actions
+        .game-actions(v-if="!gameState.isDeleting")
+          .delete-game(v-if="showGameActions" @click="showDeleteGamePrompt") Delete game
+        move-list(:game="game" :gameState="gameState" v-if="!gameState.isDeleting")
+        game-delete-prompt(:game="game" :gameState="gameState" v-if="gameState.isDeleting")
 
 </template>
 
@@ -33,13 +34,11 @@
   import MiniBoardDetailed from '../components/mini_board_detailed.vue'
   import GameInfo from '../components/game_info'
   import MoveList from '../components/move_list'
+  import GameDeletePrompt from '../components/game_delete_prompt'
+  import { getUsername } from '../store/local_storage'
   import { resetBoardState, applyStateChange } from '../store/miniboard'
   import { getOrFetchGame } from '../store/games'
   import { isElementInViewport } from '../util'
-
-  const gameState = {
-    i: 0
-  }
 
   export default {
     props: {
@@ -52,16 +51,18 @@
     data: function() {
       return {
         game: null,
-        gameState,
-        scrolledToMove: false
+        gameState: {
+          i: this.initialMoveIndex() || 0,
+          isDeleting: false
+        },
+        scrolledToMove: false,
       }
     },
 
     created() {
-      gameState.i = this.initialMoveIndex()
       resetBoardState()
       getOrFetchGame(this.id).then(game => {
-        applyStateChange(game.stateAtPositionIndex(gameState.i))
+        applyStateChange(game.stateAtPositionIndex(this.gameState.i))
         this.game = game
       })
     },
@@ -104,9 +105,12 @@
     },
 
     computed: {
-      i: function() {
+      i() {
         return this.gameState.i
       },
+      showGameActions() {
+        return this.game.metadata.submitter === getUsername()
+      }
     },
 
     methods: {
@@ -136,6 +140,9 @@
           return
         }
         this.scrollToMove(i)
+      },
+      showDeleteGamePrompt() {
+        this.gameState.isDeleting = true
       }
     },
 
@@ -145,6 +152,7 @@
       MoveList,
       HoverGraphClickable,
       MiniBoardDetailed,
+      GameDeletePrompt,
     }
   }
 </script>
@@ -185,13 +193,19 @@
     width 530px
 
     .game-info
-      margin-bottom 20px
-
-    .annotations-filter
+      padding-bottom 20px
       border-bottom 1px solid rgba(0,0,0,0.05)
-      margin-bottom 15px
 
     .game-actions
-      margin-bottom: 200px
+      padding-top 12px
+      font-size 12px
+      margin-bottom 36px
+
+      div
+        opacity 0.5
+
+        &:hover
+          cursor pointer
+          opacity 0.7
 
 </style>
