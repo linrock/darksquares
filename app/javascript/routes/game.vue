@@ -3,10 +3,12 @@
     sub-header
       div
         | Game {{ id }}
-        span(v-if="game.name")
-          | &nbsp;&mdash; {{ game.name }}
-        span.author(v-if="game.user")
-          | &nbsp;&mdash; {{ authorText }}
+      div(v-if="game.name")
+        .separator &mdash;
+        | {{ game.name }}
+      .author(v-if="game.user")
+        .separator &mdash;
+        | {{ authorText }}
 
     .content(v-if="game")
       section.left-side
@@ -188,8 +190,14 @@
   main
     overflow-x hidden
 
-  .author
-    opacity 0.5
+  .sub-header
+    .separator
+      display inline
+      margin 0 7px
+
+    .author
+      opacity 0.5
+      font-size 12px
 
   .content
     display flex
@@ -249,6 +257,6 @@
           opacity 1
 
     .move-list
-      margin-top 36px
+      margin 36px 0 80px
 
 </style>

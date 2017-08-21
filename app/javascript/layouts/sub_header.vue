@@ -17,6 +17,8 @@
     line-height 36px
     position fixed
     z-index 1
+    display flex
+    align-items center
 
   .sub-header-spacer
     height 36px
