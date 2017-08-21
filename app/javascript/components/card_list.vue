@@ -1,10 +1,7 @@
 <template lang="pug">
   .card-list
     .card-wrapper(v-for="item in cardList")
-      .votes
-        img.upvote(src="/assets/upvote.svg")
-        .score 7
-        img.downvote(src="/assets/downvote.svg")
+      votes(:item="item")
 
       .annotation-card-container(v-if="item.text")
         annotation-card(:annotation="item")
@@ -19,9 +16,10 @@
 </template>
 
 <script>
-  import AnnotationCard from '../components/annotation_card.vue'
-  import GameCardHeader from '../components/game_card_header.vue'
-  import GameCard from '../components/game_card.vue'
+  import AnnotationCard from './annotation_card.vue'
+  import GameCardHeader from './game_card_header.vue'
+  import GameCard from './game_card.vue'
+  import Votes from './votes.vue'
   import { gameIdLists, gamesMap } from '../store/games'
   import { deleteGame } from '../api/requests'
 
@@ -79,6 +77,7 @@
       AnnotationCard,
       GameCardHeader,
       GameCard,
+      Votes,
     }
   }
 </script>
@@ -93,23 +92,7 @@
       margin 25px 0
 
       .votes
-        display flex
-        align-items center
-        flex-direction column
-        padding 2px 0 0 3px
         width 60px
-
-        img, div
-          display block
-
-        img
-          width 10px
-
-        .score
-          color rgba(0,0,0,0.4)
-          font-size 12px
-          font-weight bold
-          margin 9px 0
 
   .game-card-container .commands
     float right
