@@ -1,7 +1,12 @@
 <template lang="pug">
   main#game
     sub-header
-      div Game {{ id }}
+      div
+        | Game {{ id }}
+        span(v-if="game.name")
+          | &nbsp;&mdash; {{ game.name }}
+        span.author(v-if="game.user")
+          | &nbsp;&mdash; {{ authorText }}
 
     .content(v-if="game")
       section.left-side
@@ -116,6 +121,13 @@
       canTakeActions() {
         return this.game.user.username === getUsername()
       },
+      authorText() {
+        if (this.game.submittedAt) {
+          return `submitted by ${this.game.user.username} ${this.game.submittedAtTimeAgo}`
+        } else {
+          return `created by ${this.game.user.username} ${this.game.createdAtTimeAgo}`
+        }
+      },
     },
 
     methods: {
@@ -175,6 +187,9 @@
 <style lang="stylus" scoped>
   main
     overflow-x hidden
+
+  .author
+    opacity 0.5
 
   .content
     display flex
