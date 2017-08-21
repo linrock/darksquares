@@ -84,13 +84,6 @@
 </script>
 
 <style lang="stylus" scoped>
-  clearfix()
-    &:before, &:after
-      display table
-      content ""
-    &:after
-      clear both
-
   .card-list
     padding-top 10px
     width 700px
@@ -134,14 +127,10 @@
         cursor pointer
 
   .game-container
-    @include clearfix
     border-radius 1px
     width 640px
     border-bottom 1px solid #eee
     background white
-
-    .move-list
-      margin 15px 30px 0 0
 
   .graph-container
     .game-info

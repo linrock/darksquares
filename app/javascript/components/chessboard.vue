@@ -94,15 +94,9 @@
 </script>
 
 <style lang="stylus" scoped>
+  @import "../common.styl"
+
   square-size = 42px
-
-  clearfix()
-    &:before, &:after
-      content ""
-      display table
-
-    &:after
-      clear both
 
   .chessboard
     border 1px solid #938172

@@ -87,12 +87,7 @@
 </script>
 
 <style lang="stylus" scoped>
-  clearfix()
-    &:before, &:after
-      display table
-      content ""
-    &:after
-      clear both
+  @import "../common.styl"
 
   .move-list
     font-size 14px
