@@ -6,6 +6,7 @@ class Game < ApplicationRecord
   validates_presence_of :pgn_headers
   validates_presence_of :moves
   validates_presence_of :positions
+  validates_length_of :name, in: (1..64), allow_nil: true
 
   belongs_to :user
   has_many :annotations
@@ -47,7 +48,6 @@ class Game < ApplicationRecord
     super(options).merge({
       metadata: {
         submitter: user.username,
-        submitted_at: created_at,
       }
     })
   end

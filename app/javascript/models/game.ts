@@ -6,30 +6,21 @@ import Annotation from './annotation'
 const cjs = new Chess()
 
 interface GameMetadataOptions {
-  name: string
   submitter: string
-  submitted_at: string
 }
 
 class GameMetadata {
-  public name: string
   public submitter: string
-  public submittedAt: Date
 
   public constructor(options: GameMetadataOptions) {
-    this.name = options.name
     this.submitter = options.submitter
-    this.submittedAt = parseDate(options.submitted_at)
-  }
-
-  get timeAgo(): string {
-    return timeAgo(this.submittedAt)
   }
 }
 
 export interface GameOptions {
   id: number
   metadata: GameMetadataOptions
+  name: string
   pgn: string
   pgn_headers: object
   positions: Array<string>
@@ -38,11 +29,13 @@ export interface GameOptions {
   graph_points: Array<Array<number>>
   annotations: Array<any>
   created_at: string
+  submitted_at: string
 }
 
 export default class Game {
   public id: number
   public metadata: GameMetadata
+  public name: string
   public pgn: string
   public pgnHeaders: object
   public positions: Array<string>
@@ -51,6 +44,7 @@ export default class Game {
   public graphPoints: Array<Array<number>>
   public annotations: Array<Annotation>
   public createdAt: Date
+  public submittedAt: Date
 
   private annotationMap: object
 
@@ -63,6 +57,7 @@ export default class Game {
     if (options.metadata) {
       this.metadata = new GameMetadata(options.metadata)
     }
+    this.name = options.name
     this.pgn = options.pgn
     this.pgnHeaders = options.pgn_headers
     this.positions = options.positions
@@ -74,13 +69,16 @@ export default class Game {
     if (options.annotations) {
       this.annotations = options.annotations.map(annotation => {
         return new Annotation(
-          (<any>Object).assign({ game: this }, annotation)
+          (<any> Object).assign({ game: this }, annotation)
         )
       })
       this.computeAnnotationMap()
     }
     if (options.created_at) {
       this.createdAt = parseDate(options.created_at)
+    }
+    if (options.submitted_at) {
+      this.submittedAt = parseDate(options.submitted_at)
     }
   }
 
@@ -154,6 +152,14 @@ export default class Game {
       }
     }
     return state
+  }
+
+  get createdAtTimeAgo(): string {
+    return timeAgo(this.createdAt)
+  }
+
+  get submittedAtTimeAgo(): string {
+    return timeAgo(this.submittedAt)
   }
 
   // positions

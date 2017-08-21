@@ -25,7 +25,7 @@ class API::V1::GamesController < API::V1::BaseController
 
   # POST /api/v1/games
   def create
-    game = Game.create!(game_params.merge(user_id: current_user.id))
+    game = Game.create!(create_game_params.merge(user_id: current_user.id))
     GameDataCalculatorJob.perform_later game
     render json: {
       game: game.as_json
@@ -34,18 +34,37 @@ class API::V1::GamesController < API::V1::BaseController
 
   # PATCH /api/v1/games/:id
   def update
+    if game.submitted_at.present?
+      render status: 400, json: {}
+    elsif params[:submit]
+      game.update_attributes!(patch_game_params.merge({
+        submitted_at: Time.now
+      }))
+      render json: {
+        game: game.as_json.merge({
+          annotations: game.annotations.includes(:user)
+        })
+      }
+    end
   end
 
   # DELETE /api/v1/games/:id
   def destroy
-    current_user.games.find(params[:id]).destroy!
+    game.destroy!
     render json: {}
   end
 
   private
 
-  def game_params
+  def game
+    @game ||= current_user.games.find(params[:id])
+  end
+
+  def create_game_params
     params.require(:game).permit(:pgn)
   end
 
+  def patch_game_params
+    params.require(:game).permit(:name)
+  end
 end

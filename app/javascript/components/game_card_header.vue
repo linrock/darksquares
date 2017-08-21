@@ -1,13 +1,12 @@
 <template lang="pug">
-  .game-card-header(v-if="metadata")
-    span(v-if="metadata.name")
-      span.game-card-name {{ metadata.name }}
-      .separator &ndash;
-    span(v-if="metadata.submitter")
-      | submitted by
-      span.game-submitter
-        router-link(:to="userPath") {{ metadata.submitter }}
-      span.time-ago {{ metadata.timeAgo }}
+  .game-card-header
+    span(v-if="game.name")
+      span.game-card-name {{ game.name }}
+      span.separator &ndash;
+    span {{ prefixText }}
+    span.game-author
+      router-link(:to="userPath") {{ metadata.submitter }}
+    span.time-ago {{ timeAgo }}
 
 </template>
 
@@ -26,6 +25,13 @@
       metadata() {
         return this.game.metadata
       },
+      prefixText() {
+        return this.game.submittedAt ? `submitted by` : `created by`
+      },
+      timeAgo() {
+        return this.game.submittedAt ? this.game.submittedAtTimeAgo :
+                                       this.game.createdAtTimeAgo
+      },
       userPath() {
         return `/u/${this.metadata.submitter}`
       }
@@ -43,7 +49,7 @@
   .separator
     margin 0 5px
 
-  .game-submitter
+  .game-author
     font-weight bold
     margin 0 5px
 

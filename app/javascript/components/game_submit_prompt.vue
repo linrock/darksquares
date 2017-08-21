@@ -30,8 +30,8 @@
     methods: {
       submitGame() {
         patchGame(this.game, {
+          submit: true,
           game: {
-            submit: true,
             name: this.$refs.name.value.trim(),
           }
         })

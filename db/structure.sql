@@ -91,7 +91,9 @@ CREATE TABLE games (
     graph_points jsonb,
     metadata jsonb,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    name character varying,
+    submitted_at timestamp without time zone
 );
 
 
@@ -555,6 +557,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170806012646'),
 ('20170807095726'),
 ('20170816193641'),
-('20170816195324');
+('20170816195324'),
+('20170820234635');
 
 
