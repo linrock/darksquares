@@ -206,6 +206,7 @@
     margin-left 480px
     border-left 1px solid rgba(0,0,0,0.07)
     width 530px
+    min-height 472px
 
     .game-info
       padding-bottom 20px
@@ -214,7 +215,6 @@
     .game-actions
       padding-top 12px
       font-size 12px
-      margin-bottom 36px
       display flex
 
       div
@@ -232,5 +232,8 @@
 
         &:hover
           opacity 1
+
+    .move-list
+      margin-top 36px
 
 </style>

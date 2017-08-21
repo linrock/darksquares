@@ -1,6 +1,7 @@
 import * as Chess from 'chess.js'
 import { groupBy, parseDate, timeAgo } from '../util'
 import Move from './move'
+import BoardState from './board_state'
 import User from './user'
 import { UserOptions } from './user'
 import Annotation from './annotation'
@@ -111,9 +112,9 @@ export default class Game {
     return `${~~(i / 2 + 1)}.${i % 2 === 0 ? '' : '..'}`
   }
 
-  public stateAtPositionIndex(i: number): object {
+  public stateAtPositionIndex(i: number): BoardState {
     const fen = this.positions[i]
-    const state = <any> {}
+    const state = <BoardState> {}
     if (fen) {
       state.fen = fen
     }
