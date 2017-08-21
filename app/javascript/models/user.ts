@@ -1,15 +1,18 @@
 import Game from './game'
+import { GameOptions } from './game'
 import Annotation from './annotation'
+import { AnnotationOptions } from './annotation'
 
-const defaultUserOptions = {
+const defaultUserOptions: UserOptions = {
+  username: null,
   games: [],
   annotations: []
 }
 
-interface UserOptions {
+export interface UserOptions {
   username: string
-  games?: Array<Game>
-  annotations?: Array<Annotation>
+  games?: Array<GameOptions>
+  annotations?: Array<AnnotationOptions>
 }
 
 export default class User {

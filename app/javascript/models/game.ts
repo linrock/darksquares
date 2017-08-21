@@ -2,13 +2,15 @@ import * as Chess from 'chess.js'
 import { groupBy, parseDate, timeAgo } from '../util'
 import Move from './move'
 import User from './user'
+import { UserOptions } from './user'
 import Annotation from './annotation'
+import { AnnotationOptions } from './annotation'
 
 const cjs = new Chess()
 
 export interface GameOptions {
   id: number
-  user: User
+  user: UserOptions
   name: string
   pgn: string
   pgn_headers: object
@@ -16,7 +18,7 @@ export interface GameOptions {
   moves: Array<object>
   best_moves: Array<object>
   graph_points: Array<Array<number>>
-  annotations: Array<any>
+  annotations: Array<AnnotationOptions>
   created_at: string
   submitted_at: string
 }
@@ -57,9 +59,7 @@ export default class Game {
     this.graphPoints = options.graph_points
     if (options.annotations) {
       this.annotations = options.annotations.map(annotation => {
-        return new Annotation(
-          (<any> Object).assign({ game: this }, annotation)
-        )
+        return new Annotation(Object.assign({ game: this }, annotation))
       })
       this.computeAnnotationMap()
     }
@@ -113,7 +113,7 @@ export default class Game {
 
   public stateAtPositionIndex(i: number): object {
     const fen = this.positions[i]
-    const state = <any>{}
+    const state = <any> {}
     if (fen) {
       state.fen = fen
     }

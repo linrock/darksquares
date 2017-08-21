@@ -5,7 +5,6 @@ const initialState = {
   move: "",
   score: "",
   bestMove: "",
-  annotations: "",
   highlights: [],
 }
 
