@@ -82,7 +82,7 @@
 
 <style lang="stylus" scoped>
   textarea
-    width 530px
+    width 560px
     height 338px
     font-size 16px
     padding 15px

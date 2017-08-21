@@ -62,7 +62,8 @@ class API::V1::UsersController < API::V1::BaseController
                 pgn_headers: pgn_headers
               }
             })
-          }
+          },
+          created_at: user.created_at
         }
       }
     end

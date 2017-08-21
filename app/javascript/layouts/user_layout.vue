@@ -4,7 +4,9 @@
       mini-board-detailed(:showPgn="true")
     .right-content
       header
-        h1(v-if="headerText") {{ headerText }}
+        template(v-if="headerText")
+          h1 {{ headerText }}
+          h2 Member since {{ user.memberSince }}
       nav
         template(v-if="user.username")
           router-link(:to="overviewLink") Overview
@@ -110,20 +112,24 @@
 
     header
       background #393939
-      height 70px
-      padding-left 30px + 30px
+      padding 29px 0 19px 60px
+      height 100px
 
       h1
         color white
         font-size 20px
-        padding 30px 0 20px
         margin 0
+
+      h2
+        color #cacaca
+        font-size 12px
+        margin 10px 0
 
     nav
       background #E3E3E3
       padding-left 30px + 30px
-      height 45px
-      line-height 49px
+      height 41px
+      line-height 44px
       display flex
       font-weight bold
 

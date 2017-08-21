@@ -83,7 +83,8 @@
 
     header
       background #393939
-      padding 30px 0 20px 60px
+      padding 29px 0 19px 60px
+      height 100px
 
       h1
         color white
