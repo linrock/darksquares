@@ -1,25 +1,14 @@
 import * as Chess from 'chess.js'
 import { groupBy, parseDate, timeAgo } from '../util'
 import Move from './move'
+import User from './user'
 import Annotation from './annotation'
 
 const cjs = new Chess()
 
-interface GameMetadataOptions {
-  submitter: string
-}
-
-class GameMetadata {
-  public submitter: string
-
-  public constructor(options: GameMetadataOptions) {
-    this.submitter = options.submitter
-  }
-}
-
 export interface GameOptions {
   id: number
-  metadata: GameMetadataOptions
+  user: User
   name: string
   pgn: string
   pgn_headers: object
@@ -34,7 +23,7 @@ export interface GameOptions {
 
 export default class Game {
   public id: number
-  public metadata: GameMetadata
+  public user: User
   public name: string
   public pgn: string
   public pgnHeaders: object
@@ -54,8 +43,8 @@ export default class Game {
 
   public constructor(options: GameOptions) {
     this.id = options.id
-    if (options.metadata) {
-      this.metadata = new GameMetadata(options.metadata)
+    if (options.user) {
+      this.user = new User(options.user)
     }
     this.name = options.name
     this.pgn = options.pgn

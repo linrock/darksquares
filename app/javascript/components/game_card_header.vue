@@ -5,7 +5,7 @@
       span.separator &ndash;
     span {{ prefixText }}
     span.game-author
-      router-link(:to="userPath") {{ metadata.submitter }}
+      router-link(:to="userPath") {{ game.user.username }}
     span.time-ago {{ timeAgo }}
 
 </template>
@@ -33,7 +33,7 @@
                                        this.game.createdAtTimeAgo
       },
       userPath() {
-        return `/u/${this.metadata.submitter}`
+        return `/u/${this.game.user.username}`
       }
     }
   }

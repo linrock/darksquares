@@ -12,7 +12,11 @@ export default class User {
     annotations: []
   }) {
     this.username = options.username
-    this.games = options.games.map(data => new Game(data))
-    this.annotations = options.annotations.map(data => new Annotation(data))
+    if (options.games) {
+      this.games = options.games.map(data => new Game(data))
+    }
+    if (options.annotations) {
+      this.annotations = options.annotations.map(data => new Annotation(data))
+    }
   }
 }

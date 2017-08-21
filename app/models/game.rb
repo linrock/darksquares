@@ -46,8 +46,8 @@ class Game < ApplicationRecord
 
   def as_json(options = {})
     super(options).merge({
-      metadata: {
-        submitter: user.username,
+      user: {
+        username: user.username,
       }
     })
   end

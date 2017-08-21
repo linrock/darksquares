@@ -23,7 +23,7 @@
     },
 
     methods: {
-      createAnnotation: function(ev) {
+      createAnnotation(ev) {
         ev.preventDefault()
         const annotation = new Annotation({
           username: getUsername(),
@@ -40,7 +40,7 @@
     },
 
     computed: {
-      inputPlaceholder: function() {
+      inputPlaceholder() {
         return `Write an annotation for ${this.moveString}`
       }
     },

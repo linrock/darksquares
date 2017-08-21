@@ -114,7 +114,7 @@
         return this.gameState.i
       },
       canTakeActions() {
-        return this.game.metadata.submitter === getUsername()
+        return this.game.user.username === getUsername()
       },
     },
 
