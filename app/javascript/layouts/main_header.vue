@@ -45,7 +45,7 @@
 
 <style lang="stylus" scoped>
   header
-    background #333
+    background #212121
     color white
     width 100%
     height 40px
@@ -55,7 +55,7 @@
 
   .main
     font-size 14px
-    width 1090px
+    width 1120px
     height 100%
     display flex
 
@@ -72,7 +72,7 @@
     .square
       width 40px
       height 40px
-      background #222
+      background #111
 
     .left
       width 149px
@@ -100,8 +100,8 @@
           width 17px
 
         .about
-          top 1px
-          width 16px
+          top 2px
+          width 14px
 
     a.router-link-exact-active
       color white

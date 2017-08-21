@@ -79,11 +79,11 @@
     width 100%
     height 100%
     padding-left 420px
-    background #F1F1F1
+    background #f4f4f4
 
     header
-      background #4e4e4e
-      padding 30px 0 20px 30px
+      background #393939
+      padding 30px 0 20px 60px
 
       h1
         color white
@@ -96,7 +96,6 @@
         margin 10px 0
 
     .content
-      margin-left 30px
       min-height 1000px
       height 100%
 

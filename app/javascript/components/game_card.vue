@@ -71,6 +71,8 @@
   .game-card
     background white
     position relative
+    border 1px solid #E4E4E4
+    border-radius 2px
     width 640px
 
   a

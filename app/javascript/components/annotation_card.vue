@@ -45,9 +45,6 @@
 </script>
 
 <style lang="stylus" scoped>
-  .annotation-card-container
-    margin 25px 0
-
   header
     color rgba(0,0,0,0.4)
     font-size 12px
@@ -74,6 +71,8 @@
 
   .annotation-card
     background white
+    border 1px solid #E4E4E4
+    border-radius 2px
     font-size 14px
     line-height 18px
     padding 15px 20px

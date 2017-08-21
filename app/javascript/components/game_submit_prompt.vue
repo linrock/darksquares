@@ -2,7 +2,7 @@
   .game-submit-prompt
     .prompt-text Give your game a name if you'd like.
 
-    input(type="text" placeholder="Name (optional)" ref="name")
+    input(type="text" placeholder="Name (optional)" ref="name" :value="game.name")
 
     .actions  
       button.confirm(@click="submitGame") Submit game

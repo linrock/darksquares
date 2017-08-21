@@ -109,9 +109,9 @@
     padding-left 420px
 
     header
-      background #4e4e4e
+      background #393939
       height 70px
-      padding-left 30px
+      padding-left 30px + 30px
 
       h1
         color white
@@ -121,7 +121,7 @@
 
     nav
       background #E3E3E3
-      padding-left 30px
+      padding-left 30px + 30px
       height 45px
       line-height 49px
       display flex
@@ -144,7 +144,6 @@
 
     .content
       background #F1F1F1
-      padding-left 30px
       min-height 1000px
       height 100%
 

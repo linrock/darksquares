@@ -1,16 +1,20 @@
 <template lang="pug">
   .card-list
-    .card(v-for="card in cardList")
+    .card-wrapper(v-for="item in cardList")
+      .votes
+        img.upvote(src="/assets/upvote.svg")
+        .score 7
+        img.downvote(src="/assets/downvote.svg")
 
-      .annotation-card-container(v-if="card.text")
-        annotation-card(:annotation="card")
+      .annotation-card-container(v-if="item.text")
+        annotation-card(:annotation="item")
 
-      .game-card-container(v-if="card.pgn")
+      .game-card-container(v-if="item.pgn")
         // .commands(v-if="gameSource")
           span.delete(@click="deleteGame(card)") ×
-        game-card-header(:game="card")
+        game-card-header(:game="item")
         .game-container
-          game-card(:game="card")
+          game-card(:game="item")
 
 </template>
 
@@ -89,28 +93,45 @@
 
   .card-list
     padding-top 10px
-    width 640px
+    width 700px
 
-  .annotation-card-container
-    margin 25px 0
+    .card-wrapper
+      display flex
+      margin 25px 0
 
-  .game-card-container
-    margin 25px 0
+      .votes
+        display flex
+        align-items center
+        flex-direction column
+        padding 2px 0 0 3px
+        width 60px
 
-    .commands
-      float right
-      opacity 0.3
+        img, div
+          display block
 
-      .delete
-        opacity 0.3
-        transition opacity 0.15s ease
+        img
+          width 10px
 
-        &:hover
-          opacity 0.5
-          cursor pointer
+        .score
+          color rgba(0,0,0,0.4)
+          font-size 12px
+          font-weight bold
+          margin 9px 0
+
+  .game-card-container .commands
+    float right
+    opacity 0.3
 
     a
       text-decoration none
+
+    .delete
+      opacity 0.3
+      transition opacity 0.15s ease
+
+      &:hover
+        opacity 0.5
+        cursor pointer
 
   .game-container
     @include clearfix
