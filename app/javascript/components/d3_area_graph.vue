@@ -1,7 +1,7 @@
-<template>
-  <svg class="d3-area-graph" :style="svgStyle">
-    <path ref="path" :style="pathStyle"></path>
-  </svg>
+<template lang="pug">
+  svg.d3-area-graph(:style="svgStyle")
+    path(ref="path" :style="pathStyle")
+
 </template>
 
 <script>
@@ -15,23 +15,22 @@
       height: Number
     },
 
-    data: function() {
+    data() {
       return {
         yRange: [-5, 5]
       }
     },
 
-    mounted: function() {
+    mounted() {
       this.plotPoints()
     },
 
     methods: {
-      plotPoints: function() {
+      plotPoints() {
         const areaGraph = area()
           .x(d => this.xValues(d.x))
           .y0(this.height/2)
           .y1(d => this.yValues(d.y))
-
         select(this.$refs.path)
           .data([this.dataPoints])
           .attr(`d`, areaGraph)
@@ -39,20 +38,20 @@
     },
 
     computed: {
-      xValues: function() {
+      xValues() {
         return scaleTime().range([0, this.width]).domain(extent(this.dataPoints, d => d.x))
       },
-      yValues: function() {
+      yValues() {
         return scaleLinear().range([this.height, 0]).domain(this.yRange)
       },
-      svgStyle: function() {
+      svgStyle() {
         return `width: ${this.width}px; height: ${this.height}px;`
       },
-      pathStyle: function() {
+      pathStyle() {
         return `fill: ${this.color}; stroke-width: 0;`
       },
-      dataPoints: function() {
-        return this.points.map((y,i) => { return { x: i, y: y } })
+      dataPoints() {
+        return this.points.map((y,x) => ({ x, y }))
       }
     },
   }
