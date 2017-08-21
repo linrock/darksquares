@@ -58,10 +58,11 @@
     float left
     clear left
     margin 10px 0
+    width 100%
 
     input
       font-size 14px
-      width 530px
+      width 100%
       padding 3px
 
 </style>

@@ -21,7 +21,7 @@
       section.right-side
         game-info(:pgnHeaders="game.pgnHeaders")
         .game-actions(v-if="canTakeActions && !gameState.isSubmitting && !gameState.isDeleting")
-          .submit-game(@click="showSubmitGamePrompt") Submit game
+          .submit-game(@click="showSubmitGamePrompt" v-if="!game.submittedAt") Submit game
           .edit-pgn-headers(@click="showEditPgnHeadersPrompt") Edit PGN headers
           .delete-game(@click="showDeleteGamePrompt") Delete game
         move-list(:game="game" :gameState="gameState" v-if="!gameState.isSubmitting && !gameState.isDeleting")
