@@ -15,17 +15,13 @@
       section.left-side
         .left-side-inner
           mini-board-detailed(:squareSize="55")
-          evaluation-graph(
-            v-if="game.scores.length"
+          graph-or-loading(
             :width="443"
             :height="120"
             :game="game"
             :gameState="gameState"
             :clickedGraph="scrollToMove"
           )
-          .loading(v-if="!game.scores.length")
-            | Game analysis in progress...
-
       section.right-side
         game-info(:pgnHeaders="game.pgnHeaders")
         .game-actions(v-if="canTakeActions && !gameState.isSubmitting && !gameState.isDeleting")
@@ -41,7 +37,7 @@
 <script>
   import Mousetrap from 'mousetrap'
   import SubHeader from '../layouts/sub_header'
-  import EvaluationGraph from '../components/evaluation_graph.vue'
+  import GraphOrLoading from '../components/graph_or_loading.vue'
   import MiniBoardDetailed from '../components/mini_board_detailed.vue'
   import GameInfo from '../components/game_info'
   import MoveList from '../components/move_list'
@@ -179,7 +175,7 @@
       SubHeader,
       GameInfo,
       MoveList,
-      EvaluationGraph,
+      GraphOrLoading,
       MiniBoardDetailed,
       GameSubmitPrompt,
       GameDeletePrompt,
@@ -217,10 +213,10 @@
     .left-side-inner
       width 443px
 
-      .hover-graph-clickable
+      .evaluation-graph
         margin-top 25px
 
-      .loading
+      .graph-or-loading >>> .loading
         font-size 16px
         color rgba(0,0,0,0.4)
         margin-top 30px

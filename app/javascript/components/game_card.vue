@@ -3,13 +3,13 @@
     .graph-container(@mouseenter="setCurrentPgn")
       game-info(:pgnHeaders="game.pgnHeaders")
       router-link(:to="gamePositionPath")
-        evaluation-graph(v-if="game.scores.length"
-                         :width="600" :height="150"
-                         :game="game" :gameState="gameState"
-                         :shouldModifyBoard="true")
-        .loading(v-if="!game.scores.length")
-          | Analysis in progress...
-
+        graph-or-loading(
+          :width="600"
+          :height="150"
+          :game="game"
+          :gameState="gameState"
+          :shouldModifyBoard="true"
+        )
     .annotations-container(v-if="game.annotations.length")
       annotation-previews(:game="game")
       router-link(:to="game.path")
@@ -20,6 +20,7 @@
 
 <script>
   import GameInfo from './game_info.vue'
+  import GraphOrLoading from './graph_or_loading.vue'
   import EvaluationGraph from './evaluation_graph.vue'
   import AnnotationPreviews from './annotation_previews.vue'
   import Game from '../models/game'
@@ -34,7 +35,6 @@
       return {
         boardState,
         gameState: {
-          expanded: false,
           i: 0,
         },
       }
@@ -61,7 +61,7 @@
 
     components: {
       GameInfo,
-      EvaluationGraph,
+      GraphOrLoading,
       AnnotationPreviews,
     }
   }
@@ -83,7 +83,7 @@
       opacity 0.9
       text-decoration underline
 
-  .loading
+  .graph-or-loading >>> .loading
     font-size 14px
     color rgba(0,0,0,0.4)
     padding 12px 0
