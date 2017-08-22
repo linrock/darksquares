@@ -92,10 +92,7 @@
         return !this.currentGame.scores.length
       },
       progressText() {
-        if (!this.percentComplete) {
-          return
-        }
-        return `${this.percentComplete}% done`
+        return this.percentComplete && `${this.percentComplete}% done`
       }
     },
 

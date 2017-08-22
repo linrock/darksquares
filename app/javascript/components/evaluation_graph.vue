@@ -62,7 +62,7 @@
         }
       },
       handleClick: function() {
-        this.clickedGraph(this.i)
+        this.clickedGraph(this.gameState.i)
       }
     },
 

@@ -12,7 +12,10 @@
           | {{ authorText }}
 
     .content(v-if="game")
-      section.left-side
+      section.left-side(
+        @mouseenter="disableAutoscroll"
+        @mouseleave="enableAutoscroll"
+      )
         .left-side-inner
           mini-board-detailed(:squareSize="55")
           graph-or-loading(
@@ -24,11 +27,11 @@
           )
       section.right-side
         game-info(:pgnHeaders="game.pgnHeaders")
-        .game-actions(v-if="canTakeActions && !gameState.isSubmitting && !gameState.isDeleting")
+        .game-actions(v-if="canTakeActions && !gameState.isDeleting && !gameState.isSubmitting")
           .submit-game(@click="showSubmitGamePrompt" v-if="!game.submittedAt") Submit game
           .edit-pgn-headers(@click="showEditPgnHeadersPrompt") Edit PGN headers
           .delete-game(@click="showDeleteGamePrompt") Delete game
-        move-list(:game="game" :gameState="gameState" v-if="!gameState.isSubmitting && !gameState.isDeleting")
+        move-list(:game="game" :gameState="gameState" v-if="!gameState.isDeleting && !gameState.isSubmitting")
         game-submit-prompt(:game="game" :gameState="gameState" v-if="gameState.isSubmitting")
         game-delete-prompt(:game="game" :gameState="gameState" v-if="gameState.isDeleting")
 
@@ -64,6 +67,7 @@
           isSubmitting: false,
           isDeleting: false,
         },
+        shouldScrollToMove: true,
         scrolledToMove: false,
       }
     },
@@ -105,7 +109,7 @@
 
     watch: {
       i: function() {
-        if (!this.scrolledToMove) {
+        if (!this.scrolledToMove || !this.shouldScrollToMove) {
           return
         }
         this.scrollToMoveIfFar(this.i)
@@ -144,14 +148,14 @@
         return this.$el.querySelector(`#move-${i}`)
       },
       scrollToMove(i) {
-        const offsetTop = this.moveEl(i).offsetTop
-        window.scrollTo(0, offsetTop - 250)
-      },
-      scrollToMoveIfFar(i) {
         if (i === 0) {
           window.scrollTo(0, 0)
           return
         }
+        const offsetTop = this.moveEl(i).offsetTop
+        window.scrollTo(0, offsetTop - 250)
+      },
+      scrollToMoveIfFar(i) {
         if (isElementInViewport(this.moveEl(i))) {
           return
         }
@@ -159,6 +163,12 @@
       },
       showingPrompt() {
         return this.gameState.isSubmitting || this.gameState.isDeleting
+      },
+      disableAutoscroll() {
+        this.shouldScrollToMove = false
+      },
+      enableAutoscroll() {
+        this.shouldScrollToMove = true
       },
       showSubmitGamePrompt() {
         this.gameState.isSubmitting = true
@@ -213,7 +223,7 @@
     .left-side-inner
       width 443px
 
-      .evaluation-graph
+      .graph-or-loading
         margin-top 25px
 
       .graph-or-loading >>> .loading
