@@ -1,6 +1,5 @@
 /*
  *= require reset
- *= require_tree .
  *= require_self
  */
 
@@ -12,6 +11,6 @@ html {
   box-sizing: inherit;
 }
 
-body {
-  font-family: sans-serif;
+body, button, input {
+  font-family: "Open Sans", sans-serif;
 }

@@ -46,10 +46,11 @@
 <style lang="stylus" scoped>
   .preview
     font-size 12px
+    line-height 14px
     overflow hidden
     white-space nowrap
     text-overflow ellipsis
-    margin 5px 0 10px
+    margin 4px 0 9px
     color #333
     opacity 0.9
     clear left
