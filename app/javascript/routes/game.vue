@@ -1,14 +1,15 @@
 <template lang="pug">
   main#game
     sub-header
-      div
-        | Game {{ id }}
-      div(v-if="game.name")
-        .separator &mdash;
-        | {{ game.name }}
-      .author(v-if="game.user")
-        .separator &mdash;
-        | {{ authorText }}
+      template(v-if="game")
+        div
+          | Game {{ id }}
+        div(v-if="game.name")
+          .separator &mdash;
+          | {{ game.name }}
+        .author(v-if="game.user")
+          .separator &mdash;
+          | {{ authorText }}
 
     .content(v-if="game")
       section.left-side
