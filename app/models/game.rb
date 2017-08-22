@@ -10,6 +10,7 @@ class Game < ApplicationRecord
 
   belongs_to :user
   has_many :annotations
+  has_many :votes, class_name: 'GameVote'
 
   ANALYSIS_STATUS = {
     pending: 'pending',

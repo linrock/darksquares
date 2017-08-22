@@ -76,6 +76,39 @@ CREATE TABLE ar_internal_metadata (
 
 
 --
+-- Name: game_votes; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE game_votes (
+    id bigint NOT NULL,
+    game_id integer NOT NULL,
+    user_id integer NOT NULL,
+    value integer NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: game_votes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE game_votes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: game_votes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE game_votes_id_seq OWNED BY game_votes.id;
+
+
+--
 -- Name: games; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -315,6 +348,13 @@ ALTER TABLE ONLY annotations ALTER COLUMN id SET DEFAULT nextval('annotations_id
 
 
 --
+-- Name: game_votes id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY game_votes ALTER COLUMN id SET DEFAULT nextval('game_votes_id_seq'::regclass);
+
+
+--
 -- Name: games id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -370,6 +410,14 @@ ALTER TABLE ONLY annotations
 
 ALTER TABLE ONLY ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: game_votes game_votes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY game_votes
+    ADD CONSTRAINT game_votes_pkey PRIMARY KEY (id);
 
 
 --
@@ -440,6 +488,13 @@ CREATE INDEX index_annotations_on_game_id ON annotations USING btree (game_id);
 --
 
 CREATE INDEX index_annotations_on_user_id ON annotations USING btree (user_id);
+
+
+--
+-- Name: index_game_votes_on_game_id_and_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_game_votes_on_game_id_and_user_id ON game_votes USING btree (game_id, user_id);
 
 
 --
@@ -558,6 +613,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170807095726'),
 ('20170816193641'),
 ('20170816195324'),
-('20170820234635');
+('20170820234635'),
+('20170821192928');
 
 
