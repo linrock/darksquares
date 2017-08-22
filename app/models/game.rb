@@ -11,6 +11,12 @@ class Game < ApplicationRecord
   belongs_to :user
   has_many :annotations
 
+  ANALYSIS_STATUS = {
+    pending: 'pending',
+    in_progress: 'in_progress',
+    complete: 'complete'
+  }
+
   def calculate_moves_and_positions
     return if pgn_headers.present? && moves.present? && positions.present?
     self.pgn_headers = pgn_loader.pgn_headers
@@ -42,6 +48,20 @@ class Game < ApplicationRecord
 
   def pgn_movetext
     pgn.gsub(/.*\]/, '').strip
+  end
+
+  def percent_analyzed
+    @percent_analyzed ||=
+      begin
+        fraction = PositionAnalysis.where(fen: positions).count.to_f / positions.count
+        (100 * fraction).floor
+      end
+  end
+
+  def analysis_status
+    return ANALYSIS_STATUS[:pending] if percent_analyzed == 0
+    return ANALYSIS_STATUS[:complete] if percent_analyzed == 100
+    ANALYSIS_STATUS[:in_progress]
   end
 
   def as_json(options = {})

@@ -23,6 +23,18 @@ class API::V1::GamesController < API::V1::BaseController
     }
   end
 
+  # GET /api/v1/games/:id/status
+  def status
+    game = Game.find(params[:id])
+    render json: {
+      game: {
+        id: game.id,
+        status: game.analysis_status,
+        percent: game.percent_analyzed
+      }
+    }
+  end
+
   # POST /api/v1/games
   def create
     game = Game.create!(create_game_params.merge(user_id: current_user.id))

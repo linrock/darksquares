@@ -33,6 +33,9 @@ Rails.application.routes.draw do
       get "/users/:username/annotations" => "users#annotations"
 
       resources :games, only: [:index, :show, :create, :destroy, :update] do
+        member do
+          get "/status" => "games#status"
+        end
         resources :annotations, only: [:create, :destroy, :update]
       end
     end
