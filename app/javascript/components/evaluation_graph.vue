@@ -1,15 +1,20 @@
-<template>
-  <div class="hover-graph-clickable">
-    <div @mousemove="setPositionIndex"
-         @mouseenter="shouldShowLine = true" @mouseleave="shouldShowLine = false"
-         @click="handleClick"
-         class="hover-graph">
-      <stacked-graph :width="width" :height="height" :listOfPoints="game.graphPoints"/>
-      <hover-indicator :width="width" :height="height" :i="gameState.i"
-                       :points="game.scores"
-                       :style="indicatorStyle"/>
-    </div>
-  </div>
+<template lang="pug">
+  .evaluation-graph
+    .hover-graph(
+      @mousemove="setPositionIndex"
+      @mouseenter="shouldShowLine = true"
+      @mouseleave="shouldShowLine = false"
+      @click="handleClick"
+    )
+      stacked-graph(:width="width" :height="height" :listOfPoints="game.graphPoints")
+      hover-indicator(
+        :width="width"
+        :height="height"
+        :i="gameState.i"
+        :points="game.scores"
+        :style="indicatorStyle"
+      )
+
 </template>
 
 <script>

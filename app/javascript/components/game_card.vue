@@ -3,10 +3,10 @@
     .graph-container(@mouseenter="setCurrentPgn")
       game-info(:pgnHeaders="game.pgnHeaders")
       router-link(:to="gamePositionPath")
-        hover-graph-clickable(v-if="game.scores.length"
-                              :width="600" :height="150"
-                              :game="game" :gameState="gameState"
-                              :shouldModifyBoard="true")
+        evaluation-graph(v-if="game.scores.length"
+                         :width="600" :height="150"
+                         :game="game" :gameState="gameState"
+                         :shouldModifyBoard="true")
         .loading(v-if="!game.scores.length")
           | Analysis in progress...
 
@@ -20,7 +20,7 @@
 
 <script>
   import GameInfo from './game_info.vue'
-  import HoverGraphClickable from './hover_graph_clickable.vue'
+  import EvaluationGraph from './evaluation_graph.vue'
   import AnnotationPreviews from './annotation_previews.vue'
   import Game from '../models/game'
   import { boardState } from '../store/miniboard'
@@ -61,7 +61,7 @@
 
     components: {
       GameInfo,
-      HoverGraphClickable,
+      EvaluationGraph,
       AnnotationPreviews,
     }
   }

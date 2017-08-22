@@ -15,7 +15,7 @@
       section.left-side
         .left-side-inner
           mini-board-detailed(:squareSize="55")
-          hover-graph-clickable(
+          evaluation-graph(
             v-if="game.scores.length"
             :width="443"
             :height="120"
@@ -41,7 +41,7 @@
 <script>
   import Mousetrap from 'mousetrap'
   import SubHeader from '../layouts/sub_header'
-  import HoverGraphClickable from '../components/hover_graph_clickable.vue'
+  import EvaluationGraph from '../components/evaluation_graph.vue'
   import MiniBoardDetailed from '../components/mini_board_detailed.vue'
   import GameInfo from '../components/game_info'
   import MoveList from '../components/move_list'
@@ -179,7 +179,7 @@
       SubHeader,
       GameInfo,
       MoveList,
-      HoverGraphClickable,
+      EvaluationGraph,
       MiniBoardDetailed,
       GameSubmitPrompt,
       GameDeletePrompt,
