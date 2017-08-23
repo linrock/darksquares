@@ -38,10 +38,6 @@
         type: Function,
         default: function() {}
       },
-      shouldModifyBoard: {
-        type: Boolean,
-        default: false
-      },
       width: Number,
       height: Number
     },
@@ -57,9 +53,7 @@
     methods: {
       setPositionIndex: function(e) {
         this.gameState.i = ~~(this.game.nPoints * e.offsetX / this.width)
-        if (this.shouldModifyBoard) {
-          applyStateChange(this.game.stateAtPositionIndex(this.gameState.i))
-        }
+        applyStateChange(this.game.stateAtPositionIndex(this.gameState.i))
       },
       handleClick: function() {
         this.clickedGraph(this.gameState.i)

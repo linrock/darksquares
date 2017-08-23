@@ -8,7 +8,6 @@
           :height="150"
           :game="game"
           :gameState="gameState"
-          :shouldModifyBoard="true"
         )
     .annotations-container(v-if="game.annotations.length")
       annotation-previews(:game="game")

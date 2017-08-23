@@ -7,7 +7,6 @@
       :game="currentGame"
       :gameState="gameState"
       :clickedGraph="clickedGraph"
-      :shouldModifyBoard="shouldModifyBoard"
     )
     .loading(v-if="isLoading")
       | Game analysis in progress... {{ progressText }}
@@ -40,10 +39,6 @@
       clickedGraph: {
         type: Function,
         default: function() {}
-      },
-      shouldModifyBoard: {
-        type: Boolean,
-        default: false
       },
     },
 

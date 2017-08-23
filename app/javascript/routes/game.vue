@@ -156,6 +156,10 @@
         window.scrollTo(0, offsetTop - 250)
       },
       scrollToMoveIfFar(i) {
+        if (i === 0) {
+          window.scrollTo(0, 0)
+          return
+        }
         if (isElementInViewport(this.moveEl(i))) {
           return
         }

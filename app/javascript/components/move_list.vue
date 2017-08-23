@@ -48,32 +48,32 @@
     },
 
     methods: {
-      showMoveNum: function(i) {
+      showMoveNum(i) {
         if (i > 0 && this.game.annotationsAt(i - 1)) {
           return true
         }
         return (i - 1) === this.annotationInputIndex || i % 2 === 0
       },
-      toggleAnnotationInput: function(i) {
+      toggleAnnotationInput(i) {
         this.annotationInputIndex = this.annotationInputIndex === i ? -1 : i
         this.updateMoveIndex(i)
       },
-      updateMoveIndex: function(i) {
+      updateMoveIndex(i) {
         this.gameState.i = i + 1
       },
-      highlight: function(i) {
+      highlight(i) {
         if (i + 1 === this.gameState.i) {
           return `highlighted`
         }
       },
-      moveId: function(positionIndex) {
+      moveId(positionIndex) {
         return `move-${positionIndex + 1}`
       },
     },
 
     directives: {
       focus: {
-        inserted: function(el) {
+        inserted(el) {
           el.focus()
         }
       }
