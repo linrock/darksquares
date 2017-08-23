@@ -19,7 +19,7 @@ import UserAnnotations from './routes/user_annotations.vue'
 const routes = [
   {
     path: '/',
-    component: Home
+    component: Home,
   },
   {
     path: '/import',

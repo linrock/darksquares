@@ -1,30 +1,47 @@
 <template lang="pug">
-  main#game-submitter
-    sub-header
-      div Submit Game
-
-    .content
-      div Choose from this list of games you haven't submitted yet
-      div Import a game to your personal game library
-      div Submit a game you've imported to share it with the community
+  card-list-layout
+    template(slot="header")
+      h1 Submit game
+      h2 Choose a game and click `submit game` to share it on the homepage.
+    card-list(:games="games" v-if="games.length")
+    .directions(v-if="!games.length")
+      | You must import some games before you can submit one!
 
 </template>
 
 <script>
-  import SubHeader from '../layouts/sub_header'
+  import CardListLayout from '../layouts/card_list_layout.vue'
+  import CardList from '../components/card_list.vue'
+  import { gameIdLists, gamesMap, loadMyGames } from '../store/games'
 
   export default {
+    created: () => loadMyGames(),
+
+    data() {
+      return {
+        gameIdLists
+      }
+    },
+
+    computed: {
+      sourceGameIds() {
+        return this.gameIdLists.myGames
+      },
+      games() {
+        return this.sourceGameIds.map(id => gamesMap[id])
+          .filter(game => !game.submittedAt)
+      }
+    },
+
     components: {
-      SubHeader,
+      CardListLayout,
+      CardList,
     }
   }
 </script>
 
 <style lang="stylus" scoped>
-  .content
-    display flex
-    width 1200px
-    margin-left 80px
-    padding-top 30px
+  .directions
+    margin 60px
 
 </style>
