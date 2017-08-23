@@ -8,7 +8,6 @@ import About from './routes/about.vue'
 import Login from './routes/login.vue'
 import SignUp from './routes/sign_up.vue'
 import Game from './routes/game.vue'
-import Games from './routes/games.vue'
 import Annotations from './routes/annotations.vue'
 import UserSettings from './routes/user_settings.vue'
 
@@ -42,10 +41,6 @@ const routes = [
     path: '/games/:id',
     component: Game,
     props: true
-  },
-  {
-    path: '/games',
-    component: Games
   },
   {
     path: '/annotations',

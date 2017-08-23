@@ -67,14 +67,6 @@
 </script>
 
 <style lang="stylus" scoped>
-  clearfix()
-    &:before, &:after
-      display table
-      content ""
-
-    &:after
-      clear both
-
   main
     width 100%
     height 100%
@@ -88,22 +80,8 @@
     position fixed
 
     .mini-board-view
-      margin-top 30px
-      margin-left 40px
+      margin 30px 0 0 40px
       width 338px
-
-      .game-info
-        margin-bottom 17px
-
-      .position-info
-        margin-top 10px
-        clearfix()
-
-        .game-position
-          float left
-
-        .position-evaluation
-          float right
 
   .right-content
     width 100%

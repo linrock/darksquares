@@ -58,7 +58,10 @@
       justify-content flex-end
 
       .game-position
-        margin-right auto
+        align-self flex-start
+
+      .position-evaluation
+        margin-left auto
 
     .pgn-headers
       margin-top 25px

@@ -1,8 +1,7 @@
 <template lang="pug">
   main#home
     .left-content
-      .left-inner
-        mini-board-detailed(:showPgn="true")
+      mini-board-detailed(:showPgn="true")
     .right-content
       header
         h1 Recent games
@@ -34,14 +33,6 @@
 </script>
 
 <style lang="stylus" scoped>
-  clearfix()
-    &:before, &:after
-      display table
-      content ""
-
-    &:after
-      clear both
-
   main
     width 100%
     height 100%
@@ -56,24 +47,9 @@
     padding 40px 0 20px
     overflow-y scroll
 
-    .left-inner
-      .mini-board-view
-        margin-top 30px
-        margin-left 40px
-        width 338px
-
-        .game-info
-          margin-bottom 17px
-
-        .position-info
-          margin-top 10px
-          clearfix()
-
-          .game-position
-            float left
-
-          .position-evaluation
-            float right
+    .mini-board-view
+      margin 30px 0 0 40px
+      width 338px
 
   .right-content
     width 100%

@@ -9,7 +9,6 @@ Rails.application.routes.draw do
 
   get "/import"       => "application#index"
   get "/submit"       => "application#index"
-  get "/games"        => "application#index"
   get "/games/:id"    => "application#index"
   get "/annotations"  => "application#index"
   get "/login"        => "application#index"
