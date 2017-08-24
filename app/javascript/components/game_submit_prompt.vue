@@ -50,6 +50,12 @@
   .game-submit-prompt
     margin-top 50px
 
+    .actions
+      margin-top 40px
+
+      .cancel
+        margin-left 20px
+
     .prompt-text
       margin-bottom 20px
 
@@ -78,11 +84,5 @@
     &.cancel
       background rgb(200, 200, 200)
       width 120px
-
-  .actions
-    margin-top 40px
-
-    .cancel
-      margin-left 20px
 
 </style>

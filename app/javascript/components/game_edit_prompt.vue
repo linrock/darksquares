@@ -4,6 +4,8 @@
 
     input(type="text" placeholder="Name (optional)" ref="name" :value="game.name")
 
+    pgn-headers(:pgnHeaders="game.pgnHeaders")
+
     .actions  
       button.save(@click="editGame") Save
       button.cancel(@click="cancel") Cancel
@@ -11,6 +13,7 @@
 </template>
 
 <script>
+  import PgnHeaders from './pgn_headers'
   import { patchGame } from '../api/requests'
   import Game from '../models/game'
 
@@ -38,6 +41,10 @@
       cancel() {
         this.gameState.isEditing = false
       }
+    },
+
+    components: {
+      PgnHeaders
     }
   }
 </script>
@@ -46,6 +53,12 @@
   .game-edit-prompt
     margin-top 50px
 
+    .actions
+      margin-top 40px
+
+      .cancel
+        margin-left 20px
+
     .prompt-text
       margin-bottom 20px
 
@@ -53,6 +66,7 @@
     font-size 18px
     padding 5px 12px
     width 400px
+    margin-bottom 30px
 
   button
     border none
@@ -74,11 +88,5 @@
     &.cancel
       background rgb(200, 200, 200)
       width 120px
-
-  .actions
-    margin-top 40px
-
-    .cancel
-      margin-left 20px
 
 </style>
