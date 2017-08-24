@@ -46,18 +46,23 @@ class API::V1::GamesController < API::V1::BaseController
 
   # PATCH /api/v1/games/:id
   def update
-    if game.submitted_at.present?
-      render status: 400, json: {}
-    elsif params[:submit]
-      game.update_attributes!(patch_game_params.merge({
-        submitted_at: Time.now
-      }))
-      render json: {
-        game: game.as_json.merge({
-          annotations: game.annotations.includes(:user)
-        })
-      }
+    if params[:submit]
+      if game.submitted_at.present?
+        render status: 400, json: {}
+        return
+      else
+        game.update_attributes!(patch_game_params.merge({
+          submitted_at: Time.now
+        }))
+      end
+    else
+      game.update_attributes!(patch_game_params)
     end
+    render json: {
+      game: game.as_json.merge({
+        annotations: game.annotations.includes(:user)
+      })
+    }
   end
 
   # DELETE /api/v1/games/:id

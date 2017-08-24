@@ -58,7 +58,7 @@ export default class Annotation {
         moveStringMap[moveString] = newFen
       }
     })
-    console.log(JSON.stringify(moveStringMap))
+    // console.log(JSON.stringify(moveStringMap))
     return moveStringMap
   }
 

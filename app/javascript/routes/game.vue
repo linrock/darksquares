@@ -27,13 +27,14 @@
           )
       section.right-side
         game-info(:pgnHeaders="game.pgnHeaders")
-        .game-actions(v-if="canTakeActions && !gameState.isDeleting && !gameState.isSubmitting")
+        .game-actions(v-if="canTakeActions && !gameState.isDeleting && !gameState.isSubmitting && !gameState.isEditing")
           .submit-game(@click="showSubmitGamePrompt" v-if="!game.submittedAt") Submit game
-          .edit-pgn-headers(@click="showEditPgnHeadersPrompt") Edit PGN headers
-          .delete-game(@click="showDeleteGamePrompt") Delete game
-        move-list(:game="game" :gameState="gameState" v-if="!gameState.isDeleting && !gameState.isSubmitting")
-        game-submit-prompt(:game="game" :gameState="gameState" v-if="gameState.isSubmitting")
+          .edit-pgn-headers(@click="showEditGamePrompt") Edit
+          .delete-game(@click="showDeleteGamePrompt") Delete
+        move-list(:game="game" :gameState="gameState" v-if="!gameState.isDeleting && !gameState.isSubmitting && !gameState.isEditing")
         game-delete-prompt(:game="game" :gameState="gameState" v-if="gameState.isDeleting")
+        game-edit-prompt(:game="game" :gameState="gameState" v-if="gameState.isEditing")
+        game-submit-prompt(:game="game" :gameState="gameState" v-if="gameState.isSubmitting")
 
 </template>
 
@@ -45,6 +46,7 @@
   import GameInfo from '../components/game_info'
   import MoveList from '../components/move_list'
   import GameSubmitPrompt from '../components/game_submit_prompt'
+  import GameEditPrompt from '../components/game_edit_prompt'
   import GameDeletePrompt from '../components/game_delete_prompt'
   import { getUsername } from '../store/local_storage'
   import { resetBoardState, applyStateChange } from '../store/miniboard'
@@ -64,8 +66,9 @@
         game: null,
         gameState: {
           i: this.initialMoveIndex() || 0,
-          isSubmitting: false,
           isDeleting: false,
+          isEditing: false,
+          isSubmitting: false,
         },
         shouldScrollToMove: true,
         scrolledToMove: false,
@@ -108,7 +111,7 @@
     },
 
     watch: {
-      i: function() {
+      i() {
         if (!this.scrolledToMove || !this.shouldScrollToMove) {
           return
         }
@@ -177,7 +180,7 @@
       showSubmitGamePrompt() {
         this.gameState.isSubmitting = true
       },
-      showEditPgnHeadersPrompt() {
+      showEditGamePrompt() {
         this.gameState.isEditing = true
       },
       showDeleteGamePrompt() {
@@ -191,8 +194,9 @@
       MoveList,
       GraphOrLoading,
       MiniBoardDetailed,
-      GameSubmitPrompt,
       GameDeletePrompt,
+      GameEditPrompt,
+      GameSubmitPrompt,
     }
   }
 </script>

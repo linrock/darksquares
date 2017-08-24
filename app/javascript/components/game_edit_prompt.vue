@@ -1,53 +1,49 @@
 <template lang="pug">
-  .game-submit-prompt
-    .prompt-text Give your game a name if you'd like.
+  .game-edit-prompt
+    .prompt-text Edit this game
 
     input(type="text" placeholder="Name (optional)" ref="name" :value="game.name")
 
     .actions  
-      button.confirm(@click="submitGame") Submit game
+      button.save(@click="editGame") Save
       button.cancel(@click="cancel") Cancel
 
 </template>
 
 <script>
-  import router from '../router'
   import { patchGame } from '../api/requests'
-  import { gameIdLists } from '../store/games'
   import Game from '../models/game'
 
   export default {
     props: {
       game: {
         type: Game,
-        required: true
+        required: true,
       },
       gameState: {
         type: Object,
-        required: true
-      }
+        required: true,
+      },
     },
 
     methods: {
-      submitGame() {
+      editGame() {
         patchGame(this.game, {
-          submit: true,
           game: {
             name: this.$refs.name.value.trim(),
           }
         })
-        router.push({ path: '/' })
-        this.gameState.isSubmitting = false
+        this.gameState.isEditing = false
       },
       cancel() {
-        this.gameState.isSubmitting = false
+        this.gameState.isEditing = false
       }
     }
   }
 </script>
 
 <style lang="stylus" scoped>
-  .game-submit-prompt
+  .game-edit-prompt
     margin-top 50px
 
     .prompt-text
@@ -71,9 +67,9 @@
       cursor pointer
       opacity 1
 
-    &.confirm
+    &.save
       background rgb(58, 137, 201)
-      width 150px
+      width 90px
 
     &.cancel
       background rgb(200, 200, 200)
