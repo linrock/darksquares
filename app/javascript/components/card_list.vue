@@ -1,5 +1,6 @@
 <template lang="pug">
   .card-list
+    loading(v-if="!cardList.length")
     .card-wrapper(v-for="item in cardList")
       votes(:item="item")
 
@@ -20,6 +21,7 @@
   import GameCardHeader from './game_card_header.vue'
   import GameCard from './game_card.vue'
   import Votes from './votes.vue'
+  import Loading from './loading.vue'
   import { gameIdLists, gamesMap } from '../store/games'
   import { deleteGame } from '../api/requests'
 
@@ -77,6 +79,7 @@
       AnnotationCard,
       GameCardHeader,
       GameCard,
+      Loading,
       Votes,
     }
   }
