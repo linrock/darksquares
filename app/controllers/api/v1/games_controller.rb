@@ -3,7 +3,7 @@ class API::V1::GamesController < API::V1::BaseController
 
   # GET /api/v1/games
   def index
-    games = Game.order('id DESC').limit(10)
+    games = Game.order('id DESC').offset(offset).limit(10)
     render json: {
       games: games.includes(:user, :annotations).map {|game|
         game.as_json.merge({
@@ -84,4 +84,5 @@ class API::V1::GamesController < API::V1::BaseController
   def patch_game_params
     params.require(:game).permit(:name)
   end
+
 end

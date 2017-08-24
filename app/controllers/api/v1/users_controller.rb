@@ -24,7 +24,7 @@ class API::V1::UsersController < API::V1::BaseController
   # GET /api/v1/users/me/games
   def games
     render json: {
-      games: current_user.games.map {|game|
+      games: current_user.games.order('id DESC').offset(offset).limit(PAGE_SIZE).map {|game|
         game.as_json.merge({
           annotations: game.annotations
         })
@@ -34,7 +34,7 @@ class API::V1::UsersController < API::V1::BaseController
 
   # GET /api/v1/users/me/annotations
   def annotations
-    annotations = current_user.annotations.order('id DESC').limit(10)
+    annotations = current_user.annotations.order('id DESC').offset(offset).limit(PAGE_SIZE)
     render json: {
       annotations: annotations
     }

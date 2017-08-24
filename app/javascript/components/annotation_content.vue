@@ -41,23 +41,29 @@
 <style lang="stylus" scoped>
   .annotation
     display block
+    background #fcfcfc
+    color rgba(0,0,0,0.8)
+    font-size 13px
+    line-height 20px
+    padding 10px 15px
+
+    p
+      margin 0
 
   .annotation-info
     display flex
+    margin-bottom 3px
 
     .username
       font-weight bold
-      font-size 12px
       color inherit
       text-decoration none
 
       &:hover
         text-decoration underline
 
-
     .time-ago
       margin-left 10px
-      font-size 12px
       opacity 0.4
 
   .spacer

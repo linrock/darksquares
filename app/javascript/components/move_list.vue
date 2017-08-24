@@ -14,8 +14,7 @@
         <annotation v-for="annotation in game.annotationsAt(i)"
                     :key="annotation.id"
                     :annotation="annotation"
-                    :game="game"
-                    @edit-annotation="console.log('editing lol')"/>
+                    :game="game"/>
       </div>
       <annotation-input v-if="annotationInputIndex === i"
                         :game="game" :moveString="game.moveString(i)"
@@ -142,16 +141,7 @@
     float left
     margin 10px 0 15px
     width 100%
+    border 1px solid #f3f3f3
     border-radius 2px
-
-  .annotation
-    background rgba(0,0,0,0.03)
-    color rgba(0,0,0,0.8)
-    font-size 14px
-    line-height 20px
-    padding 10px
-
-    p
-      margin 0
 
 </style>

@@ -41,8 +41,8 @@
 <style lang="stylus" scoped>
   .annotation-commands
     position absolute
-    top 2px
-    right 8px
+    top 5px
+    right 7px
     display none
 
     div
