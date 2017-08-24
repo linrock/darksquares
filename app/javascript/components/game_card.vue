@@ -12,7 +12,7 @@
     .annotations-container(v-if="game.annotations.length")
       annotation-previews(:game="game")
       router-link(:to="game.path")
-        .annotation-count(v-if="annotationsRemaining")
+        .more-annotations(v-if="annotationsRemaining")
           | View {{ annotationsRemaining }} more annotations
 
 </template>
@@ -67,6 +67,8 @@
 </script>
 
 <style lang="stylus" scoped>
+  @import "../common.styl"
+
   .game-card
     background white
     position relative
@@ -78,8 +80,7 @@
     color inherit
     text-decoration none
 
-    &:hover .annotation-count
-      opacity 0.9
+    &:hover .more-annotations
       text-decoration underline
 
   .graph-or-loading >>> .loading
@@ -87,9 +88,8 @@
     color rgba(0,0,0,0.4)
     padding 12px 0
 
-  .annotation-count
-    color rgb(58,137,201)
-    opacity 0.8
+  .more-annotations
+    color highlight-color
     font-size 12px
     margin-top 15px
 

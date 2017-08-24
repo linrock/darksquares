@@ -202,6 +202,8 @@
 </script>
 
 <style lang="stylus" scoped>
+  @import "../common.styl"
+
   main
     overflow-x hidden
 
@@ -264,7 +266,7 @@
           opacity 0.7
 
       .submit-game
-        color rgb(58,137,201)
+        color highlight-color
         font-weight bold
         opacity 0.9
 

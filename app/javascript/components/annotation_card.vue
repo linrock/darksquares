@@ -67,7 +67,7 @@
     text-decoration none
 
     &:hover .annotation-card
-      background #fafafa
+      border 1px solid #aaa
 
   .annotation-card
     background white
@@ -77,6 +77,7 @@
     line-height 18px
     padding 15px 20px
     position relative
+    transition border 0.2s ease
     width 640px
 
     .move-string

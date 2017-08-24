@@ -61,6 +61,7 @@
         text-decoration underline
 
   .game-card-name
+    color #333
     font-weight bold
 
 </style>

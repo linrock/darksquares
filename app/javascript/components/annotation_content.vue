@@ -1,7 +1,8 @@
 <template lang="pug">
   .annotation
     .annotation-info
-      .username(v-if="showUsername(annotation)") {{ annotation.username }}
+      router-link(:to="userPath").username(v-if="showUsername(annotation)")
+        | {{ annotation.username }}
       .time-ago {{ annotation.timeAgo }}
     annotation-text(:annotation="annotation")
 
@@ -25,6 +26,12 @@
       },
     },
 
+    computed: {
+      userPath() {
+        return `/u/${this.annotation.username}`
+      }
+    },
+
     components: {
       AnnotationText
     }
@@ -41,6 +48,12 @@
     .username
       font-weight bold
       font-size 12px
+      color inherit
+      text-decoration none
+
+      &:hover
+        text-decoration underline
+
 
     .time-ago
       margin-left 10px

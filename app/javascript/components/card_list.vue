@@ -89,7 +89,7 @@
 
     .card-wrapper
       display flex
-      margin 25px 0
+      margin 30px 0
 
       .votes
         width 60px
