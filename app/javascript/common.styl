@@ -1,3 +1,5 @@
+// - Mixins
+
 clearfix()
   &:before, &:after
     display table
@@ -5,4 +7,16 @@ clearfix()
   &:after
     clear both
 
+
+// - Variables
+
 highlight-color = rgb(58,137,201)
+
+
+// - Animations
+
+.fade-enter-active, .fade-leave-active
+  transition opacity .2s
+
+.fade-enter, .fade-leave-to
+  opacity 0

@@ -1,18 +1,20 @@
 <template lang="pug">
-  .card-list
+  section.card-list
     loading(v-if="!cardList.length")
-    .card-wrapper(v-for="item in cardList")
-      votes(:item="item")
+    transition(name="fade")
+      .cards(v-if="cardList.length")
+        .card-wrapper(v-for="item in cardList")
+          votes(:item="item")
 
-      .annotation-card-container(v-if="item.text")
-        annotation-card(:annotation="item")
+          .annotation-card-container(v-if="item.text")
+            annotation-card(:annotation="item")
 
-      .game-card-container(v-if="item.pgn")
-        // .commands(v-if="gameSource")
-          span.delete(@click="deleteGame(card)") ×
-        game-card-header(:game="item")
-        .game-container
-          game-card(:game="item")
+          .game-card-container(v-if="item.pgn")
+            // .commands(v-if="gameSource")
+              span.delete(@click="deleteGame(card)") ×
+            game-card-header(:game="item")
+            .game-container
+              game-card(:game="item")
 
 </template>
 
@@ -86,6 +88,8 @@
 </script>
 
 <style lang="stylus" scoped>
+  @import "../common.styl"
+
   .card-list
     padding-top 10px
     width 700px
