@@ -1,61 +1,56 @@
 import Game from '../models/game'
+import GameCache from './game_cache'
 import {
   createGame,
   getGame,
   getGames,
-  getMyGames
+  getMyGames,
+  getUserGames,
 } from '../api/requests'
 
-const gamesMap: Map<number, Game> = new Map()
+export const gameCache = new GameCache()
 
-const gameIdLists = {
-  home: [],
-  myGames: []
-}
-
-const saveGame = function(newGameData: any): Promise<Game> {
+export const saveGame = function(newGameData: any): Promise<Game> {
   return createGame(newGameData).then(response => {
     const game = new Game(response.data.game)
-    gamesMap.set(game.id, game)
+    gameCache.cacheGame(game)
     return game
   })
 }
 
-const getOrFetchGame = function(id: number): Promise<Game> {
-  let game = gamesMap.get(id)
+export const getOrFetchGame = function(id: number): Promise<Game> {
+  let game = gameCache.getGame(id)
   if (game) {
     return Promise.resolve(game)
   }
   return getGame(id).then(response => {
     game = new Game(response.data.game)
-    gamesMap.set(id, game)
+    gameCache.cacheGame(game)
     return game
   })
 }
 
-const loadHomeGames = function(options: any = { page: 1 }): Promise<Array<number>> {
+export const loadHomeGames = function(options: any = { page: 1 }): Promise<Array<number>> {
   return getGames(options.page).then(response => {
     const games = Game.loadGamesFromData(response.data.games)
-    games.forEach(game => gamesMap.set(game.id, game))
-    gameIdLists.home = Array.from(gamesMap.keys())
+    gameCache.addGamesToSet('home', games)
     return games.map(game => game.id)
   })
 }
 
-const loadMyGames = function(options: any = { page: 1 }): Promise<Array<number>> {
+export const loadMyGames = function(options: any = { page: 1 }): Promise<Array<number>> {
   return getMyGames(options.page).then(response => {
     const games = Game.loadGamesFromData(response.data.games)
-    games.forEach(game => gamesMap.set(game.id, game))
-    gameIdLists.myGames = Array.from(gamesMap.keys())
+    gameCache.addGamesToSet('my_games', games)
     return games.map(game => game.id)
   })
 }
 
-export {
-  loadHomeGames,
-  loadMyGames,
-  getOrFetchGame,
-  gameIdLists,
-  gamesMap,
-  saveGame,
+export const loadUserGames = function(options: any = { username: ``, page: 1 }): Promise<Array<number>> {
+  return getUserGames(options.username, options.page).then(response => {
+    const games = Game.loadGamesFromData(response.data.games)
+    gameCache.addGamesToSet(`user-${options.username}`, games)
+    console.log('adding games to set')
+    return games.map(game => game.id)
+  })
 }

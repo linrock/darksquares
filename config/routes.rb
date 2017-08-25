@@ -22,14 +22,15 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :users, only: [:create]
       get "/users/me"             => "users#me"
-      get "/users/me/games"       => "users#games"
+      get "/users/me/games"       => "users#my_games"
       get "/users/me/annotations" => "users#annotations"
 
-      get "/users/:username" => "users#profile"
-      get "/users/:username/games" => "users#games"
+      get "/users/:username"             => "users#profile"
+      get "/users/:username/games"       => "users#games"
       get "/users/:username/annotations" => "users#annotations"
+
+      resources :users, only: [:create]
 
       resources :games, only: [:index, :show, :create, :destroy, :update] do
         member do

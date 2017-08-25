@@ -22,7 +22,7 @@ class API::V1::UsersController < API::V1::BaseController
   end
 
   # GET /api/v1/users/me/games
-  def games
+  def my_games
     render json: {
       games: current_user.games.order('id DESC').offset(offset).limit(PAGE_SIZE).map {|game|
         game.as_json.merge({
@@ -64,6 +64,22 @@ class API::V1::UsersController < API::V1::BaseController
             })
           },
           created_at: user.created_at
+        }
+      }
+    end
+  end
+
+  # GET /api/v1/users/:username/games
+  def games
+    user = User.find_by(username: params[:username])
+    if !user
+      render json: {}, status: 404
+    else
+      render json: {
+        games: user.games.order('id DESC').offset(offset).limit(PAGE_SIZE).map {|game|
+          game.as_json.merge({
+            annotations: game.annotations
+          })
         }
       }
     end

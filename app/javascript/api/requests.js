@@ -42,6 +42,12 @@ export const getGameStatus = function(id) {
   return api.get(`/api/v1/games/${id}/status`)
 }
 
+export const getMyUserInfo = function() {
+  return api.get(`/api/v1/users/me`).then(response => {
+    setUsername(response.data.username)
+  })
+}
+
 export const getMyGames = function(page) {
   return api.get(`/api/v1/users/me/games?page=${page}`)
 }
@@ -54,10 +60,12 @@ export const getUserProfile = function(username) {
   return api.get(`/api/v1/users/${username}`)
 }
 
-export const getUserInfo = function() {
-  return api.get(`/api/v1/users/me`).then(response => {
-    setUsername(response.data.username)
-  })
+export const getUserGames = function(username, page) {
+  return api.get(`/api/v1/users/${username}/games?page=${page}`)
+}
+
+export const getUserAnnotations = function(username, page) {
+  return api.get(`/api/v1/users/${username}/annotations?page=${page}`)
 }
 
 // PATCH

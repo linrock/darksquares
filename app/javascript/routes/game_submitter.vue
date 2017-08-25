@@ -12,7 +12,7 @@
 <script>
   import CardListLayout from '../layouts/card_list_layout.vue'
   import CardList from '../components/card_list.vue'
-  import { gameIdLists, gamesMap, loadMyGames } from '../store/games'
+  import { gameCache, loadMyGames } from '../store/games'
 
   export default {
     created: () => loadMyGames(),
@@ -24,12 +24,8 @@
     },
 
     computed: {
-      sourceGameIds() {
-        return this.gameIdLists.myGames
-      },
       games() {
-        return this.sourceGameIds.map(id => gamesMap[id])
-          .filter(game => !game.submittedAt)
+        return this.gameCache.get('my_games').filter(game => !game.submittedAt)
       }
     },
 

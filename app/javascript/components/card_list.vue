@@ -24,7 +24,7 @@
   import GameCard from './game_card.vue'
   import Votes from './votes.vue'
   import Loading from './loading.vue'
-  import { gameIdLists, gamesMap } from '../store/games'
+  import { gameCache } from '../store/games'
   import { deleteGame } from '../api/requests'
 
   export default {
@@ -37,12 +37,22 @@
       },
       gameSource: {
         type: String,
+      },
+      username: {
+        type: String
       }
     },
 
     data() {
+      let obj
+      if (this.username) {
+        obj = gameCache.getGameSource(`user-${this.username}`)
+      } else {
+        obj = gameCache.getGameSource(this.gameSource)
+      }
       return {
-        gameIdLists
+        gameCache,
+        gameSourceObj: obj
       }
     },
 
@@ -50,18 +60,18 @@
       deleteGame(game) {
         console.log('deleting game')
         // deleteGame(game)
-        this.sourceGameIds.splice(this.sourceGameIds.findIndex(id => id === game.id), 1)
+        this.gameCache.removeGame(game.id)
       }
     },
 
     computed: {
-      sourceGameIds() {
-        return this.gameIdLists[this.gameSource]
+      sourceGames() {
+        console.log(`accessing source games - ${this.gameSourceObj.games.length}`)
+        return this.gameSourceObj.games
       },
       cardList() {
-        if (this.gameSource) {
-          return this.sourceGameIds.
-            map(id => gamesMap.get(id)).
+        if (this.sourceGames) {
+          return this.sourceGames.
             filter(game => game.graphPoints && game.graphPoints.length > 0)
         } else if (this.games && this.annotations) {
           return this.games.concat(this.annotations).sort((a,b) => {

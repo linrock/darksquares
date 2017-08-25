@@ -44,7 +44,7 @@
         this.headerText = this.user.username
       }).catch(error => {
         const statusCode = error.response.status
-        this.headerText = statusCode === 404 && "User not found" || `Error statusCode`
+        this.headerText = statusCode === 404 && "User not found" || `Error ${statusCode}`
       })
     },
 

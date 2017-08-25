@@ -1,7 +1,7 @@
 <template lang="pug">
-  section#user_games
-    infinite-scroll(:apiCaller="loadMyGames")
-      card-list(gameSource="myGames")
+  section#user_games(v-if="user.username")
+    infinite-scroll(:apiCaller="loadUserGamesFromPage")
+      card-list(gameSource="userGames" :username="user.username")
 
 </template>
 
@@ -9,19 +9,19 @@
   import User from '../models/user'
   import InfiniteScroll from '../components/infinite_scroll.vue'
   import CardList from '../components/card_list.vue'
-  import { loadMyGames } from '../store/games'
+  import { loadUserGames } from '../store/games'
 
   export default {
-    data() {
-      return {
-        loadMyGames
-      }
-    },
-
     props: {
       user: {
         type: User,
         required: true
+      }
+    },
+
+    methods: {
+      loadUserGamesFromPage(options) {
+        return loadUserGames({ username: this.user.username, page: options.page })
       }
     },
 

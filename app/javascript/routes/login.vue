@@ -15,7 +15,7 @@
 <script>
   import router from '../router'
   import requireAnonymous from './guards/require_anonymous'
-  import { createSession, getUserInfo } from '../api/requests'
+  import { createSession, getMyUserInfo } from '../api/requests'
 
   export default {
     beforeRouteEnter: requireAnonymous,
@@ -40,7 +40,7 @@
           return
         }
         createSession(credentials).then(() => {
-          getUserInfo()
+          getMyUserInfo()
           router.push({ path: '/' })
         }).catch(() => {
           this.showError = true

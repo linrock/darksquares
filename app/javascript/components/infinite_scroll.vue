@@ -42,6 +42,9 @@
         })
       },
       distanceFromBottom() {
+        if (!this.$refs.bottom) {
+          return Infinity
+        }
         return this.$refs.bottom.offsetTop - (window.scrollY + window.innerHeight)
       }
     },
