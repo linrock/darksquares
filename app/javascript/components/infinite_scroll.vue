@@ -1,7 +1,7 @@
 <template lang="pug">
   .infinite-scroll
     slot
-    .bottom(ref="bottom")
+    .bottom(ref="bottom" style="height: 200px")
   
 </template>
 
