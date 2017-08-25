@@ -242,18 +242,23 @@
         margin-top 30px
 
   section.right-side
-    padding 30px 0 0 40px
     margin-left 480px
     border-left 1px solid rgba(0,0,0,0.07)
     width 560px
+    padding-left 40px
     min-height 472px
 
     .game-info
-      padding-bottom 20px
+      background white
+      padding 27px 0 20px
       border-bottom 1px solid rgba(0,0,0,0.05)
+      width 519px
+      position fixed
+      z-index 1
 
     .game-actions
       padding-top 12px
+      margin-top 97px
       font-size 12px
       display flex
 

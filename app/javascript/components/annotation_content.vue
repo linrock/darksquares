@@ -1,7 +1,7 @@
 <template lang="pug">
-  .annotation
+  .annotation-content
     .annotation-info
-      router-link(:to="userPath").username(v-if="showUsername(annotation)")
+      router-link.username(:to="userPath" v-if="showUsername(annotation)")
         | {{ annotation.username }}
       .time-ago {{ annotation.timeAgo }}
     annotation-text(:annotation="annotation")
@@ -39,13 +39,14 @@
 </script>
 
 <style lang="stylus" scoped>
-  .annotation
+  .annotation-content
     display block
     background #fcfcfc
     color rgba(0,0,0,0.8)
     font-size 13px
     line-height 20px
     padding 10px 15px
+    width 100%
 
     p
       margin 0
