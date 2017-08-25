@@ -5,20 +5,27 @@
       h2
         | Hover over the graphs to explore chess games.
         | Click to annotate a position.
-    card-list(gameSource="home")
+    infinite-scroll(:apiCaller="loadHomeGames")
+      card-list(gameSource="home")
 
 </template>
 
 <script>
   import CardListLayout from '../layouts/card_list_layout.vue'
+  import InfiniteScroll from '../components/infinite_scroll.vue'
   import CardList from '../components/card_list.vue'
   import { loadHomeGames } from '../store/games'
 
   export default {
-    created: () => loadHomeGames(),
+    data() {
+      return {
+        loadHomeGames
+      }
+    },
 
     components: {
       CardListLayout,
+      InfiniteScroll,
       CardList,
     }
   }

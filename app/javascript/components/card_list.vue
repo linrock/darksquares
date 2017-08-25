@@ -61,7 +61,7 @@
       cardList() {
         if (this.gameSource) {
           return this.sourceGameIds.
-            map(id => gamesMap[id]).
+            map(id => gamesMap.get(id)).
             filter(game => game.graphPoints && game.graphPoints.length > 0)
         } else if (this.games && this.annotations) {
           return this.games.concat(this.annotations).sort((a,b) => {

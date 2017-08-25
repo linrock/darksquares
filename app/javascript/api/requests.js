@@ -30,8 +30,8 @@ export const createUser = function(data) {
 
 // GET
 
-export const getGames = function() {
-  return api.get(`/api/v1/games`)
+export const getGames = function(page) {
+  return api.get(`/api/v1/games?page=${page}`)
 }
 
 export const getGame = function(id) {
@@ -42,8 +42,8 @@ export const getGameStatus = function(id) {
   return api.get(`/api/v1/games/${id}/status`)
 }
 
-export const getMyGames = function() {
-  return api.get(`/api/v1/users/me/games`)
+export const getMyGames = function(page) {
+  return api.get(`/api/v1/users/me/games?page=${page}`)
 }
 
 export const getMyAnnotations = function() {
