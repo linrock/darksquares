@@ -77,7 +77,7 @@
 
     created() {
       resetBoardState()
-      getOrFetchGame(this.id).then(game => {
+      getOrFetchGame(Number(this.id)).then(game => {
         applyStateChange(game.stateAtPositionIndex(this.gameState.i))
         this.game = game
       })

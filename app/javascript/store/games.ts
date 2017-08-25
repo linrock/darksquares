@@ -1,5 +1,6 @@
 import Game from '../models/game'
 import {
+  createGame,
   getGame,
   getGames,
   getMyGames
@@ -12,37 +13,41 @@ const gameIdLists = {
   myGames: []
 }
 
+const saveGame = function(newGameData: any): Promise<Game> {
+  return createGame(newGameData).then(response => {
+    const game = new Game(response.data.game)
+    gamesMap.set(game.id, game)
+    return game
+  })
+}
+
 const getOrFetchGame = function(id: number): Promise<Game> {
-  let game = gamesMap[id]
+  let game = gamesMap.get(id)
   if (game) {
     return Promise.resolve(game)
   }
   return getGame(id).then(response => {
     game = new Game(response.data.game)
-    gamesMap[id] = game
+    gamesMap.set(id, game)
     return game
   })
 }
 
-const loadHomeGames = function() {
-  if (gameIdLists.home.length) {
-    return
-  }
-  getGames().then(response => {
+const loadHomeGames = function(options: any = { page: 1 }): Promise<Array<number>> {
+  return getGames(options.page).then(response => {
     const games = Game.loadGamesFromData(response.data.games)
-    games.forEach(game => gamesMap[game.id] = game)
-    gameIdLists.home = games.map(game => game.id)
+    games.forEach(game => gamesMap.set(game.id, game))
+    gameIdLists.home = Array.from(gamesMap.keys())
+    return games.map(game => game.id)
   })
 }
 
-const loadMyGames = function() {
-  if (gameIdLists.myGames.length) {
-    return
-  }
-  getMyGames().then(response => {
+const loadMyGames = function(options: any = { page: 1 }): Promise<Array<number>> {
+  return getMyGames(options.page).then(response => {
     const games = Game.loadGamesFromData(response.data.games)
-    games.forEach(game => gamesMap[game.id] = game)
-    gameIdLists.myGames = games.map(game => game.id)
+    games.forEach(game => gamesMap.set(game.id, game))
+    gameIdLists.myGames = Array.from(gamesMap.keys())
+    return games.map(game => game.id)
   })
 }
 
@@ -52,4 +57,5 @@ export {
   getOrFetchGame,
   gameIdLists,
   gamesMap,
+  saveGame,
 }

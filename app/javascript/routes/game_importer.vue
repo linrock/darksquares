@@ -1,12 +1,9 @@
 <template lang="pug">
   main#game-importer
-    sub-header
-      div Import Game
-
+    sub-header Import Game
     .content
       section.left-side
         chessboard(:fen="boardState.fen" :squareSize="55")
-
       section.right-side
         h1 Import Game
         .description
@@ -27,7 +24,7 @@
   import requireLogin from './guards/require_login'
   import { boardState } from '../store/miniboard'
   import Chessboard from '../components/chessboard.vue'
-  import { createGame } from '../api/requests'
+  import { saveGame } from '../store/games'
 
   export default {
     beforeRouteEnter: requireLogin,
@@ -61,8 +58,8 @@
             pgn: pgn
           }
         }
-        createGame(data).then(response => {
-          router.push({ path: `/games/${response.data.game.id}` })
+        saveGame(data).then(game => {
+          router.push({ path: `/games/${game.id}` })
           this.isSubmitting = false
         }).catch(error => {
           this.isSubmitting = false
