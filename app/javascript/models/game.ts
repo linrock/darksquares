@@ -38,7 +38,7 @@ export default class Game {
   public createdAt: Date
   public submittedAt: Date
 
-  private annotationMap: object
+  private annotationMap: object = {}
 
   public static loadGamesFromData(gameData): Array<Game> {
     return gameData.map(data => new Game(data))

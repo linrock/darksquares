@@ -19,21 +19,28 @@
   import InfiniteScroll from '../components/infinite_scroll.vue'
   import CardList from '../components/card_list.vue'
   import { gameCache, loadHomeGames } from '../store/games'
-  import { getAccessToken } from '../store/local_storage'
+  import { getUsername } from '../store/local_storage'
 
   export default {
     data() {
+      const username = getUsername()
       return {
         loadHomeGames,
-        isLoggedIn: !!getAccessToken(),
-        games: gameCache.getGamesFromSet(`home`)
+        isLoggedIn: !!username,
+        username,
+        games: this.filteredGames()
       }
     },
 
     methods: {
+      filteredGames() {
+        return gameCache.getGamesFromSet(`home`).filter(game => {
+          return game.graphPoints || game.user.username === this.username
+        })
+      },
       loadHomeGamesFromPage(options) {
         return loadHomeGames(options.page).then(ids => {
-          this.games = gameCache.getGamesFromSet(`home`)
+          this.games = this.filteredGames()
           return ids
         })
       }

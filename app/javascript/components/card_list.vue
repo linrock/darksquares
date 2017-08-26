@@ -1,7 +1,7 @@
 <template lang="pug">
   section.card-list
     transition(name="fade")
-      .cards(v-if="cardList.length")
+      .cards(v-if="cardList && cardList.length")
         .card-wrapper(v-for="item in cardList")
           votes(:item="item")
           .annotation-card-container(v-if="item.text")
