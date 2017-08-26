@@ -13,7 +13,7 @@
           router-link(:to="gamesLink") {{ user.games.length }} Games
           router-link(:to="annotationsLink") {{ user.annotations.length }} Annotations
       .content
-        router-view(:user="user")
+        router-view(:isLoading="isLoading" :user="user")
 
 </template>
 
@@ -33,6 +33,7 @@
 
     data() {
       return {
+        isLoading: true,
         headerText: null,
         user: new User()
       }
@@ -42,6 +43,7 @@
       getUserProfile(this.username).then(response => {
         this.user = new User(response.data.user)
         this.headerText = this.user.username
+        this.isLoading = false
       }).catch(error => {
         const statusCode = error.response.status
         this.headerText = statusCode === 404 && "User not found" || `Error ${statusCode}`

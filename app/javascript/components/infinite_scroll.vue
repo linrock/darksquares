@@ -1,11 +1,15 @@
 <template lang="pug">
   .infinite-scroll
     slot
+    transition(name="fade")
+      loading(v-if="isFetching")
     .bottom(ref="bottom" style="height: 200px")
   
 </template>
 
 <script>
+  import Loading from './loading.vue'
+
   // # pixels from bottom of the page before api call triggers
   const POLL_INTERVAL = 500
   const THRESHOLD = 500
@@ -27,6 +31,9 @@
     },
 
     methods: {
+      lol() {
+        debugger
+      },
       fetchFromApi() {
         if (this.isFetching) {
           return
@@ -36,6 +43,8 @@
           if (results.length === 0) {
             console.log('no more!')
             clearInterval(this.interval)
+            this.isFetching = false
+            return
           }
           this.page = this.page + 1
           setTimeout(() => { this.isFetching = false }, 2000)
@@ -56,6 +65,23 @@
           this.fetchFromApi()
         }
       }, POLL_INTERVAL)
+    },
+
+    components: {
+      Loading
     }
   }
 </script>
+
+<style lang="stylus" scoped>
+  @import "../common.styl"
+
+  .infinite-scroll
+    position relative
+
+  .loading
+    margin 50px 0 50px -45px
+    position absolute
+    left 50%
+
+</style>

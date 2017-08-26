@@ -32,7 +32,6 @@
 <style lang="stylus" scoped>
   .loading
     font-size 16px
-    margin 60px auto 0
     text-transform uppercase
     opacity 0.7
     width 90px

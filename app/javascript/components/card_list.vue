@@ -1,6 +1,5 @@
 <template lang="pug">
   section.card-list
-    loading(v-if="!cardList.length")
     transition(name="fade")
       .cards(v-if="cardList.length")
         .card-wrapper(v-for="item in cardList")
@@ -19,7 +18,6 @@
   import GameCardHeader from './game_card_header.vue'
   import GameCard from './game_card.vue'
   import Votes from './votes.vue'
-  import Loading from './loading.vue'
 
   export default {
     props: {
@@ -51,7 +49,6 @@
       AnnotationCard,
       GameCardHeader,
       GameCard,
-      Loading,
       Votes,
     }
   }
