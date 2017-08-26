@@ -26,7 +26,7 @@
             :clickedGraph="scrollToMove"
           )
       section.right-side
-        game-info(:pgnHeaders="game.pgnHeaders")
+        game-info(:pgnHeaders="game.pgnHeaders" :fixed="true")
         .game-actions(v-if="canTakeActions && !gameState.isDeleting && !gameState.isSubmitting && !gameState.isEditing")
           .submit-game(@click="showSubmitGamePrompt" v-if="!game.submittedAt") Submit game
           .edit-pgn-headers(@click="showEditGamePrompt") Edit
@@ -242,7 +242,7 @@
         margin-top 30px
 
   section.right-side
-    padding 30px 0 10px 40px
+    padding 0 0 10px 40px
     margin-left 480px
     border-left 1px solid rgba(0,0,0,0.07)
     width 560px
@@ -251,15 +251,18 @@
 
     .game-info
       background white
-      padding 27px 0 20px
-      border-bottom 1px solid rgba(0,0,0,0.05)
       width 519px
-      position fixed
-      z-index 1
+
+      & >>> .content
+        padding 27px 0 15px
+        border-bottom 1px solid rgba(0,0,0,0.05)
+
+      & >>> .spacer
+        box-sizing content-box
+        padding 27px 0 15px
 
     .game-actions
       padding-top 12px
-      margin-top 97px
       font-size 12px
       display flex
 

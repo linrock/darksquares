@@ -1,8 +1,10 @@
 <template lang="pug">
   .game-info
-    .line-1 {{ line1 }}
-    .line-2 {{ line2 }}
-    .line-3 {{ line3 }}
+    .content(:style="contentStyle")
+      .line-1 {{ line1 }}
+      .line-2 {{ line2 }}
+      .line-3 {{ line3 }}
+    .spacer(v-if="fixed" :style="spacerStyle")
 
 </template>
 
@@ -12,11 +14,15 @@
       pgnHeaders: {
         type: Object,
         required: true
+      },
+      fixed: {
+        type: Boolean,
+        default: false
       }
     },
 
     computed: {
-      gameName: function() {
+      gameName() {
         const event = this.pgnHeaders["Event"]
         const round = this.pgnHeaders["Round"]
         const timeControl = this.pgnHeaders["TimeControl"]
@@ -30,26 +36,18 @@
           return ``
         }
       },
-      line1: function() {
+      line1() {
         return this.gameName
       },
-      line2: function() {
-        if (this.players) {
-          return `${this.players} • ${this.result}`
-        } else {
-          return ``
-        }
+      line2() {
+        return this.players ? `${this.players} • ${this.result}` : ``
       },
-      line3: function() {
+      line3() {
         const eco = this.pgnHeaders["ECO"]
         const opening = this.pgnHeaders["Opening"]
-        if (eco && opening) {
-          return `${eco} ${opening}`
-        } else {
-          return ``
-        }
+        return (eco && opening) ? `${eco} ${opening}` : ``
       },
-      players: function() {
+      players() {
         const white = this.pgnHeaders["White"]
         const black = this.pgnHeaders["Black"]
         if (!white || !black) {
@@ -63,9 +61,22 @@
           return `${white} vs. ${black}`
         }
       },
-      result: function() {
+      result() {
         return this.pgnHeaders["Result"]
       },
+      nLines() {
+        let n = 0
+        if (this.line1) { n = n + 1 }
+        if (this.line2) { n = n + 1 }
+        if (this.line3) { n = n + 1 }
+        return n
+      },
+      contentStyle() {
+        return this.fixed ? `position: fixed; z-index: 1` : ``
+      },
+      spacerStyle() {
+        return `height: ${this.nLines * 17}px`
+      }
     }
   }
 </script>
@@ -75,6 +86,10 @@
     font-size 13px
     line-height 17px
     color #222
+
+    .content
+      background white
+      width inherit
 
   .line-2
     font-weight bold
