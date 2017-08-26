@@ -4,13 +4,23 @@ class API::V1::GamesController < API::V1::BaseController
   # GET /api/v1/games
   def index
     games = Game.includes(:user, annotations: :user).order('id DESC').offset(offset).limit(10)
-    render_json({
+    results = {
       games: games.map {|game|
         game.as_json.merge({
           annotations: game.annotations.order('id DESC')
         })
       }
-    })
+    }
+    if current_user
+      game_votes = current_user.game_votes.where(game_id: games.map(&:id))
+      results[:game_votes] = game_votes.map {|vote|
+        {
+          game_id: vote.game.id,
+          value: vote.value
+        }
+      }
+    end
+    render_json(results)
   end
 
   # GET /api/v1/games/:id

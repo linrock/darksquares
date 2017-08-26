@@ -7,6 +7,7 @@ class User < ApplicationRecord
   validates_uniqueness_of :username, case_sensitive: false
 
   has_many :games
+  has_many :game_votes
   has_many :annotations
 
   def self.find_for_database_authentication(conditions)

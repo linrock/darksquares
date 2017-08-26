@@ -1,13 +1,20 @@
 import * as Chess from 'chess.js'
 import { groupBy, parseDate, timeAgo } from '../util'
 import Move from './move'
-import BoardState from './board_state'
 import User from './user'
 import { UserOptions } from './user'
 import Annotation from './annotation'
 import { AnnotationOptions } from './annotation'
 
 const cjs = new Chess()
+
+interface BoardState {
+  fen: string
+  score: string|number
+  bestMove: string|object
+  move: string
+  highlights: Array<string>
+}
 
 export interface GameOptions {
   id: number

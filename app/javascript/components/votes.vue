@@ -16,6 +16,7 @@
   import Game from '../models/game'
   import Annotation from '../models/annotation'
   import { createGameVote, createAnnotationVote } from '../api/requests'
+  import { gameVoteCache } from '../store/games'
   import { getUsername } from '../store/local_storage'
 
   const Vote = {
@@ -33,10 +34,17 @@
     },
 
     data() {
+      const voteValue = gameVoteCache.getValue(this.item.id)
+      let voteState = Vote.None
+      if (voteValue === 1) {
+        voteState = Vote.Upvoted
+      } else if (voteValue === -1) {
+        voteState = Vote.Downvoted
+      }
       return {
         Vote,
         initialScore: ~~(Math.random() * 20),
-        voteState: Vote.None,
+        voteState,
       }
     },
 
