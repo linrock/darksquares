@@ -43,20 +43,21 @@ class API::V1::UsersController < API::V1::BaseController
   # GET /api/v1/users/:username
   def profile
     user = User.find_by(username: params[:username])
-    games = user.games.includes(:annotations).order('id DESC').limit(PAGE_SIZE)
-    annotations = user.annotations.includes(:game).order('id DESC').limit(PAGE_SIZE)
+    games = user.games.includes(:annotations).order('id DESC')
+    annotations = user.annotations.includes(:game).order('id DESC')
     if !user
       render_json({}, status: 404)
     else
       render_json({
         user: {
           username: user.username,
-          games: games.map {|game|
+          games: games.limit(PAGE_SIZE).map {|game|
             game.as_json.merge({
               annotations: game.annotations
             })
           },
-          annotations: annotations.map {|annotation|
+          games_count: games.count,
+          annotations: annotations.limit(PAGE_SIZE).map {|annotation|
             # TODO deal with deleted games later
             pgn_headers = annotation.game&.pgn_headers || { "Deleted" => "Game" }
             annotation.as_json.merge({
@@ -65,6 +66,7 @@ class API::V1::UsersController < API::V1::BaseController
               }
             })
           },
+          annotations_count: annotations.count,
           created_at: user.created_at
         }
       })

@@ -10,8 +10,8 @@
       nav
         template(v-if="user.username")
           router-link(:to="overviewLink") Overview
-          router-link(:to="gamesLink") {{ user.games.length }} Games
-          router-link(:to="annotationsLink") {{ user.annotations.length }} Annotations
+          router-link(:to="gamesLink") {{ user.gamesCount }} Games
+          router-link(:to="annotationsLink") {{ user.annotationsCount }} Annotations
       .content
         router-view(:isLoading="isLoading" :user="user")
 
