@@ -7,7 +7,7 @@ class API::V1::GamesController < API::V1::BaseController
     render_json({
       games: games.map {|game|
         game.as_json.merge({
-          annotations: game.annotations.order('id DESC').limit(3)
+          annotations: game.annotations.order('id DESC')
         })
       }
     })

@@ -74,6 +74,7 @@
 
   .linked-card
     color inherit
+    display block
     text-decoration none
 
   .annotation-card
