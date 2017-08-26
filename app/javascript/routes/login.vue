@@ -9,6 +9,9 @@
       div
         input(type="submit" value="Log in")
         .error(v-if="showError") Invalid username or password
+    .bottom-instructions
+      | Don't have an account? &mdash;
+      router-link(to="/sign_up") Sign up
 
 </template>
 
@@ -89,5 +92,12 @@
   .error
     color orange
     margin-left 20px
+
+  .bottom-instructions
+    margin-top 70px
+
+    a
+      color inherit
+      margin 0 5px
 
 </style>

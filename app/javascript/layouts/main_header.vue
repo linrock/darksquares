@@ -34,10 +34,10 @@
     },
     computed: {
       userPath: function() {
-        return this.username ? `/u/${this.username}` : `/login`
+        return this.username ? `/u/${this.username}` : `/sign_up`
       },
       userLinkText: function() {
-        return this.username ? this.username : `Log in`
+        return this.username ? this.username : `Sign up`
       }
     }
   }

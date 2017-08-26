@@ -4,6 +4,6 @@ export default function(to, from, next) {
   if (getAccessToken()) {
     next()
   } else {
-    next({ path: "/login" })
+    next({ path: "/sign_up" })
   }
 }

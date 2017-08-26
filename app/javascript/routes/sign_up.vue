@@ -11,6 +11,9 @@
       div
         input(type="submit" value="Sign up")
         .error(v-if="showError") {{ errorMessage }}
+    .bottom-instructions
+      | Have an account? &mdash;
+      router-link(to="/login") Log in
 
 </template>
 
@@ -93,5 +96,12 @@
   .error
     color orange
     margin-left 20px
+
+  .bottom-instructions
+    margin-top 70px
+
+    a
+      color inherit
+      margin 0 5px
 
 </style>
