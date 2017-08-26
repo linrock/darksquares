@@ -3,8 +3,8 @@
     template(slot="header")
       h1 Submit game
       h2 Choose a game and click `submit game` to share it on the homepage.
-    card-list(:games="games" v-if="games.length")
-    .directions(v-if="!games.length")
+    card-list(:games="games")
+    .directions(v-if="gamesLoaded && !games.length")
       | You must import some games before you can submit one!
 
 </template>
@@ -15,17 +15,17 @@
   import { gameCache, loadMyGames } from '../store/games'
 
   export default {
-    created: () => loadMyGames(),
+    mounted() {
+      loadMyGames().then(() => {
+        this.games = gameCache.getGamesFromSet('my_games').filter(game => !game.submittedAt)
+        this.gamesLoaded = true
+      })
+    },
 
     data() {
       return {
-        gameIdLists
-      }
-    },
-
-    computed: {
-      games() {
-        return this.gameCache.get('my_games').filter(game => !game.submittedAt)
+        games: [],
+        gamesLoaded: false,
       }
     },
 
