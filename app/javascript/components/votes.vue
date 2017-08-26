@@ -4,7 +4,7 @@
       svg.upvote(width="12px" height="10px" viewBox="0 0 12 10")
         g
           polygon(points="6 0 12 10 0 10")
-    .score {{ score }}
+    .score(:class="[{ voted: voteState !== Vote.None }]") {{ score }}
     a(@click="downvoteItem" :class="[{ voted: voteState === Vote.Downvoted }]")
       svg.downvote(width="12px" height="10px" viewBox="0 0 12 10")
         g
@@ -57,6 +57,8 @@
 </script>
 
 <style lang="stylus" scoped>
+  @import "../common.styl"
+
   .votes
     display flex
     align-items center
@@ -69,9 +71,12 @@
     a:hover
       cursor pointer
 
-    a:hover, .voted
-      svg g
-        fill #aaa
+    a:hover svg g
+      fill #aaa
+
+    a.voted svg g
+      fill highlight-color
+      opacity 0.6
 
   svg
     width 10px
@@ -85,5 +90,9 @@
     font-weight bold
     margin 9px 0
     user-select none
+
+    &.voted
+      color highlight-color
+      opacity 0.6
 
 </style>
