@@ -12,6 +12,6 @@ export default class GameVoteCache {
   }
 
   public getValue(gameId: number, value: number): number {
-    return this.gameVoteMap.get(gameId, value) || 0
+    return this.gameVoteMap.get(gameId) || 0
   }
 }
