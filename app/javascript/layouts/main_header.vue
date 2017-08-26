@@ -12,7 +12,7 @@
           router-link(to="/submit")
             img(src="/assets/submit.svg" class="submit")
             | Submit game
-          router-link(to="/about")
+          // router-link(to="/about")
             img(src="/assets/about.svg" class="about")
             | About
         .far-right

@@ -3,8 +3,12 @@
     template(slot="header")
       h1 Recent games
       h2
-        | Hover over the graphs to explore chess games.
-        | Click to annotate a position.
+        | Hover over the graphs to explore positions.
+        | Click the graph to annotate.
+    div(slot="dark-subheader" v-if="!isLoggedIn")
+      | Annotate and share chess games with the community.
+      router-link(to="/sign_up") Sign up
+      | to get started
     infinite-scroll(:apiCaller="loadHomeGamesFromPage")
       card-list(:games="games")
 
@@ -15,11 +19,13 @@
   import InfiniteScroll from '../components/infinite_scroll.vue'
   import CardList from '../components/card_list.vue'
   import { gameCache, loadHomeGames } from '../store/games'
+  import { getAccessToken } from '../store/local_storage'
 
   export default {
     data() {
       return {
         loadHomeGames,
+        isLoggedIn: !!getAccessToken(),
         games: gameCache.getGamesFromSet(`home`)
       }
     },

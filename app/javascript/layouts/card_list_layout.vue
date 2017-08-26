@@ -3,8 +3,10 @@
     .left-content
       mini-board-detailed(:showPgn="true")
     .right-content
-      header
+      header.main
         slot(name="header")
+      header.dark-subheader
+        slot(name="dark-subheader")
       .content
         slot
 
@@ -45,7 +47,7 @@
     padding-left 420px
     background #f4f4f4
 
-    header
+    header.main
       background #393939
       padding 29px 0 19px 60px
       height 100px
@@ -59,6 +61,24 @@
         color #cacaca
         font-size 12px
         margin 10px 0
+
+    header.dark-subheader
+      background #595959
+      font-size 15px
+      color rgba(255,255,255,0.9)
+
+      div
+        padding 15px 0 15px 60px
+
+      a
+        color white
+        font-weight bold
+        text-decoration none
+        margin 0 5px
+        opacity 1
+
+        &:hover
+          text-decoration underline
 
     .content
       min-height 1000px

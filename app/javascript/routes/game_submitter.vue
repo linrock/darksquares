@@ -12,10 +12,14 @@
 <script>
   import CardListLayout from '../layouts/card_list_layout.vue'
   import CardList from '../components/card_list.vue'
+  import requireLogin from './guards/require_login'
   import { gameCache, loadMyGames } from '../store/games'
 
   export default {
+    beforeRouteEnter: requireLogin,
+
     mounted() {
+      window.scrollTo(0, 0)
       loadMyGames().then(() => {
         this.games = gameCache.getGamesFromSet('my_games').filter(game => !game.submittedAt)
         this.gamesLoaded = true
