@@ -12,4 +12,7 @@ class API::V1::BaseController < ActionController::Base
     ((params[:page] || 1).to_i - 1) * PAGE_SIZE
   end
 
+  def render_json(data, options = { status: 200 })
+    render json: data.to_json, status: options[:status]
+  end
 end

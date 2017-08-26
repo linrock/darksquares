@@ -22,7 +22,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      namespace :users do
+      scope :users do
         get "/me"                    => "users#me"
         get "/me/games"              => "users#my_games"
         get "/me/annotations"        => "users#annotations"

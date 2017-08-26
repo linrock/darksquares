@@ -4,59 +4,61 @@ class API::V1::UsersController < API::V1::BaseController
   def create
     user = User.create(user_params)
     if user.errors
-      render json: { error: user.error_message_upon_creation }, status: 400
+      render_json({ error: user.error_message_upon_creation }, status: 400)
     else
-      render json: {
+      render_json({
         access_token: user.create_access_token!.token,
         token_type: "bearer",
-      }
+      })
     end
   end
 
   # GET /api/v1/users/me
   def me
-    render json: {
+    render_json({
       username: current_user.username,
       email: current_user.email
-    }
+    })
   end
 
   # GET /api/v1/users/me/games
   def my_games
-    render json: {
+    render_json({
       games: current_user.games.order('id DESC').offset(offset).limit(PAGE_SIZE).map {|game|
         game.as_json.merge({
           annotations: game.annotations
         })
       }
-    }
+    })
   end
 
   # GET /api/v1/users/me/annotations
   def annotations
     annotations = current_user.annotations.order('id DESC').offset(offset).limit(PAGE_SIZE)
-    render json: {
+    render_json({
       annotations: annotations
-    }
+    })
   end
 
   # GET /api/v1/users/:username
   def profile
     user = User.find_by(username: params[:username])
+    games = user.games.includes(:annotations).order('id DESC').limit(PAGE_SIZE)
+    annotations = user.annotations.includes(:game).order('id DESC').limit(PAGE_SIZE)
     if !user
-      render json: {}, status: 404
+      render_json({}, status: 404)
     else
-      render json: {
+      render_json({
         user: {
           username: user.username,
-          games: user.games.order('id DESC').map {|game|
+          games: games.map {|game|
             game.as_json.merge({
               annotations: game.annotations
             })
           },
-          annotations: user.annotations.order('id DESC').map {|annotation|
+          annotations: annotations.map {|annotation|
             # TODO deal with deleted games later
-            pgn_headers = annotation.game && annotation.game.pgn_headers || { "Deleted" => "Game" }
+            pgn_headers = annotation.game&.pgn_headers || { "Deleted" => "Game" }
             annotation.as_json.merge({
               game: {
                 pgn_headers: pgn_headers
@@ -65,41 +67,42 @@ class API::V1::UsersController < API::V1::BaseController
           },
           created_at: user.created_at
         }
-      }
+      })
     end
   end
 
   # GET /api/v1/users/:username/games
   def games
     user = User.find_by(username: params[:username])
+    games = user.games.includes(:annotations).order('id DESC').offset(offset).limit(PAGE_SIZE)
     if !user
-      render json: {}, status: 404
+      render_json({}, status: 404)
     else
-      render json: {
-        games: user.games.order('id DESC').offset(offset).limit(PAGE_SIZE).map {|game|
+      render_json({
+        games: games.map {|game|
           game.as_json.merge({
             annotations: game.annotations
           })
         }
-      }
+      })
     end
   end
 
   # GET /api/v1/users/:username/annotations
   def annotations
     user = User.find_by(username: params[:username])
-    annotations = user.annotations.order('id DESC').offset(offset).limit(PAGE_SIZE)
-    render json: {
+    annotations = user.annotations.includes(:game).order('id DESC').offset(offset).limit(PAGE_SIZE)
+    render_json({
       annotations: annotations.map {|annotation|
         # TODO deal with deleted games later
-        pgn_headers = annotation.game && annotation.game.pgn_headers || { "Deleted" => "Game" }
+        pgn_headers = annotation.game&.pgn_headers || { "Deleted" => "Game" }
         annotation.as_json.merge({
           game: {
             pgn_headers: pgn_headers
           }
         })
       },
-    }
+    })
   end
 
   private

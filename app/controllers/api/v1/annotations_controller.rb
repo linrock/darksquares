@@ -4,9 +4,9 @@ class API::V1::AnnotationsController < API::V1::BaseController
   # POST /api/v1/games/:game_id/annotations
   def create
     annotation = game.annotations.create!(annotation_params.merge(user_id: current_user.id))
-    render json: {
+    render_json({
       annotation: annotation
-    }
+    })
   end
 
   # PATCH /api/v1/games/:game_id/annotations
@@ -16,7 +16,7 @@ class API::V1::AnnotationsController < API::V1::BaseController
   # DELETE /api/v1/games/:game_id/annotations/:id
   def destroy
     current_user.annotations.find(params[:id]).destroy!
-    render json: {}
+    render_json({})
   end
 
   private
