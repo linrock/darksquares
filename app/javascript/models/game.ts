@@ -90,6 +90,10 @@ export default class Game {
     return this.graphPoints[0].length
   }
 
+  get username(): string {
+    return this.user.username
+  }
+
   // annotations
 
   public addAnnotation(annotation: Annotation): void {

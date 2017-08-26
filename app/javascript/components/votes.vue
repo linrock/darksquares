@@ -1,5 +1,5 @@
 <template lang="pug">
-  .votes
+  .votes(:class="[{ disabled }]")
     a(@click="upvoteItem" :class="[{ voted: voteState === Vote.Upvoted }]")
       svg.upvote(width="12px" height="10px" viewBox="0 0 12 10")
         g
@@ -16,6 +16,7 @@
   import Game from '../models/game'
   import Annotation from '../models/annotation'
   import { createGameVote, createAnnotationVote } from '../api/requests'
+  import { getUsername } from '../store/local_storage'
 
   const Vote = {
     None: 'none',
@@ -40,6 +41,9 @@
     },
 
     computed: {
+      disabled() {
+        return this.item.username === getUsername()
+      },
       score() {
         let score = this.initialScore
         if (this.voteState === Vote.Upvoted) {
@@ -53,10 +57,16 @@
 
     methods: {
       upvoteItem() {
+        if (this.disabled) {
+          return
+        }
         this.voteState = this.voteState === Vote.Upvoted ? Vote.None : Vote.Upvoted
         this.createVote(this.voteState === Vote.None ? 0 : 1)
       },
       downvoteItem() {
+        if (this.disabled) {
+          return
+        }
         this.voteState = this.voteState === Vote.Downvoted ? Vote.None : Vote.Downvoted
         this.createVote(this.voteState === Vote.None ? 0 : -1)
       },
@@ -98,11 +108,21 @@
       fill highlight-color
       opacity 0.6
 
+    &.disabled
+      a:hover
+        cursor auto
+
+        svg g
+          fill #ececec
+
+      svg g
+        fill #ececec
+
   svg
     width 10px
     g
       stroke none
-      fill #dadada
+      fill #d5d5d5
 
   .score
     color rgba(0,0,0,0.4)
