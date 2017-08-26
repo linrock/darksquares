@@ -44,8 +44,28 @@ class API::V1::GamesController < API::V1::BaseController
     }
   end
 
+  # POST /api/v1/games/:id/votes
+  def vote
+    game = Game.find(params[:id])
+    if game.user_id == current_user.id
+      render status: 400, json: {}
+    else
+      vote = game.votes.find_by(user_id: current_user.id)
+      if vote
+        vote.value = vote_game_params[:value]
+      else
+        vote = game.votes.new(user_id: current_user.id, value: vote_game_params[:value])
+      end
+      vote.save!
+      render json: {
+        vote: vote
+      }
+    end
+  end
+
   # PATCH /api/v1/games/:id
   def update
+    game = current_user.games.find(params[:id])
     if params[:submit]
       if game.submitted_at.present?
         render status: 400, json: {}
@@ -67,15 +87,12 @@ class API::V1::GamesController < API::V1::BaseController
 
   # DELETE /api/v1/games/:id
   def destroy
+    game = current_user.games.find(params[:id])
     game.destroy!
     render json: {}
   end
 
   private
-
-  def game
-    @game ||= current_user.games.find(params[:id])
-  end
 
   def create_game_params
     params.require(:game).permit(:pgn)
@@ -83,6 +100,10 @@ class API::V1::GamesController < API::V1::BaseController
 
   def patch_game_params
     params.require(:game).permit(:name)
+  end
+
+  def vote_game_params
+    params.require(:vote).permit(:value)
   end
 
 end

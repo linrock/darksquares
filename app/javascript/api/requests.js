@@ -28,6 +28,14 @@ export const createUser = function(data) {
   })
 }
 
+export const createGameVote = function(gameId, data) {
+  return api.post(`/api/v1/games/${gameId}/votes`, data)
+}
+
+export const createAnnotationVote = function(annotationId, data) {
+  return api.post(`/api/v1/annotations/${annotationId}/votes`, data)
+}
+
 // GET
 
 export const getGames = function(page) {

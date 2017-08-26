@@ -15,6 +15,7 @@
 <script>
   import Game from '../models/game'
   import Annotation from '../models/annotation'
+  import { createGameVote, createAnnotationVote } from '../api/requests'
 
   const Vote = {
     None: 'none',
@@ -23,7 +24,12 @@
   }
 
   export default {
-    props: ['item'],
+    props: {
+      item: {
+        type: [Game, Annotation],
+        required: true
+      }
+    },
 
     data() {
       return {
@@ -48,9 +54,18 @@
     methods: {
       upvoteItem() {
         this.voteState = this.voteState === Vote.Upvoted ? Vote.None : Vote.Upvoted
+        this.createVote(1)
       },
       downvoteItem() {
         this.voteState = this.voteState === Vote.Downvoted ? Vote.None : Vote.Downvoted
+        this.createVote(-1)
+      },
+      createVote(value) {
+        if (this.item.pgn) {
+          createGameVote(this.item.id, { value })
+        } else {
+          createAnnotationVote(this.item.id, { value })
+        }
       }
     },
   }
