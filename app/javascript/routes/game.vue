@@ -242,6 +242,7 @@
         margin-top 30px
 
   section.right-side
+    padding 30px 0 10px 40px
     margin-left 480px
     border-left 1px solid rgba(0,0,0,0.07)
     width 560px
