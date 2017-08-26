@@ -5,13 +5,9 @@
       .cards(v-if="cardList.length")
         .card-wrapper(v-for="item in cardList")
           votes(:item="item")
-
           .annotation-card-container(v-if="item.text")
             annotation-card(:annotation="item")
-
           .game-card-container(v-if="item.pgn")
-            // .commands(v-if="gameSource")
-              span.delete(@click="deleteGame(card)") ×
             game-card-header(:game="item")
             .game-container
               game-card(:game="item")
@@ -24,8 +20,6 @@
   import GameCard from './game_card.vue'
   import Votes from './votes.vue'
   import Loading from './loading.vue'
-  import { gameCache } from '../store/games'
-  import { deleteGame } from '../api/requests'
 
   export default {
     props: {
@@ -35,46 +29,12 @@
       annotations: {
         type: Array,
       },
-      gameSource: {
-        type: String,
-      },
-      username: {
-        type: String
-      }
-    },
-
-    data() {
-      let obj
-      if (this.username) {
-        obj = gameCache.getGameSource(`user-${this.username}`)
-      } else {
-        obj = gameCache.getGameSource(this.gameSource)
-      }
-      return {
-        gameCache,
-        gameSourceObj: obj
-      }
-    },
-
-    methods: {
-      deleteGame(game) {
-        console.log('deleting game')
-        // deleteGame(game)
-        this.gameCache.removeGame(game.id)
-      }
     },
 
     computed: {
-      sourceGames() {
-        console.log(`accessing source games - ${this.gameSourceObj.games.length}`)
-        return this.gameSourceObj.games
-      },
       cardList() {
-        if (this.sourceGames) {
-          return this.sourceGames.
-            filter(game => game.graphPoints && game.graphPoints.length > 0)
-        } else if (this.games && this.annotations) {
-          return this.games.concat(this.annotations).sort((a,b) => {
+        if (this.games && this.annotations) {
+          return [...this.games, ...this.annotations].sort((a,b) => {
             let bDate = b.submittedAt ? b.submittedAt : b.createdAt
             let aDate = a.submittedAt ? a.submittedAt : a.createdAt
             return bDate - aDate
@@ -117,14 +77,6 @@
 
     a
       text-decoration none
-
-    .delete
-      opacity 0.3
-      transition opacity 0.15s ease
-
-      &:hover
-        opacity 0.5
-        cursor pointer
 
   .game-container
     border-radius 1px

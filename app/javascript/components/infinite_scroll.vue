@@ -32,8 +32,8 @@
           return
         }
         this.isFetching = true
-        this.apiCaller({ page: this.page }).then((ids) => {
-          if (ids.length === 0) {
+        this.apiCaller({ page: this.page }).then(results => {
+          if (results.length === 0) {
             console.log('no more!')
             clearInterval(this.interval)
           }

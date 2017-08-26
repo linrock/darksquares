@@ -30,8 +30,8 @@ export const getOrFetchGame = function(id: number): Promise<Game> {
   })
 }
 
-export const loadHomeGames = function(options: any = { page: 1 }): Promise<Array<number>> {
-  return getGames(options.page).then(response => {
+export const loadHomeGames = function(page: number = 1): Promise<Array<number>> {
+  return getGames(page).then(response => {
     const games = Game.loadGamesFromData(response.data.games)
     gameCache.addGamesToSet('home', games)
     return games.map(game => game.id)

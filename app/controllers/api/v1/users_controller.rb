@@ -85,6 +85,23 @@ class API::V1::UsersController < API::V1::BaseController
     end
   end
 
+  # GET /api/v1/users/:username/annotations
+  def annotations
+    user = User.find_by(username: params[:username])
+    annotations = user.annotations.order('id DESC').offset(offset).limit(PAGE_SIZE)
+    render json: {
+      annotations: annotations.map {|annotation|
+        # TODO deal with deleted games later
+        pgn_headers = annotation.game && annotation.game.pgn_headers || { "Deleted" => "Game" }
+        annotation.as_json.merge({
+          game: {
+            pgn_headers: pgn_headers
+          }
+        })
+      },
+    }
+  end
+
   private
 
   def user_params

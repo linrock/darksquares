@@ -20,8 +20,12 @@ export default class GameCache {
     })
   }
 
-  public addGamesToSet(name: string, games: Array<Game>) {
+  public addGamesToSet(name: string, games: Array<Game>): void {
     games.forEach(game => this.addGameToSet(name, game))
+  }
+
+  public getGamesFromSet(name: string): Array<Game> {
+    return Array.from(this.gameIdSet.get(name) || []).map(id => this.gamesMap.get(id))
   }
 
   public getGameSource(name: string): any {
