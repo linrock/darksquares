@@ -54,17 +54,22 @@
     methods: {
       upvoteItem() {
         this.voteState = this.voteState === Vote.Upvoted ? Vote.None : Vote.Upvoted
-        this.createVote(1)
+        this.createVote(this.voteState === Vote.None ? 0 : 1)
       },
       downvoteItem() {
         this.voteState = this.voteState === Vote.Downvoted ? Vote.None : Vote.Downvoted
-        this.createVote(-1)
+        this.createVote(this.voteState === Vote.None ? 0 : -1)
       },
       createVote(value) {
+        const data = {
+          vote: {
+            value
+          }
+        }
         if (this.item.pgn) {
-          createGameVote(this.item.id, { value })
+          createGameVote(this.item.id, data)
         } else {
-          createAnnotationVote(this.item.id, { value })
+          createAnnotationVote(this.item.id, data)
         }
       }
     },
