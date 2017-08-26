@@ -7,7 +7,10 @@
       span {{ annotation.timeAgo }}
 
     router-link.linked-card(:to="gamePath")
-      .annotation-card(@mouseenter="previewAnnotatedGame")
+      .annotation-card(
+        @mouseenter="previewAnnotatedGame"
+        :class="[{ previewing: isPreviewing }]"
+      )
         .move-string {{ annotation.move_string }}
         .text {{ annotation.text }}
 
@@ -20,7 +23,11 @@
 
   export default {
     props: {
-      annotation: Annotation
+      annotation: {
+        type: Annotation,
+        required: true
+      },
+      isPreviewing: Boolean
     },
 
     methods: {
@@ -29,7 +36,8 @@
         boardState.highlights = [this.annotation.move.from, this.annotation.move.to]
         boardState.move = this.annotation.move_string
         boardState.pgnHeaders = this.annotation.game.pgnHeaders || {}
-      }
+        this.$emit(`previewing`, this.annotation.key)
+      },
     },
 
     computed: {
@@ -45,6 +53,8 @@
 </script>
 
 <style lang="stylus" scoped>
+  @import "../common.styl"
+
   header
     color rgba(0,0,0,0.4)
     font-size 12px
@@ -66,19 +76,11 @@
     color inherit
     text-decoration none
 
-    &:hover .annotation-card
-      border 1px solid #aaa
-
   .annotation-card
-    background white
-    border 1px solid #E4E4E4
-    border-radius 2px
     font-size 14px
     line-height 18px
     padding 15px 20px
-    position relative
-    transition border 0.2s ease
-    width 640px
+    card()
 
     .move-string
       font-weight bold

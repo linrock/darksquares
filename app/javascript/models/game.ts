@@ -76,6 +76,10 @@ export default class Game {
     return `/games/${this.id}`
   }
 
+  get key(): string {
+    return `game-${this.id}`
+  }
+
   get scores(): Array<number> {
     if (!this.graphPoints) return []
     return this.graphPoints[this.graphPoints.length - 1]

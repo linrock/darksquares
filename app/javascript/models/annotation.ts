@@ -43,6 +43,10 @@ export default class Annotation {
     return Game.moveStringToPositionIndex(this.move_string)
   }
 
+  get key(): string {
+    return `annotation-${this.id}`
+  }
+
   public findMoveStrings(): Array<string> {
     return this.text.match(/\d\.(\.\.)?\s?\w\w?\d/g) || []
   }

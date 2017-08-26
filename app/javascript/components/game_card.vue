@@ -1,8 +1,10 @@
 <template lang="pug">
-  .game-card
-    .graph-container(@mouseenter="setCurrentPgn")
-      game-info(:pgnHeaders="game.pgnHeaders")
-      router-link(:to="gamePositionPath")
+  .game-card(:class="[{ previewing: isPreviewing }]")
+    game-info(:pgnHeaders="game.pgnHeaders")
+    .graph-container(@mouseenter="previewGame")
+      router-link(
+        :to="gamePositionPath"
+      )
         graph-or-loading(
           :width="600"
           :height="150"
@@ -27,7 +29,11 @@
 
   export default {
     props: {
-      game: Game,
+      game: {
+        type: Game,
+        required: true
+      },
+      isPreviewing: Boolean
     },
 
     data() {
@@ -40,9 +46,10 @@
     },
 
     methods: {
-      setCurrentPgn() {
+      previewGame() {
         this.boardState.pgn = this.game.pgn
         this.boardState.pgnHeaders = this.game.pgnHeaders
+        this.$emit(`previewing`, this.game.key)
       },
     },
 
@@ -70,14 +77,11 @@
   @import "../common.styl"
 
   .game-card
-    background white
-    position relative
-    border 1px solid #E4E4E4
-    border-radius 2px
-    width 640px
+    card()
 
   a
     color inherit
+    display block
     text-decoration none
 
     &:hover .more-annotations
@@ -93,8 +97,11 @@
     font-size 12px
     margin-top 15px
 
+  .game-info
+    padding 15px 20px 0
+
   .graph-container
-    padding 15px 20px 5px
+    padding 0 20px 5px
 
   .annotations-container
     background rgba(0,0,0,0.02)

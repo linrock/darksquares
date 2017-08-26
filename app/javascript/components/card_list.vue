@@ -5,11 +5,19 @@
         .card-wrapper(v-for="item in cardList")
           votes(:item="item")
           .annotation-card-container(v-if="item.text")
-            annotation-card(:annotation="item")
+            annotation-card(
+              :annotation="item"
+              :isPreviewing="activeKey === item.key"
+              @previewing="setActiveKey"
+            )
           .game-card-container(v-if="item.pgn")
             game-card-header(:game="item")
             .game-container
-              game-card(:game="item")
+              game-card(
+                :game="item"
+                :isPreviewing="activeKey === item.key"
+                @previewing="setActiveKey"
+              )
 
 </template>
 
@@ -27,6 +35,18 @@
       annotations: {
         type: Array,
       },
+    },
+
+    data() {
+      return {
+        activeKey: null
+      }
+    },
+
+    methods: {
+      setActiveKey(key) {
+        this.activeKey = key
+      }
     },
 
     computed: {
