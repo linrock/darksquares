@@ -43,7 +43,13 @@ export default class GameCache {
 
   public removeGame(id: number) {
     this.gamesMap.delete(id)
-    // this.gameIdSet.delete(id)
+    Object.keys(this.games).forEach(key => {
+      const gamesList = this.games[key].games
+      gamesList.splice(gamesList.findIndex(gameId => gameId === id), 1)
+    })
+    Array.from(this.gameIdSet.values()).forEach(idSet => {
+      idSet.delete(id)
+    })
   }
 
   private initializeCache(name: string) {

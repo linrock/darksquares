@@ -11,7 +11,7 @@
 <script>
   import router from '../router'
   import { deleteGame } from '../api/requests'
-  import { gameIdLists } from '../store/games'
+  import { gameCache } from '../store/games'
   import Game from '../models/game'
 
   export default {
@@ -28,8 +28,7 @@
     methods: {
       deleteGame() {
         deleteGame(this.game)
-        gameIdLists.home.splice(gameIdLists.home.findIndex(id => id === game.id), 1)
-        gameIdLists.myGames.splice(gameIdLists.myGames.findIndex(id => id === game.id), 1)
+        gameCache.removeGame(this.game.id)
         router.go(-1) || router.replace({ path: '/' })
         this.gameState.isDeleting = false
       },

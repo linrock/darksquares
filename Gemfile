@@ -17,6 +17,7 @@ gem 'redis-namespace'
 gem 'sidekiq'
 gem 'devise'
 gem 'doorkeeper'
+gem 'paranoia', '~> 2.2'
 gem 'mini_racer'
 gem 'stockfish'
 

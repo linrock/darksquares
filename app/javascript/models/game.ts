@@ -41,7 +41,7 @@ export default class Game {
   public moves: Array<Move>
   public bestMoves: Array<object>
   public graphPoints: Array<Array<number>>
-  public annotations: Array<Annotation>
+  public annotations: Array<Annotation> = []
   public createdAt: Date
   public submittedAt: Date
 

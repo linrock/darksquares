@@ -1,4 +1,6 @@
 class Game < ApplicationRecord
+  acts_as_paranoid
+
   before_validation :calculate_moves_and_positions
   before_validation :classify_opening
 

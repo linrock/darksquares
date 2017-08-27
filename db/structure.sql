@@ -126,7 +126,8 @@ CREATE TABLE games (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     name character varying,
-    submitted_at timestamp without time zone
+    submitted_at timestamp without time zone,
+    deleted_at timestamp without time zone
 );
 
 
@@ -498,6 +499,13 @@ CREATE UNIQUE INDEX index_game_votes_on_game_id_and_user_id ON game_votes USING 
 
 
 --
+-- Name: index_games_on_deleted_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_games_on_deleted_at ON games USING btree (deleted_at);
+
+
+--
 -- Name: index_games_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -614,6 +622,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170816193641'),
 ('20170816195324'),
 ('20170820234635'),
-('20170821192928');
+('20170821192928'),
+('20170827032341');
 
 
