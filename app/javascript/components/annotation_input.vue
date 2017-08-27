@@ -65,9 +65,11 @@
     width 100%
 
     input
-      font-size 14px
+      font-size 13px
       width 100%
-      padding 3px
+      padding 8px 16px
+      margin-top 1px
+      border 1px solid rgba(0,0,0,0.05)
 
     textarea
       color rgba(0,0,0,0.9)

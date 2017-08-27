@@ -144,4 +144,12 @@
     border 1px solid #f3f3f3
     border-radius 2px
 
+    & + .annotation-input
+      margin-top -15px
+      position relative
+
+      & >>> input
+        margin-top 0
+        border-top 0
+
 </style>
