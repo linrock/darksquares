@@ -7,9 +7,9 @@
       section.right-side
         h1 Import Game
         .description
-          | Enter a PGN or move the pieces on the board
+          | Enter a PGN in the area below
         form(@submit="importGame")
-          textarea(ref="pgn" class="pgn-importer" placeholder="1.d4 d5 2.c4 e6 3.Nf3 c6"
+          textarea(ref="pgn" class="pgn-importer" :placeholder="pgnPlaceholder"
                    @keyup="clearError")
           .commands
             input(type="submit" :value="buttonText" :disabled="isSubmitting")
@@ -34,6 +34,7 @@
         boardState,
         errorMessage: ``,
         isSubmitting: false,
+        pgnPlaceholder: `[ECO "D30"]\n[Opening "Queen's gambit declined"]\n\n1.d4 d5 2.c4 e6 3.Nf3 c6`
       }
     },
 
@@ -82,6 +83,7 @@
     width 560px
     height 336px
     font-size 16px
+    line-height 21px
     padding 15px
     display block
     border 1px solid rgba(0,0,0,0.15)
