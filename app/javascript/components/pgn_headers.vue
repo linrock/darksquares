@@ -30,6 +30,9 @@
 
   .header
     font-weight bold
+    overflow-x hidden
+    text-overflow ellipsis
+    white-space nowrap
     width 120px
 
   .value
