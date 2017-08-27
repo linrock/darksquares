@@ -120,6 +120,7 @@
         if (!this.scrolledToMove || !this.shouldScrollToMove) {
           return
         }
+        history.replaceState(null, null, `#${this.i}`)
         this.scrollToMoveIfFar(this.i)
         applyStateChange(this.game.stateAtPositionIndex(this.i))
       }
