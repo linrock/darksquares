@@ -92,6 +92,10 @@ export default class Annotation {
   }
 
   get timeAgo(): string {
-    return timeAgo(this.createdAt)
+    return timeAgo(this.createdAt).
+      replace('a few seconds ago', 'just now').
+      replace('a ', '1 ').
+      replace('minute', 'min').
+      replace('second', 'sec')
   }
 }
