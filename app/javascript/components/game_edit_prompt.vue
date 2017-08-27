@@ -31,11 +31,11 @@
 
     methods: {
       editGame() {
+        const name = this.$refs.name.value.trim()
         patchGame(this.game, {
-          game: {
-            name: this.$refs.name.value.trim(),
-          }
+          game: { name }
         })
+        this.game.name = name
         this.gameState.isEditing = false
       },
       cancel() {
