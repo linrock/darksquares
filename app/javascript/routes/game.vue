@@ -268,6 +268,7 @@
       & >>> .content
         padding 27px 0 15px
         border-bottom 1px solid rgba(0,0,0,0.05)
+        box-shadow 0 0 15px 9px white
 
       & >>> .spacer
         box-sizing content-box

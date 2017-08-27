@@ -18,7 +18,7 @@
     height sub-header-height
     line-height sub-header-height
     position fixed
-    z-index 1
+    z-index 2
     display flex
     align-items center
 
