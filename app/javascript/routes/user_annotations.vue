@@ -20,9 +20,10 @@
     },
 
     data() {
+      const annotations = this.user.annotations
       return {
-        annotationSet: new Set(),
-        annotations: [],
+        annotationSet: new Set(annotations),
+        annotations,
       }
     },
 

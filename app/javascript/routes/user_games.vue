@@ -21,7 +21,7 @@
 
     data() {
       return {
-        games: []
+        games: this.user.games
       }
     },
 

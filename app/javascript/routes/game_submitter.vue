@@ -21,15 +21,22 @@
     mounted() {
       window.scrollTo(0, 0)
       loadMyGames().then(() => {
-        this.games = gameCache.getGamesFromSet('my_games').filter(game => !game.submittedAt)
+        this.games = this.myUnsubmittedGames(),
         this.gamesLoaded = true
       })
     },
 
     data() {
+      const games = this.myUnsubmittedGames()
       return {
-        games: [],
-        gamesLoaded: false,
+        games,
+        gamesLoaded: games.length !== 0,
+      }
+    },
+
+    methods: {
+      myUnsubmittedGames() {
+        return gameCache.getGamesFromSet('my_games').filter(game => !game.submittedAt)
       }
     },
 
