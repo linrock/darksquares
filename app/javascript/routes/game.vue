@@ -234,11 +234,11 @@
 
   section.left-side
     position fixed
-    top 0
-    padding-top 30px + 76px
+    top main-header-height + sub-header-height
+    padding-top 30px
     padding-bottom 15px
     width 480px
-    height 100%
+    height "calc(100% - %s - %s)" % (main-header-height sub-header-height)
     overflow-y auto
 
     .left-side-inner

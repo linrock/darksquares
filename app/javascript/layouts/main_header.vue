@@ -44,12 +44,14 @@
 </script>
 
 <style lang="stylus" scoped>
+  @import "../common.styl"
+
   header
     background #212121
     color white
     width 100%
-    height 40px
-    line-height 40px
+    height main-header-height
+    line-height main-header-height
     position fixed
     z-index 1
 
@@ -119,6 +121,6 @@
         margin-right 5px
 
   .header-spacer
-    height 40px
+    height main-header-height
 
 </style>

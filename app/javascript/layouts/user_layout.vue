@@ -69,6 +69,8 @@
 </script>
 
 <style lang="stylus" scoped>
+  @import "../common.styl"
+
   main
     width 100%
     height 100%
@@ -77,9 +79,11 @@
   .left-content
     background white
     width 420px
-    height 100%
-    min-height 1000px
+    height "calc(100% - %s)" % main-header-height
     position fixed
+    top main-header-height
+    padding-bottom 20px
+    overflow-y scroll
 
     .mini-board-view
       margin 30px 0 0 40px

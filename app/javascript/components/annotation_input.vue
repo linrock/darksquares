@@ -69,4 +69,11 @@
       width 100%
       padding 3px
 
+    textarea
+      color rgba(0,0,0,0.9)
+      font-size 13px
+      padding 7px 15px
+      width 100%
+      height 48px
+
 </style>

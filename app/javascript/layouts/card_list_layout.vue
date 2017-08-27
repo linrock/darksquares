@@ -23,6 +23,8 @@
 </script>
 
 <style lang="stylus" scoped>
+  @import "../common.styl"
+
   main
     width 100%
     height 100%
@@ -31,10 +33,10 @@
   .left-content
     background white
     width 420px
-    height 100%
+    height "calc(100% - %s)" % main-header-height
     position fixed
-    top 0
-    padding 40px 0 20px
+    top main-header-height
+    padding-bottom 20px
     overflow-y scroll
 
     .mini-board-view

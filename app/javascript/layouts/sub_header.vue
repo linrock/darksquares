@@ -7,20 +7,22 @@
 </template>
 
 <style lang="stylus" scoped>
+  @import "../common.styl"
+
   .sub-header
     background #f5f5f5
     color #777
     padding-left 80px
     font-size 14px
     width 100%
-    height 36px
-    line-height 36px
+    height sub-header-height
+    line-height sub-header-height
     position fixed
     z-index 1
     display flex
     align-items center
 
   .sub-header-spacer
-    height 36px
+    height sub-header-height
 
 </style>
