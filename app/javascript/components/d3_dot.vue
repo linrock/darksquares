@@ -33,7 +33,7 @@
         return `width: ${this.width}px; height: ${this.height}px;`
       },
       yValues() {
-        return scaleLinear().range([this.height, 0]).domain(this.yRange)
+        return scaleLinear().range([this.height, 0]).domain(this.yRange).clamp(true)
       }
     }
   }
