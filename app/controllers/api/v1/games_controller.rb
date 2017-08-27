@@ -25,12 +25,18 @@ class API::V1::GamesController < API::V1::BaseController
 
   # GET /api/v1/games/:id
   def show
-    game = Game.find(params[:id])
-    render_json({
-      game: game.as_json.merge({
-        annotations: game.annotations.includes(:user)
+    game = Game.unscoped.find_by(id: params[:id])
+    if game.nil?
+      render_json({ error: "Game not found" }, status: 404)
+    elsif game.deleted_at
+      render_json({ error: "This game has been deleted" }, status: 404)
+    else
+      render_json({
+        game: game.as_json.merge({
+          annotations: game.annotations.includes(:user)
+        })
       })
-    })
+    end
   end
 
   # GET /api/v1/games/:id/status

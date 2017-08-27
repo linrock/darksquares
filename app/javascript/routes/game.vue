@@ -11,6 +11,7 @@
           .separator &mdash;
           | {{ authorText }}
 
+    .error-message(v-if="errorMessage") {{ errorMessage }}
     .content(v-if="game")
       section.left-side(
         @mouseenter="disableAutoscroll"
@@ -61,7 +62,7 @@
       }
     },
 
-    data: function() {
+    data() {
       return {
         game: null,
         gameState: {
@@ -72,6 +73,7 @@
         },
         shouldScrollToMove: true,
         scrolledToMove: false,
+        errorMessage: null
       }
     },
 
@@ -80,6 +82,9 @@
       getOrFetchGame(Number(this.id)).then(game => {
         applyStateChange(game.stateAtPositionIndex(this.gameState.i))
         this.game = game
+      }).catch(error => {
+        this.errorMessage = error.response.data.error
+        console.log(this.errorMessage)
       })
     },
 
@@ -215,6 +220,12 @@
     .author
       opacity 0.5
       font-size 12px
+
+  .error-message
+    display flex
+    width 1200px
+    margin-left 80px
+    padding 30px 0
 
   .content
     display flex
