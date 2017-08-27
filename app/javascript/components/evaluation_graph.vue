@@ -2,18 +2,21 @@
   .evaluation-graph
     .hover-graph(
       @mousemove="setPositionIndex"
-      @mouseenter="shouldShowLine = true"
-      @mouseleave="shouldShowLine = false"
       @click="handleClick"
     )
-      stacked-graph(:width="width" :height="height" :listOfPoints="game.graphPoints")
-      hover-indicator(
+      stacked-graph(
         :width="width"
         :height="height"
-        :i="gameState.i"
-        :points="game.scores"
-        :style="indicatorStyle"
+        :listOfPoints="game.graphPoints"
       )
+      transition(name="fade")
+        hover-indicator(
+          v-if="shouldShowLine"
+          :width="width"
+          :height="height"
+          :i="gameState.i"
+          :points="game.scores"
+        )
 
 </template>
 
@@ -23,6 +26,7 @@
   import MoveList from './move_list'
   import Game from '../models/game'
   import { applyStateChange } from '../store/miniboard'
+  import { activeGame } from '../store/active_game'
 
   export default {
     props: {
@@ -42,27 +46,21 @@
       height: Number
     },
 
-    data: function() {
-      return {
-        shouldShowLine: false,
-      }
-    },
-
     // global state changes - fen, move, score, highlights, annotations
     //
     methods: {
-      setPositionIndex: function(e) {
+      setPositionIndex(e) {
         this.gameState.i = ~~(this.game.nPoints * e.offsetX / this.width)
         applyStateChange(this.game.stateAtPositionIndex(this.gameState.i))
       },
-      handleClick: function() {
+      handleClick() {
         this.clickedGraph(this.gameState.i)
       }
     },
 
     computed: {
-      indicatorStyle: function() {
-        return this.shouldShowLine ? `display: block` : `display: none`
+      shouldShowLine() {
+        return activeGame.key === this.game.key
       },
     },
 
@@ -75,6 +73,8 @@
 </script>
 
 <style lang="stylus" scoped>
+  @import "../common.styl"
+
   .hover-graph
     position relative
 

@@ -7,16 +7,14 @@
           .annotation-card-container(v-if="item.text")
             annotation-card(
               :annotation="item"
-              :isPreviewing="activeKey === item.key"
-              @previewing="setActiveKey"
+              :isPreviewing="activeGame.key === item.key"
             )
           .game-card-container(v-if="item.pgn")
             game-card-header(:game="item")
             .game-container
               game-card(
                 :game="item"
-                :isPreviewing="activeKey === item.key"
-                @previewing="setActiveKey"
+                :isPreviewing="activeGame.key === item.key"
               )
 
 </template>
@@ -26,6 +24,7 @@
   import GameCardHeader from './game_card_header.vue'
   import GameCard from './game_card.vue'
   import Votes from './votes.vue'
+  import { activeGame } from '../store/active_game'
 
   export default {
     props: {
@@ -39,13 +38,7 @@
 
     data() {
       return {
-        activeKey: null
-      }
-    },
-
-    methods: {
-      setActiveKey(key) {
-        this.activeKey = key
+        activeGame
       }
     },
 

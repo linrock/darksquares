@@ -1,6 +1,7 @@
 <template lang="pug">
   svg.d3-dot(ref="circle" :style="svgStyle")
-    circle(r="2" style="fill: orange" :cx="x" :cy="yValues(y)")
+    circle(r="4" style="fill: orange; opacity: 0.8" :cx="x" :cy="yValues(y)")
+    circle(r="2" style="fill: white" :cx="x" :cy="yValues(y)")
 
 </template>
 

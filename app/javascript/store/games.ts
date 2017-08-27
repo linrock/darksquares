@@ -32,7 +32,7 @@ export const getOrFetchGame = function(id: number): Promise<Game> {
   })
 }
 
-export const loadHomeGames = function(page: number = 1): Promise<Array<number>> {
+export const loadHomeGames = function(page: number = 1): Promise<number[]> {
   return getGames(page).then(response => {
     const games = Game.loadGamesFromData(response.data.games)
     gameCache.addGamesToSet('home', games)
@@ -44,7 +44,7 @@ export const loadHomeGames = function(page: number = 1): Promise<Array<number>> 
   })
 }
 
-export const loadMyGames = function(options: any = { page: 1 }): Promise<Array<number>> {
+export const loadMyGames = function(options: any = { page: 1 }): Promise<number[]> {
   return getMyGames(options.page).then(response => {
     const games = Game.loadGamesFromData(response.data.games)
     gameCache.addGamesToSet('my_games', games)
@@ -52,7 +52,7 @@ export const loadMyGames = function(options: any = { page: 1 }): Promise<Array<n
   })
 }
 
-export const loadUserGames = function(options: any = { username: ``, page: 1 }): Promise<Array<number>> {
+export const loadUserGames = function(options: any = { username: ``, page: 1 }): Promise<number[]> {
   return getUserGames(options.username, options.page).then(response => {
     const games = Game.loadGamesFromData(response.data.games)
     gameCache.addGamesToSet(`user-${options.username}`, games)

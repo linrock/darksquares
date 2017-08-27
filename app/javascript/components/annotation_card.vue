@@ -20,6 +20,7 @@
   import Game from '../models/game'
   import Annotation from '../models/annotation'
   import { boardState } from '../store/miniboard'
+  import { activeGame } from '../store/active_game'
 
   export default {
     props: {
@@ -36,7 +37,7 @@
         boardState.highlights = [this.annotation.move.from, this.annotation.move.to]
         boardState.move = this.annotation.move_string
         boardState.pgnHeaders = this.annotation.game.pgnHeaders || {}
-        this.$emit(`previewing`, this.annotation.key)
+        activeGame.setKey(this.annotation.key)
       },
     },
 

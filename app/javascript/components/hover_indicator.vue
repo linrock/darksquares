@@ -18,10 +18,10 @@
     },
 
     computed: {
-      x: function() {
+      x() {
         return this.i / (this.n - 1) * this.width
       },
-      n: function() {
+      n() {
         return this.points.length
       }
     },
