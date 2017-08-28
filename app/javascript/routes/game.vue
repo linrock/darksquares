@@ -49,7 +49,7 @@
   import GameSubmitPrompt from '../components/game_submit_prompt'
   import GameEditPrompt from '../components/game_edit_prompt'
   import GameDeletePrompt from '../components/game_delete_prompt'
-  import { getUsername } from '../store/local_storage'
+  import { userState } from '../store/user_state'
   import { resetBoardState, applyStateChange } from '../store/miniboard'
   import { getOrFetchGame } from '../store/games'
   import { isElementInViewport } from '../util'
@@ -131,7 +131,7 @@
         return this.gameState.i
       },
       canTakeActions() {
-        return this.game.user.username === getUsername()
+        return this.game.user.username === userState.username
       },
       authorText() {
         if (this.game.submittedAt) {

@@ -17,7 +17,8 @@
   import Annotation from '../models/annotation'
   import { createGameVote, createAnnotationVote } from '../api/requests'
   import { gameVoteCache } from '../store/games'
-  import { getUsername } from '../store/local_storage'
+  import { modalState } from '../store/modal_state'
+  import { userState } from '../store/user_state'
 
   const Vote = {
     None: 'none',
@@ -45,12 +46,13 @@
         Vote,
         initialScore: ~~(Math.random() * 20),
         voteState,
+        userState,
       }
     },
 
     computed: {
       disabled() {
-        return this.item.username === getUsername()
+        return this.item.username === userState.username
       },
       score() {
         let score = this.initialScore
@@ -65,18 +67,21 @@
 
     methods: {
       upvoteItem() {
-        if (this.disabled) {
-          return
-        }
-        this.voteState = this.voteState === Vote.Upvoted ? Vote.None : Vote.Upvoted
-        this.createVote(this.voteState === Vote.None ? 0 : 1)
+        this.attemptVote(Vote.Upvoted, 1)
       },
       downvoteItem() {
+        this.attemptVote(Vote.Downvoted, -1)
+      },
+      attemptVote(voteType, value) {
         if (this.disabled) {
           return
         }
-        this.voteState = this.voteState === Vote.Downvoted ? Vote.None : Vote.Downvoted
-        this.createVote(this.voteState === Vote.None ? 0 : -1)
+        if (!userState.username) {
+          modalState.open = true
+          return
+        }
+        this.voteState = this.voteState === voteType ? Vote.None : voteType
+        this.createVote(this.voteState === Vote.None ? 0 : value)
       },
       createVote(value) {
         const data = {

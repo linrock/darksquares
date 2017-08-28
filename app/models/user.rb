@@ -19,13 +19,19 @@ class User < ApplicationRecord
 
   def error_message_upon_creation
     return unless errors
+    error = nil
     if errors.details[:username].present?
-      return "Invalid username"
-    elsif errors.details.dig(:password, 0, :error) == :too_short
-      return "Password must be at least 6 characters"
-    elsif errors.details[:password_confirmation]
-      return "Passwords don't match"
+      if errors.details[:username].any? {|reason| reason[:error] == :taken }
+        error = "Username is taken"
+      else
+        error "Invalid username"
+      end
+    elsif errors.details[:password].any? {|reason| reason[:error] == :too_short }
+      error = "Password must be at least 6 characters"
+    elsif errors.details[:password_confirmation].present?
+      error = "Passwords don't match"
     end
+    error
   end
 
   def create_access_token!

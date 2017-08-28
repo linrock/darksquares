@@ -1,4 +1,5 @@
 import APIClient from './client'
+import { userState } from '../store/user_state'
 import { setUsername } from '../store/local_storage'
 
 const api = new APIClient()
@@ -52,7 +53,9 @@ export const getGameStatus = function(id) {
 
 export const getMyUserInfo = function() {
   return api.get(`/api/v1/users/me`).then(response => {
-    setUsername(response.data.username)
+    const username = response.data.username
+    userState.username = username
+    setUsername(username)
   })
 }
 

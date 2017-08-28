@@ -24,19 +24,23 @@
 </template>
 
 <script>
-  import { getUsername } from '../store/local_storage'
+  import { userState } from '../store/user_state'
 
   export default {
-    data: function() {
+    data() {
       return {
-        username: getUsername()
+        userState
       }
     },
+
     computed: {
-      userPath: function() {
+      username() {
+        return this.userState.username
+      },
+      userPath() {
         return this.username ? `/u/${this.username}` : `/sign_up`
       },
-      userLinkText: function() {
+      userLinkText() {
         return this.username ? this.username : `Sign up`
       }
     }

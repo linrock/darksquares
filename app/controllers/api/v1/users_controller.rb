@@ -3,7 +3,7 @@ class API::V1::UsersController < API::V1::BaseController
   # POST /api/v1/users
   def create
     user = User.create(user_params)
-    if user.errors
+    if user.errors.present?
       render_json({ error: user.error_message_upon_creation }, status: 400)
     else
       render_json({

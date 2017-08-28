@@ -19,15 +19,13 @@
   import InfiniteScroll from '../components/infinite_scroll.vue'
   import CardList from '../components/card_list.vue'
   import { gameCache, loadHomeGames } from '../store/games'
-  import { getUsername } from '../store/local_storage'
+  import { userState } from '../store/user_state'
 
   export default {
     data() {
-      const username = getUsername()
       return {
         loadHomeGames,
-        isLoggedIn: !!username,
-        username,
+        userState,
         games: this.filteredGames()
       }
     },
@@ -43,6 +41,15 @@
           this.games = this.filteredGames()
           return ids
         })
+      }
+    },
+
+    computed: {
+      username() {
+        return this.userState.username
+      },
+      isLoggedIn() {
+        return !!this.username
       }
     },
 

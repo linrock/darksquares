@@ -7,8 +7,8 @@
 <script>
   import Annotation from '../models/annotation'
   import Game from '../models/game'
-  import { getUsername } from '../store/local_storage'
   import { createAnnotation } from '../api/requests'
+  import { userState } from '../store/user_state'
 
   export default {
     props: {
@@ -26,7 +26,7 @@
       createAnnotation(ev) {
         ev.preventDefault()
         const annotation = new Annotation({
-          username: getUsername(),
+          username: userState.username,
           move_string: this.moveString,
           text: this.$refs.annotationInput.value
         })
