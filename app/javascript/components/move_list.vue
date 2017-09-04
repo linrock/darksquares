@@ -1,30 +1,34 @@
-<template>
-  <div class="move-list">
-    <template v-for="(move, i) in game.moves">
-      <div class="move-num" v-if="showMoveNum(i)">{{ game.moveNum(i) }}</div>
-      <div class="move">
-        <div class="move-san" :class="highlight(i)" :id="moveId(i)"
-             @click="updateMoveIndex(i)">{{ move.san }}</div>
-        <div class="move-actions">
-          <img src="/assets/comment-bubble.svg" class="comment-bubble"
-               @click="toggleAnnotationInput(i)">
-        </div>
-      </div>
-      <div class="annotations" v-if="game.annotationsAt(i)">
-        <annotation v-for="annotation in game.annotationsAt(i)"
-                    :key="annotation.id"
-                    :annotation="annotation"
-                    :game="game"/>
-      </div>
-      <annotation-input v-if="annotationInputIndex === i"
-                        :game="game" :moveString="game.moveString(i)"
-                        @annotation-created="annotationInputIndex = -1"/>
-    </template>
-  </div>
+<template lang="pug">
+  .move-list
+    template(v-for="(move, i) in game.moves")
+      .move-num(v-if="showMoveNum(i)") {{ game.moveNum(i) }}
+      .move
+        .move-san(
+          :class="highlight(i)"
+          :id="moveId(i)"
+          @click="updateMoveIndex(i)"
+        ) {{ move.san }}
+        .move-actions
+          img(
+            src="/assets/comment-bubble.svg"
+            class="comment-bubble"
+            @click="toggleAnnotationInput(i)"
+          )
+      move-annotations(
+        :annotations="game.annotationsAt(i)"
+        :game="game"
+      )
+      annotation-input(
+        v-if="annotationInputIndex === i"
+        :game="game"
+        :moveString="game.moveString(i)"
+        @annotation-created="annotationInputIndex = -1"
+      )
+
 </template>
 
 <script>
-  import Annotation from './annotation.vue'
+  import MoveAnnotations from './move_annotations.vue'
   import AnnotationInput from './annotation_input.vue'
   import Game from '../models/game'
   import { modalState } from '../store/modal_state'
@@ -85,8 +89,8 @@
     },
 
     components: {
-      Annotation,
       AnnotationInput,
+      MoveAnnotations,
     }
   }
 </script>

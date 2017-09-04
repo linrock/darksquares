@@ -2,10 +2,16 @@
   .annotation-content
     annotation-text(:annotation="annotation")
     .annotation-info
-      span.prefix &ndash;
-      router-link.username(:to="userPath" v-if="showUsername(annotation)")
-        | {{ annotation.username }}
-      span.time-ago {{ annotation.timeAgo }}
+      template(v-if="!annotation.annotator")
+        span.author
+          span.prefix &ndash;
+          router-link.username(:to="userPath" v-if="showUsername(annotation)")
+            | {{ annotation.username }}
+          span.time-ago {{ annotation.timeAgo }}
+      template(v-if="annotation.annotator")
+        span.annotator
+          span.prefix &ndash;
+          | {{ annotation.annotator }}
 
 </template>
 
@@ -22,7 +28,7 @@
     },
 
     methods: {
-      showUsername: function(annotation) {
+      showUsername(annotation) {
         return annotation.username && annotation.username !== ``
       },
     },
@@ -62,23 +68,26 @@
     .prefix
       display inline
       margin 0 3px 0 8px
-      opacity 0.6
 
-    .username
-      color highlight-color
-      display inline
-      opacity 0.9
-      text-decoration none
+    .author
+      .prefix
+        opacity 0.6
 
-      &:hover
-        text-decoration underline
+      .username
+        color highlight-color
+        display inline
+        opacity 0.9
+        text-decoration none
 
-    .time-ago
-      display inline
-      margin-left 6px
-      opacity 0.2
+        &:hover
+          text-decoration underline
 
-  .spacer
-    width 4px
+      .time-ago
+        display inline
+        margin-left 6px
+        opacity 0.2
+
+    .annotator
+      color rgba(0,0,0,0.3)
 
 </style>

@@ -10,8 +10,9 @@ export interface AnnotationOptions {
   username: string
   move: object
   move_string: string
-  created_at: string
   text: string
+  annotator: string
+  created_at: string
 }
 
 export default class Annotation {
@@ -23,6 +24,7 @@ export default class Annotation {
   public move: object
   public move_string: string
   public text: string
+  public annotator: string
   public createdAt: Date
 
   public constructor(options: AnnotationOptions) {
@@ -36,6 +38,7 @@ export default class Annotation {
     this.move = options.move
     this.move_string = options.move_string
     this.text = options.text
+    this.annotator = options.annotator
     this.createdAt = parseDate(options.created_at)
   }
 
@@ -48,7 +51,7 @@ export default class Annotation {
   }
 
   public findMoveStrings(): Array<string> {
-    return this.text.match(/\d\.(\.\.)?\s?\w\w?\d/g) || []
+    return this.text.match(/\d+\.(\.\.)?\s?\w\w?\d/g) || []
   }
 
   // Find valid positions from move strings in the annotation text

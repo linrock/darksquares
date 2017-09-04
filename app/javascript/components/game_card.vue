@@ -91,7 +91,7 @@
   .graph-or-loading >>> .loading
     font-size 14px
     color rgba(0,0,0,0.4)
-    padding 12px 0
+    padding 40px 0
 
   .more-annotations
     color highlight-color
