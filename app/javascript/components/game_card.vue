@@ -15,7 +15,7 @@
       annotation-previews(:game="game")
       router-link(:to="game.path")
         .more-annotations(v-if="annotationsRemaining")
-          | View {{ annotationsRemaining }} more annotations
+          | View {{ annotationsRemaining }} more {{ pluralizedAnnotationLabel }}
 
 </template>
 
@@ -60,6 +60,9 @@
         if (remaining > 0) {
           return remaining
         }
+      },
+      pluralizedAnnotationLabel() {
+        return this.annotationsRemaining === 1 ? `annotation` : `annotations`
       },
       gamePositionPath() {
         return `${this.game.path}#${this.gameState.i}`
