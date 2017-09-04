@@ -3,12 +3,12 @@
     template(slot="header")
       h1 Recent games
       h2
-        | Hover over the graphs to explore positions.
-        | Click the graph to annotate.
+        | Hover over the graphs to preview positions on the board.
+        | Click a graph to explore the game.
     div(slot="dark-subheader" v-if="!isLoggedIn")
-      | Annotate and share chess games with the community.
+      | Share and annotate chess games with the community.
       router-link(to="/sign_up") Sign up
-      | to get started
+      | to get started.
     infinite-scroll(:apiCaller="loadHomeGamesFromPage")
       card-list(:games="games")
 
