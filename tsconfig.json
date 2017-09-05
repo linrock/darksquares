@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
+    "allowJs": true,
+    "lib": ["es2017", "dom"],
     "sourceMap": true,
-    "target": "es2017",
-    "allowJs": true
+    "target": "es5"
   }
 }
