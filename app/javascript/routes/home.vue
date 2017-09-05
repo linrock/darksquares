@@ -37,9 +37,9 @@
         })
       },
       loadHomeGamesFromPage(options) {
-        return loadHomeGames(options.page).then(ids => {
+        return loadHomeGames(options.page).then(data => {
           this.games = this.filteredGames()
-          return ids
+          return data
         })
       }
     },

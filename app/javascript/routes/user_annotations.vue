@@ -30,10 +30,14 @@
     methods: {
       loadUserAnnotationsFromPage(options) {
         const username = this.user.username
-        return loadUserAnnotations(username, options.page).then(annotations => {
+        return loadUserAnnotations(username, options.page).then(data => {
+          const annotations = data.results
           annotations.forEach(annotation => this.annotationSet.add(annotation))
           this.annotations = Array.from(this.annotationSet)
-          return annotations.map(annotation => annotation.id)
+          return {
+            results: annotations.map(annotation => annotation.id),
+            moreResults: data.moreResults
+          }
         })
       }
     },

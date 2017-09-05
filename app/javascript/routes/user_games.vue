@@ -28,9 +28,12 @@
     methods: {
       loadUserGamesFromPage(options) {
         const username = this.user.username
-        return loadUserGames({ username, page: options.page }).then(ids => {
+        return loadUserGames({ username, page: options.page }).then(data => {
           this.games = gameCache.getGamesFromSet(`user-${username}`)
-          return ids
+          return {
+            results: data.results,
+            moreResults: data.moreResults
+          }
         })
       }
     },

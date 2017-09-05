@@ -32,7 +32,7 @@ export const getOrFetchGame = function(id: number): Promise<Game> {
   })
 }
 
-export const loadHomeGames = function(page: number = 1): Promise<number[]> {
+export const loadHomeGames = function(page: number = 1): Promise<any> {
   return getGames(page).then(response => {
     const games = Game.loadGamesFromData(response.data.games)
     gameCache.addGamesToSet('home', games)
@@ -40,7 +40,10 @@ export const loadHomeGames = function(page: number = 1): Promise<number[]> {
     if (gameVotes) {
       gameVotes.forEach(vote => gameVoteCache.setValue(vote.game_id, vote.value))
     }
-    return games.map(game => game.id)
+    return {
+      results: games.map(game => game.id),
+      moreResults: response.data.more_results
+    }
   })
 }
 
@@ -52,7 +55,7 @@ export const loadMyGames = function(options: any = { page: 1 }): Promise<number[
   })
 }
 
-export const loadUserGames = function(options: any = { username: ``, page: 1 }): Promise<number[]> {
+export const loadUserGames = function(options: any = { username: ``, page: 1 }): Promise<any> {
   return getUserGames(options.username, options.page).then(response => {
     const games = Game.loadGamesFromData(response.data.games)
     gameCache.addGamesToSet(`user-${options.username}`, games)
@@ -60,6 +63,9 @@ export const loadUserGames = function(options: any = { username: ``, page: 1 }):
     if (gameVotes) {
       gameVotes.forEach(vote => gameVoteCache.setValue(vote.game_id, vote.value))
     }
-    return games.map(game => game.id)
+    return {
+      results: games.map(game => game.id),
+      moreResults: response.data.more_results
+    }
   })
 }

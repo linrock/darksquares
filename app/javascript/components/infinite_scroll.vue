@@ -31,16 +31,13 @@
     },
 
     methods: {
-      lol() {
-        debugger
-      },
       fetchFromApi() {
         if (this.isFetching) {
           return
         }
         this.isFetching = true
-        this.apiCaller({ page: this.page }).then(results => {
-          if (results.length === 0) {
+        this.apiCaller({ page: this.page }).then(data => {
+          if (data.results.length === 0 || data.moreResults === false) {
             console.log('no more!')
             clearInterval(this.interval)
             this.isFetching = false

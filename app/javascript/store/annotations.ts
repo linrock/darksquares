@@ -3,9 +3,11 @@ import {
   getUserAnnotations,
 } from '../api/requests'
 
-export const loadUserAnnotations =
-  function(username: string, page: number): Promise<Array<Annotation>> {
-    return getUserAnnotations(username, page).then(response => {
-      return response.data.annotations.map(data => new Annotation(data))
-    })
-  }
+export const loadUserAnnotations = function(username: string, page: number): Promise<any> {
+  return getUserAnnotations(username, page).then(response => {
+    return {
+      results: response.data.annotations.map(data => new Annotation(data)),
+      moreResults: response.data.more_results
+    }
+  })
+}
