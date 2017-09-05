@@ -7,17 +7,17 @@
           router-link(to="/") Dark Squares
         .right
           router-link(to="/import")
-            img(src="/assets/icons/import.svg" class="import")
+            img(src="/icons/import.svg" class="import")
             | Import game
           router-link(to="/submit")
-            img(src="/assets/icons/submit.svg" class="submit")
+            img(src="/icons/submit.svg" class="submit")
             | Submit game
           // router-link(to="/about")
             img(src="/assets/about.svg" class="about")
             | About
         .far-right
           router-link(:to="userPath")
-            img(src="/assets/icons/user.svg")
+            img(src="/icons/user.svg")
             | {{ userLinkText }}
     .header-spacer
 

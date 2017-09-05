@@ -67,7 +67,7 @@
         return piece && `${piece.color}${piece.type}`
       },
       pieceImgSrc(i,j) {
-        return `/assets/pieces/${this.pieceAt(i,j)}.svg`
+        return `/pieces/${this.pieceAt(i,j)}.svg`
       }
     },
 

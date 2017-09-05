@@ -10,7 +10,7 @@
         ) {{ move.san }}
         .move-actions
           img(
-            src="/assets/icons/comment-bubble.svg"
+            src="/icons/comment-bubble.svg"
             class="comment-bubble"
             @click="toggleAnnotationInput(i)"
           )
