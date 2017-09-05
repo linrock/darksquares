@@ -2,7 +2,7 @@
   .infinite-scroll
     slot
     transition(name="fade")
-      loading(v-if="isFetching")
+      loading(v-if="!isComplete")
     .bottom(ref="bottom" style="height: 200px")
   
 </template>
@@ -25,6 +25,7 @@
     data() {
       return {
         page: 1,
+        isComplete: false,
         isFetching: false,
         interval: null
       }
@@ -41,10 +42,11 @@
             console.log('no more!')
             clearInterval(this.interval)
             this.isFetching = false
+            this.isComplete = true
             return
           }
           this.page = this.page + 1
-          setTimeout(() => { this.isFetching = false }, 2000)
+          setTimeout(() => { this.isFetching = false }, 1000)
         })
       },
       distanceFromBottom() {
