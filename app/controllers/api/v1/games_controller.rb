@@ -45,7 +45,7 @@ class API::V1::GamesController < API::V1::BaseController
     render_json({
       game: {
         id: game.id,
-        status: game.analysis_status,
+        status: game.status,
         percent: game.percent_analyzed
       }
     })

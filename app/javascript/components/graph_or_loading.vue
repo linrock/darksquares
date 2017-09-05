@@ -9,7 +9,10 @@
       :clickedGraph="clickedGraph"
     )
     .loading(v-if="isLoading")
-      | Game analysis in progress... {{ progressText }}
+      template(v-if="analysisStatus === `pending`")
+        | Waiting to analyze game...
+      template(v-if="analysisStatus === `in_progress`")
+        | Game analysis in progress... {{ progressText }}
 
 </template>
 
@@ -45,6 +48,7 @@
     data() {
       return {
         currentGame: this.game,
+        analysisStatus: null,
         percentComplete: null,
         periodicFetcher: null,
       }
@@ -63,10 +67,12 @@
     methods: {
       checkOrFetchGame() {
         getGameStatus(this.game.id).then(response => {
+          const analysisStatus = response.data.game.status
           const percentComplete = response.data.game.percent
           if (percentComplete === 100) {
             this.fetchGame()
           } else {
+            this.analysisStatus = analysisStatus
             this.percentComplete = percentComplete
           }
         })

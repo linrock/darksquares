@@ -14,11 +14,7 @@ class Game < ApplicationRecord
   has_many :annotations
   has_many :votes, class_name: 'GameVote'
 
-  ANALYSIS_STATUS = {
-    pending: 'pending',
-    in_progress: 'in_progress',
-    complete: 'complete'
-  }
+  delegate :status, :percent_analyzed, to: :analysis_status
 
   def calculate_moves_and_positions
     return if pgn_headers.present? && moves.present? && positions.present?
@@ -53,20 +49,6 @@ class Game < ApplicationRecord
     pgn.gsub(/.*\]/, '').strip
   end
 
-  def percent_analyzed
-    @percent_analyzed ||=
-      begin
-        fraction = PositionAnalysis.where(fen: positions).count.to_f / positions.count
-        (100 * fraction).floor
-      end
-  end
-
-  def analysis_status
-    return ANALYSIS_STATUS[:pending] if percent_analyzed == 0
-    return ANALYSIS_STATUS[:complete] if percent_analyzed == 100
-    ANALYSIS_STATUS[:in_progress]
-  end
-
   def as_json(options = {})
     super(options).merge({
       user: {
@@ -80,4 +62,9 @@ class Game < ApplicationRecord
   def pgn_loader
     @pgn_loader ||= PgnLoader.new(pgn)
   end
+
+  def analysis_status
+    @analysis_status ||= GameAnalysisStatus.new(self)
+  end
+
 end
