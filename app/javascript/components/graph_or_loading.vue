@@ -9,7 +9,7 @@
       :clickedGraph="clickedGraph"
     )
     .loading(v-if="isLoading")
-      template(v-if="analysisStatus === `pending`")
+      template(v-if="!analysisStatus || analysisStatus === `pending`")
         | Waiting to analyze game...
       template(v-if="analysisStatus === `in_progress`")
         | Game analysis in progress... {{ progressText }}
