@@ -25,7 +25,7 @@ class Game < ApplicationRecord
 
   def calculate_game_data!
     self.analysis = GameAnalyzer.new(self.positions).analyze!
-    self.best_moves = self.analysis.map {|position| position["bestmove"]["san"] }
+    self.best_moves = self.analysis.map {|position| position.dig("bestmove", "san") }
     self.graph_points = GraphPointsCalculator.new(self.analysis).calculate!.values[0].values
     self.save!
   end

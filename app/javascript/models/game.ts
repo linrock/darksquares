@@ -140,11 +140,14 @@ export default class Game {
       state.highlights = []
     } else {
       const score = this.scores[i]
-      if (score !== undefined) {
-        state.score = score
-      }
-      if (this.bestMoves && this.bestMoves[i]) {
-        state.bestMove = this.bestMoves[i]
+      if (this.bestMoves) {
+        if (this.bestMoves[i] === null) {
+          state.bestMove = "Game Over"
+          state.score = ""
+        } else {
+          state.bestMove = this.bestMoves[i]
+          state.score = score !== undefined ? score : ""
+        }
       }
       const j = i - 1
       const move = this.moves[j]

@@ -1,7 +1,8 @@
 <template lang="pug">
   .position-evaluation
     span.score(:style="scoreStyle") {{ scoreStr }}
-    span.best-move(v-if="bestMove") &nbsp;- {{ bestMove }}
+    span.separator(v-if="scoreStr && bestMove") &ndash;
+    span.best-move(v-if="bestMove") {{ bestMove }}
 
 </template>
 
@@ -50,5 +51,8 @@
     font-size 16px
     font-weight bold
     height 18px
+
+  .separator
+    margin 0 5px
 
 </style>

@@ -39,7 +39,10 @@ class GraphPointsCalculator
   # A list of scores at a given search depth - [ 1.21, 1.52, 1.74, ... ]
   #
   def scores_at_depth(depth)
-    @game_analysis.map {|a| a['analysis'].find {|v| v['depth'] == depth }['score'] }
+    @game_analysis.map {|position_analysis|
+      analysis = position_analysis['analysis'].find {|v| v['depth'] == depth }
+      (analysis || position_analysis['analysis'][-1])['score']
+    }
   end
 
   def to_csv
