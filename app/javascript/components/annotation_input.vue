@@ -1,6 +1,13 @@
 <template lang="pug">
   form.annotation-input(@submit="createAnnotation")
-    input(type="text" :placeholder="inputPlaceholder" ref="annotationInput" v-focus="")
+    textarea(
+      :style="textareaStyle"
+      :placeholder="textareaPlaceholder"
+      ref="annotationInput"
+      v-focus=""
+      @input="resizeTextarea"
+    )
+    input(type="submit" value="Save")
 
 </template>
 
@@ -22,7 +29,21 @@
       },
     },
 
+    data() {
+      return {
+        textareaHeight: 52,
+        textareaStyle: `height: auto`
+      }
+    },
+
     methods: {
+      resizeTextarea() {
+        const currentHeight = this.$refs.annotationInput.scrollHeight
+        if (currentHeight > this.textareaHeight) {
+          this.textareaHeight = currentHeight
+          this.textareaStyle = `height: ${currentHeight}px`
+        }
+      },
       createAnnotation(ev) {
         ev.preventDefault()
         const annotation = new Annotation({
@@ -44,9 +65,9 @@
     },
 
     computed: {
-      inputPlaceholder() {
+      textareaPlaceholder() {
         return `Write an annotation for ${this.moveString}`
-      }
+      },
     },
 
     directives: {
@@ -64,18 +85,30 @@
     margin 10px 0
     width 100%
 
-    input
-      font-size 13px
-      width 100%
-      padding 8px 16px
-      margin-top 1px
-      border 1px solid rgba(0,0,0,0.05)
+    input[type="submit"]
+      color white
+      background rgb(58, 137, 201)
+      border none
+      border-radius 2px
+      font-size 14px
+      padding 3px 0
+      text-align center
+      opacity 0.9
+      width 70px
+
+      &:hover
+        cursor pointer
+        opacity 1
 
     textarea
+      border 1px solid rgba(0,0,0,0.05)
+      border-radius 1px
       color rgba(0,0,0,0.9)
       font-size 13px
-      padding 7px 15px
+      margin-top -1px
+      padding 8px 16px
       width 100%
-      height 48px
+      height 52px
+      resize none
 
 </style>
