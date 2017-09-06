@@ -61,6 +61,7 @@ class Game < ApplicationRecord
   private
 
   def format_pgn_headers
+    return unless self.pgn_headers.present?
     new_pgn_headers = {}
     self.pgn_headers.each do |header, value|
       new_header = header.dup.strip

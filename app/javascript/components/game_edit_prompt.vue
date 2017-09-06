@@ -4,7 +4,7 @@
     input(type="text" placeholder="Name (optional)" ref="name" :value="game.name")
     pgn-headers-editor(:game="game")
     .actions  
-      button.save(@click="editGame") Save
+      button.save(@click="updateGame") Save
       button.cancel(@click="cancel") Cancel
 
 </template>
@@ -26,8 +26,15 @@
       },
     },
 
+    data() {
+      return {
+        originalName: this.game.name,
+        originalPgnHeaders: Object.assign({}, this.game.pgnHeaders)
+      }
+    },
+
     methods: {
-      editGame() {
+      updateGame() {
         const name = this.$refs.name.value.trim()
         const game = {}
         if (name) {
@@ -41,6 +48,8 @@
         this.gameState.isEditing = false
       },
       cancel() {
+        this.game.name = this.originalName
+        this.game.pgnHeaders = this.originalPgnHeaders
         this.gameState.isEditing = false
       }
     },
