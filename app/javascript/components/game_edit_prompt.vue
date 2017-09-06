@@ -1,11 +1,8 @@
 <template lang="pug">
   .game-edit-prompt
     .prompt-text Edit this game
-
     input(type="text" placeholder="Name (optional)" ref="name" :value="game.name")
-
-    pgn-headers(:pgnHeaders="game.pgnHeaders")
-
+    pgn-headers-editor(:game="game")
     .actions  
       button.save(@click="editGame") Save
       button.cancel(@click="cancel") Cancel
@@ -13,7 +10,7 @@
 </template>
 
 <script>
-  import PgnHeaders from './pgn_headers'
+  import PgnHeadersEditor from './pgn_headers_editor'
   import { patchGame } from '../api/requests'
   import Game from '../models/game'
 
@@ -32,9 +29,14 @@
     methods: {
       editGame() {
         const name = this.$refs.name.value.trim()
-        patchGame(this.game, {
-          game: { name }
-        })
+        const game = {}
+        if (name) {
+          game.name = name
+        }
+        if (this.game.pgnHeaders) {
+          game.pgn_headers = this.game.pgnHeaders
+        }
+        patchGame(this.game, { game })
         this.game.name = name
         this.gameState.isEditing = false
       },
@@ -44,7 +46,7 @@
     },
 
     components: {
-      PgnHeaders
+      PgnHeadersEditor
     }
   }
 </script>

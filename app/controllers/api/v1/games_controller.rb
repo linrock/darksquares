@@ -116,7 +116,8 @@ class API::V1::GamesController < API::V1::BaseController
   end
 
   def patch_game_params
-    params.require(:game).permit(:name)
+    all_pgn_headers = params.require(:game).fetch(:pgn_headers, nil).try(:permit!)
+    params.require(:game).permit(:name).merge(pgn_headers: all_pgn_headers)
   end
 
   def vote_game_params

@@ -1,6 +1,7 @@
 class Game < ApplicationRecord
   acts_as_paranoid
 
+  before_validation :format_pgn_headers
   before_validation :calculate_moves_and_positions
   before_validation :classify_opening
 
@@ -58,6 +59,16 @@ class Game < ApplicationRecord
   end
 
   private
+
+  def format_pgn_headers
+    new_pgn_headers = {}
+    self.pgn_headers.each do |header, value|
+      new_header = header.dup.strip
+      new_header[0] = new_header[0].upcase
+      new_pgn_headers[new_header] = value.strip
+    end
+    self.pgn_headers = new_pgn_headers
+  end
 
   def pgn_loader
     @pgn_loader ||= PgnLoader.new(pgn)
