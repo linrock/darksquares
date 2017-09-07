@@ -3,7 +3,7 @@
     transition(name="fade")
       .cards(v-if="cardList && cardList.length")
         .card-wrapper(v-for="item in cardList")
-          votes(:item="item")
+          votes(v-if="item.submittedAt" :item="item")
           .annotation-card-container(v-if="item.text")
             annotation-card(
               :annotation="item"
@@ -81,9 +81,12 @@
       .votes
         width 60px
 
-  .game-card-container .commands
-    float right
-    opacity 0.3
+  .game-card-container
+    margin-left 60px
+
+    .commands
+      float right
+      opacity 0.3
 
     a
       text-decoration none

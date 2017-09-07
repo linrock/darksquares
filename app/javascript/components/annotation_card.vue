@@ -56,6 +56,9 @@
 <style lang="stylus" scoped>
   @import "../common.styl"
 
+  .annotation-card-container
+    margin-left 60px
+
   header
     color rgba(0,0,0,0.4)
     font-size 12px

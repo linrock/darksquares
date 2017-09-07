@@ -103,6 +103,7 @@
   @import "../common.styl"
 
   .votes
+    position absolute
     display flex
     align-items center
     flex-direction column

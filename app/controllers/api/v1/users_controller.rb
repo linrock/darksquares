@@ -27,7 +27,8 @@ class API::V1::UsersController < API::V1::BaseController
     render_json({
       games: games.map {|game|
         game.as_json.merge({
-          annotations: game.annotations
+          annotations: game.annotations,
+          score: game.votes.sum('value')
         })
       },
       more_results: games.length == PAGE_SIZE
@@ -56,7 +57,8 @@ class API::V1::UsersController < API::V1::BaseController
           username: user.username,
           games: games.limit(PAGE_SIZE).map {|game|
             game.as_json.merge({
-              annotations: game.annotations
+              annotations: game.annotations,
+              score: game.votes.sum('value')
             })
           },
           games_count: games.count,
@@ -86,7 +88,8 @@ class API::V1::UsersController < API::V1::BaseController
       render_json({
         games: games.map {|game|
           game.as_json.merge({
-            annotations: game.annotations
+            annotations: game.annotations,
+            score: game.votes.sum('value')
           })
         }
       })
