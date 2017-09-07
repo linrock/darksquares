@@ -8,6 +8,8 @@
       @input="resizeTextarea"
     )
     input(type="submit" value="Save")
+    template(v-if="userState.username === game.username")
+      input(type="text" placeholder="Annotator (optional)" ref="annotator")
 
 </template>
 
@@ -32,7 +34,8 @@
     data() {
       return {
         textareaHeight: 62,
-        textareaStyle: `height: auto`
+        textareaStyle: `height: auto`,
+        userState,
       }
     },
 
@@ -52,6 +55,13 @@
           text: this.$refs.annotationInput.value
         })
         this.$refs.annotationInput.value = ''
+        if (this.$refs.annotator) {
+          const annotator = this.$refs.annotator.value.trim()
+          if (annotator !== '') {
+            annotation.annotator = annotator
+            this.$refs.annotator.value = ''
+          }
+        }
         this.game.addAnnotation(annotation)
         createAnnotation(this.game.id, annotation).then(response => {
           const newAnnotation = this.game.annotations.find(annotation => {
@@ -92,7 +102,7 @@
       border-radius 2px
       font-size 14px
       margin 5px 0 15px
-      padding 3px 0
+      padding 4px 0
       text-align center
       opacity 0.9
       width 70px
@@ -100,6 +110,15 @@
       &:hover
         cursor pointer
         opacity 1
+
+    input[type="text"]
+      border 1px solid rgba(0,0,0,0.05)
+      border-radius 1px
+      color rgba(0,0,0,0.9)
+      font-size 12px
+      padding 4px 10px
+      margin-left 10px
+      width 200px
 
     textarea
       border 1px solid rgba(0,0,0,0.05)

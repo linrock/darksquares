@@ -9,6 +9,7 @@
           span.time-ago {{ annotation.timeAgo }}
       template(v-if="annotation.annotator")
         span.annotator
+          span.prefix &ndash;
           | {{ annotation.annotator }}
 
 </template>

@@ -3,6 +3,10 @@ class API::V1::AnnotationsController < API::V1::BaseController
 
   # POST /api/v1/games/:game_id/annotations
   def create
+    if annotation_params[:annotator].present? && current_user.id != game.user.id
+      render_json({ error: "Unauthorized" }, status: 401)
+      return
+    end
     annotation = game.annotations.create!(annotation_params.merge(user_id: current_user.id))
     render_json({
       annotation: annotation
@@ -26,6 +30,6 @@ class API::V1::AnnotationsController < API::V1::BaseController
   end
 
   def annotation_params
-    params.require(:annotation).permit(:text, :move_string)
+    params.require(:annotation).permit(:text, :move_string, :annotator)
   end
 end

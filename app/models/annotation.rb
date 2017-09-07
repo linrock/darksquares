@@ -1,4 +1,6 @@
 class Annotation < ApplicationRecord
+  before_validation :trim_annotation_text
+
   validates_presence_of :game
   validates_presence_of :user
 
@@ -25,5 +27,11 @@ class Annotation < ApplicationRecord
     super(options).merge({
       username: user.username,
     })
+  end
+
+  private
+
+  def trim_annotation_text
+    self.text = self.text.strip
   end
 end
