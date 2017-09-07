@@ -31,7 +31,6 @@
 
 <style lang="stylus" scoped>
   .annotation
-    border-bottom 1px solid #f3f3f3
     position relative
     display flex
 

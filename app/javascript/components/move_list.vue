@@ -151,11 +151,9 @@
     float left
     margin 10px 0 20px
     width 100%
-    border 1px solid #f3f3f3
-    border-radius 2px
 
     & + .annotation-input
-      margin-top -15px
+      margin-top -20px
       position relative
 
       & >>> input

@@ -31,7 +31,7 @@
 
     data() {
       return {
-        textareaHeight: 52,
+        textareaHeight: 62,
         textareaStyle: `height: auto`
       }
     },
@@ -107,9 +107,9 @@
       color rgba(0,0,0,0.9)
       font-size 14px
       margin-top -1px
-      padding 8px 16px
+      padding 12px 17px
       width 100%
-      height 52px
+      height 62px
       resize none
 
 </style>

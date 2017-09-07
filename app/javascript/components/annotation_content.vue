@@ -48,11 +48,10 @@
 
   .annotation-content
     display block
-    background #fcfcfc
     color rgba(0,0,0,0.9)
     font-size 14px
     line-height 20px
-    padding 8px 16px
+    padding 12px 18px
     width 100%
 
   .annotation-text
@@ -61,7 +60,7 @@
   .annotation-info
     font-size 11px
     white-space nowrap
-    margin-top 8px
+    margin-top 6px
 
     .prefix
       display inline
