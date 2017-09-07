@@ -91,6 +91,7 @@
       border none
       border-radius 2px
       font-size 14px
+      margin 5px 0 15px
       padding 3px 0
       text-align center
       opacity 0.9
@@ -104,7 +105,7 @@
       border 1px solid rgba(0,0,0,0.05)
       border-radius 1px
       color rgba(0,0,0,0.9)
-      font-size 13px
+      font-size 14px
       margin-top -1px
       padding 8px 16px
       width 100%

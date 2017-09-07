@@ -149,7 +149,7 @@
   .annotations
     clear left
     float left
-    margin 10px 0 15px
+    margin 10px 0 20px
     width 100%
     border 1px solid #f3f3f3
     border-radius 2px

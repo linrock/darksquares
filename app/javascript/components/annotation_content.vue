@@ -1,22 +1,20 @@
 <template lang="pug">
   .annotation-content
-    annotation-text(:annotation="annotation")
+    annotation-text-basic(:annotation="annotation")
     .annotation-info
       template(v-if="!annotation.annotator")
         span.author
-          span.prefix &ndash;
           router-link.username(:to="userPath" v-if="showUsername(annotation)")
             | {{ annotation.username }}
           span.time-ago {{ annotation.timeAgo }}
       template(v-if="annotation.annotator")
         span.annotator
-          span.prefix &ndash;
           | {{ annotation.annotator }}
 
 </template>
 
 <script>
-  import AnnotationText from './annotation_text'
+  import AnnotationTextBasic from './annotation_text_basic'
   import Annotation from '../models/annotation'
 
   export default {
@@ -40,7 +38,7 @@
     },
 
     components: {
-      AnnotationText
+      AnnotationTextBasic
     }
   }
 </script>
@@ -52,7 +50,7 @@
     display block
     background #fcfcfc
     color rgba(0,0,0,0.9)
-    font-size 13px
+    font-size 14px
     line-height 20px
     padding 8px 16px
     width 100%
@@ -61,18 +59,15 @@
     display inline
 
   .annotation-info
-    display inline
+    font-size 11px
     white-space nowrap
-    margin-bottom 3px
+    margin-top 8px
 
     .prefix
       display inline
-      margin 0 3px 0 8px
+      margin-right 4px
 
     .author
-      .prefix
-        opacity 0.6
-
       .username
         color highlight-color
         display inline

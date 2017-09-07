@@ -31,10 +31,14 @@
 
 <style lang="stylus" scoped>
   .annotation
+    border-bottom 1px solid #f3f3f3
     position relative
     display flex
 
     &:hover .annotation-commands
       display block
+
+    &:last-child
+      border-bottom 0
 
 </style>
