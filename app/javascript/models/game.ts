@@ -25,6 +25,7 @@ export interface GameOptions {
   positions: Array<string>
   moves: Array<object>
   best_moves: Array<object>
+  score: number
   graph_points: Array<Array<number>>
   annotations: Array<AnnotationOptions>
   created_at: string
@@ -40,6 +41,7 @@ export default class Game {
   public positions: Array<string>
   public moves: Array<Move>
   public bestMoves: Array<object>
+  public score: number
   public graphPoints: Array<Array<number>>
   public annotations: Array<Annotation> = []
   public createdAt: Date
@@ -64,6 +66,7 @@ export default class Game {
       this.moves = options.moves.map(move => new Move(move))
     }
     this.bestMoves = options.best_moves
+    this.score = options.score
     this.graphPoints = options.graph_points
     if (options.annotations) {
       this.annotations = options.annotations.map(annotation => {

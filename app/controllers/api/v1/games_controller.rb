@@ -7,7 +7,8 @@ class API::V1::GamesController < API::V1::BaseController
     results = {
       games: games.includes(:annotations).map {|game|
         game.as_json.merge({
-          annotations: game.annotations.includes(:user).order('id DESC')
+          annotations: game.annotations.includes(:user).order('id DESC'),
+          score: game.votes.sum('value')
         })
       },
       more_results: games.length == PAGE_SIZE
@@ -34,7 +35,8 @@ class API::V1::GamesController < API::V1::BaseController
     else
       render_json({
         game: game.as_json.merge({
-          annotations: game.annotations.includes(:user)
+          annotations: game.annotations.includes(:user),
+          score: game.votes.sum('value')
         })
       })
     end

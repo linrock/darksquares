@@ -44,7 +44,7 @@
       }
       return {
         Vote,
-        initialScore: ~~(Math.random() * 20),
+        initialScore: this.item.score - voteValue,
         voteState,
         userState,
       }
