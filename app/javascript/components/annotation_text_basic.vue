@@ -2,6 +2,7 @@
   .annotation-text
     .annotation-block(v-for="text in annotationBlocks")
       .spacer(v-if="text === ``")
+      .tabber(v-if="text[0] === ` ` && text[1] === ` `") &nbsp;&nbsp;
       | {{ text }}
 
 </template>
@@ -30,5 +31,8 @@
 <style lang="stylus" scoped>
   .spacer
     height 16px
+
+  .tabber
+    display inline
 
 </style>
