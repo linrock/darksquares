@@ -1,6 +1,8 @@
 <template lang="pug">
   .annotation-text
-    .annotation-block(v-for="text in annotationBlocks") {{ text }}
+    .annotation-block(v-for="text in annotationBlocks")
+      .spacer(v-if="text === ``")
+      | {{ text }}
 
 </template>
 
@@ -17,18 +19,16 @@
     },
 
     data() {
+      const annotationText = this.annotation.text.replace(/\n{2,}/, "\n\n")
       return {
-        annotationBlocks: this.annotation.text.split(/\n{2,}/)
+        annotationBlocks: annotationText.split("\n")
       }
     },
   }
 </script>
 
 <style lang="stylus" scoped>
-  .annotation-block
-    margin-bottom 16px
-
-    &:last-child
-      margin-bottom 0
+  .spacer
+    height 16px
 
 </style>

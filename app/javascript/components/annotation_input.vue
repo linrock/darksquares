@@ -3,13 +3,14 @@
     textarea(
       :style="textareaStyle"
       :placeholder="textareaPlaceholder"
-      ref="annotationInput"
+      ref="input"
       v-focus=""
       @input="resizeTextarea"
     )
-    input(type="submit" value="Save")
-    template(v-if="userState.username === game.username")
-      input(type="text" placeholder="Annotator (optional)" ref="annotator")
+    .under-input
+      input(type="submit" value="Save")
+      template(v-if="userState.username === game.username")
+        input(type="text" placeholder="Annotator (optional)" ref="annotator")
 
 </template>
 
@@ -33,7 +34,7 @@
 
     data() {
       return {
-        textareaHeight: 62,
+        textareaHeight: 64,
         textareaStyle: `height: auto`,
         userState,
       }
@@ -41,7 +42,7 @@
 
     methods: {
       resizeTextarea() {
-        const currentHeight = this.$refs.annotationInput.scrollHeight
+        const currentHeight = this.$refs.input.scrollHeight + 2
         if (currentHeight > this.textareaHeight) {
           this.textareaHeight = currentHeight
           this.textareaStyle = `height: ${currentHeight}px`
@@ -52,9 +53,9 @@
         const annotation = new Annotation({
           username: userState.username,
           move_string: this.moveString,
-          text: this.$refs.annotationInput.value
+          text: this.$refs.input.value
         })
-        this.$refs.annotationInput.value = ''
+        this.$refs.input.value = ''
         if (this.$refs.annotator) {
           const annotator = this.$refs.annotator.value.trim()
           if (annotator !== '') {
@@ -101,7 +102,6 @@
       border none
       border-radius 2px
       font-size 14px
-      margin 5px 0 15px
       padding 4px 0
       text-align center
       opacity 0.9
@@ -113,22 +113,27 @@
 
     input[type="text"]
       border 1px solid rgba(0,0,0,0.05)
-      border-radius 1px
+      border-radius 2px
       color rgba(0,0,0,0.9)
       font-size 12px
       padding 4px 10px
       margin-left 10px
-      width 200px
+      width 250px
 
     textarea
       border 1px solid rgba(0,0,0,0.05)
-      border-radius 1px
+      border-radius 2px
       color rgba(0,0,0,0.9)
       font-size 14px
+      line-height 20px
       margin-top -1px
       padding 12px 17px
       width 100%
-      height 62px
+      height 64px
       resize none
+
+    .under-input
+      margin 5px 0 15px
+      display flex
 
 </style>
