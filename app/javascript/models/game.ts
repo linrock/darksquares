@@ -104,6 +104,11 @@ export default class Game {
     return this.user.username
   }
 
+  get annotator(): string {
+    const annotator = this.pgnHeaders["Annotator"]
+    return annotator && annotator.match(/[\w\s]+/) ? annotator : null
+  }
+
   // annotations
 
   public addAnnotation(annotation: Annotation): void {

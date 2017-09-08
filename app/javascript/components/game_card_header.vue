@@ -3,6 +3,9 @@
     span(v-if="game.name")
       span.game-card-name {{ game.name }}
       span.separator &ndash;
+    span(v-if="game.annotator")
+      span.annotator annotated by {{ game.annotator }}
+      span.separator &ndash;
     span {{ prefixText }}
     span.game-author
       router-link(:to="userPath") {{ game.user.username }}
@@ -48,6 +51,9 @@
 
   .separator
     margin 0 5px
+
+  .annotator
+    color rgba(0,0,0,0.5)
 
   .game-author
     font-weight bold
