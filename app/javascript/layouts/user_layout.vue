@@ -33,6 +33,7 @@
 
     data() {
       return {
+        currentUsername: this.username,
         isLoading: true,
         headerText: null,
         user: new User()
@@ -40,14 +41,30 @@
     },
 
     created() {
-      getUserProfile(this.username).then(response => {
-        this.user = new User(response.data.user)
-        this.headerText = this.user.username
-        this.isLoading = false
-      }).catch(error => {
-        const statusCode = error.response.status
-        this.headerText = statusCode === 404 && "User not found" || `Error ${statusCode}`
-      })
+      this.fetchUserProfile(this.currentUsername)
+    },
+
+    beforeRouteUpdate(to, from, next) {
+      // TODO figure out how to get layout component updating when
+      // navigating to a different user profile
+      if (to.params.username !== this.currentUsername) {
+        this.currentUsername = to.params.username
+        this.fetchUserProfile(to.params.username)
+      }
+      next()
+    },
+
+    methods: {
+      fetchUserProfile(username) {
+        getUserProfile(username).then(response => {
+          this.user = new User(response.data.user)
+          this.headerText = this.user.username
+          this.isLoading = false
+        }).catch(error => {
+          const statusCode = error.response.status
+          this.headerText = statusCode === 404 && "User not found" || `Error ${statusCode}`
+        })
+      }
     },
 
     computed: {
