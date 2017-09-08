@@ -28,14 +28,16 @@
           )
       section.right-side
         game-info(:pgnHeaders="game.pgnHeaders" :fixed="true")
-        .game-actions(v-if="canTakeActions && !gameState.isDeleting && !gameState.isSubmitting && !gameState.isEditing")
+        .game-actions(v-if="canTakeActions && !isPromptOpen")
           .submit-game(@click="showSubmitGamePrompt" v-if="!game.submittedAt") Submit game
-          .edit-pgn-headers(@click="showEditGamePrompt") Edit
+          .edit-game(@click="showEditGamePrompt") Edit
           .delete-game(@click="showDeleteGamePrompt") Delete
-        move-list(:game="game" :gameState="gameState" v-if="!gameState.isDeleting && !gameState.isSubmitting && !gameState.isEditing")
+          .view-pgn.right(@click="showViewPgnPrompt") View PGN
+        move-list(:game="game" :gameState="gameState" v-if="!isPromptOpen")
         game-delete-prompt(:game="game" :gameState="gameState" v-if="gameState.isDeleting")
         game-edit-prompt(:game="game" :gameState="gameState" v-if="gameState.isEditing")
         game-submit-prompt(:game="game" :gameState="gameState" v-if="gameState.isSubmitting")
+        game-view-pgn-prompt(:game="game" :gameState="gameState" v-if="gameState.isViewingPgn")
 
 </template>
 
@@ -49,6 +51,7 @@
   import GameSubmitPrompt from '../components/game_submit_prompt'
   import GameEditPrompt from '../components/game_edit_prompt'
   import GameDeletePrompt from '../components/game_delete_prompt'
+  import GameViewPgnPrompt from '../components/game_view_pgn_prompt'
   import { userState } from '../store/user_state'
   import { resetBoardState, applyStateChange } from '../store/miniboard'
   import { activeGame } from '../store/active_game'
@@ -71,6 +74,7 @@
           isDeleting: false,
           isEditing: false,
           isSubmitting: false,
+          isViewingPgn: false,
         },
         shouldScrollToMove: true,
         scrolledToMove: false,
@@ -142,6 +146,10 @@
           return `created by ${this.game.user.username} ${this.game.createdAtTimeAgo}`
         }
       },
+      isPromptOpen() {
+        return this.gameState.isEditing || this.gameState.isDeleting ||
+               this.gameState.isSubmitting || this.gameState.isViewingPgn
+      }
     },
 
     methods: {
@@ -193,6 +201,9 @@
       },
       showDeleteGamePrompt() {
         this.gameState.isDeleting = true
+      },
+      showViewPgnPrompt() {
+        this.gameState.isViewingPgn = true
       }
     },
 
@@ -205,6 +216,7 @@
       GameDeletePrompt,
       GameEditPrompt,
       GameSubmitPrompt,
+      GameViewPgnPrompt,
     }
   }
 </script>
@@ -284,6 +296,10 @@
       div
         margin-right 25px
         opacity 0.5
+
+        &.right
+          margin-right 0
+          margin-left auto
 
         &:hover
           cursor pointer
