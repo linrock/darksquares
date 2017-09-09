@@ -10,6 +10,7 @@ class Game < ApplicationRecord
   validates_presence_of :moves
   validates_presence_of :positions
   validates_length_of :name, in: (1..64), allow_nil: true
+  validate :pgn_headers_must_be_valid
 
   belongs_to :user
   has_many :annotations
@@ -59,6 +60,19 @@ class Game < ApplicationRecord
   end
 
   private
+
+  def pgn_headers_must_be_valid
+    return unless self.pgn_headers.present?
+    if self.pgn_headers.keys.any? {|header| header =~ /\s/ }
+      errors.add(:pgn_headers, "can't have spaces in the header key")
+    end
+    if self.pgn_headers.keys.any? {|header| header.length > 32 }
+      errors.add(:pgn_headers, "can't have header keys longer than 32 characters")
+    end
+    if self.pgn_headers.values.any? {|header| header.length > 128 }
+      errors.add(:pgn_headers, "can't have header values longer than 128 characters")
+    end
+  end
 
   def format_pgn_headers
     return unless self.pgn_headers.present?

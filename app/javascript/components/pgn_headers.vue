@@ -16,7 +16,7 @@
     },
     methods: {
       validValue(value) {
-        return value.length > 0 && value !== '?'
+        return value.length > 0 && value !== '?' && !value.match(/\?{2,}/) && value !== '-'
       }
     }
   }
