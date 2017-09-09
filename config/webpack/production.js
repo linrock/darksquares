@@ -9,7 +9,7 @@ const sharedConfig = require('./shared.js')
 
 module.exports = merge(sharedConfig, {
   output: { filename: '[name]-[chunkhash].js' },
-  devtool: 'source-map',
+  devtool: 'eval',
   stats: 'normal',
 
   plugins: [
