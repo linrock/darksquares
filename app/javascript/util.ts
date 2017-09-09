@@ -1,4 +1,4 @@
-import * as moment from 'moment'
+import { parse, distanceInWordsToNow }  from 'date-fns'
 
 export const groupBy = function(xs, key) {
   return xs.reduce(function(rv, x) {
@@ -18,11 +18,11 @@ export const isElementInViewport = function(el: HTMLElement): boolean {
 }
 
 export const parseDate = function(dateString: string): Date {
-  return moment(dateString).toDate()
+  return parse(dateString)
 }
 
 export const timeAgo = function(date: Date): string {
-  return `${moment(date).toNow(true)} ago`
+  return `${distanceInWordsToNow(date)} ago`
 }
 
 export const flatten = function(list: Array<any>): Array<any> {
