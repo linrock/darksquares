@@ -1,7 +1,10 @@
 <template lang="pug">
   .annotation-previews
     .preview(v-for="(annotation, i) in annotationPreviews")
-      router-link(:to="userPath(annotation.username)").username {{ annotation.username }}
+      template(v-if="annotation.annotator")
+        span.annotator {{ annotation.annotator }}
+      template(v-if="!annotation.annotator")
+        router-link(:to="userPath(annotation.username)").username {{ annotation.username }}
       router-link(:to="gamePositionPath(annotation.move_string)")
         span.move-string {{ annotation.move_string }}
       span.text {{ annotation.text }}
@@ -44,6 +47,8 @@
 </script>
 
 <style lang="stylus" scoped>
+  @import "../common.styl"
+
   .preview
     font-size 12px
     line-height 14px
@@ -51,8 +56,7 @@
     white-space nowrap
     text-overflow ellipsis
     margin 4px 0 9px
-    color #333
-    opacity 0.9
+    color #9c9c9c
     clear left
 
     a
@@ -62,15 +66,17 @@
       &:hover
         text-decoration underline
 
-    .username
-      font-weight bold
-
     .move-string
-      margin 0 10px 0 7px
-      opacity 0.7
+      color #555
+      margin-right 7px
 
-    .text
-      opacity 0.5
+    .annotator
+      color #333
+      margin-right 7px
+
+    .username
+      color highlight-color
+      margin-right 7px
 
     &:last-child
       margin-bottom 0

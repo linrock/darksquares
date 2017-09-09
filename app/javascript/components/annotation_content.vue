@@ -11,15 +11,22 @@
         span.annotator
           span.prefix &ndash;
           | {{ annotation.annotator }}
+      annotation-commands(:annotation="annotation" :game="game")
 
 </template>
 
 <script>
   import AnnotationTextBasic from './annotation_text_basic'
+  import AnnotationCommands from './annotation_commands'
   import Annotation from '../models/annotation'
+  import Game from '../models/game'
 
   export default {
     props: {
+      game: {
+        type: Game,
+        required: true
+      },
       annotation: {
         type: Annotation,
         required: true
@@ -39,7 +46,8 @@
     },
 
     components: {
-      AnnotationTextBasic
+      AnnotationTextBasic,
+      AnnotationCommands
     }
   }
 </script>
@@ -55,6 +63,9 @@
     padding 12px 18px
     width 100%
 
+    &:hover .annotation-commands
+      opacity 1
+
   .annotation-text
     display inline
 
@@ -62,6 +73,7 @@
     font-size 11px
     white-space nowrap
     margin-top 6px
+    display flex
 
     .prefix
       display inline
@@ -84,5 +96,9 @@
 
     .annotator
       color rgba(0,0,0,0.3)
+
+  .annotation-commands
+    opacity 0
+    transition 0.5s opacity 0.15s ease
 
 </style>

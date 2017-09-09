@@ -39,7 +39,7 @@ export default class Annotation {
     this.move_string = options.move_string
     this.text = options.text
     this.annotator = options.annotator
-    this.createdAt = parseDate(options.created_at)
+    this.createdAt = options.created_at ? parseDate(options.created_at) : new Date()
   }
 
   get positionIndex(): number {

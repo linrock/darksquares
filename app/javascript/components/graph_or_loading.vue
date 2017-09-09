@@ -10,7 +10,7 @@
     )
     .loading(v-if="isLoading")
       template(v-if="!analysisStatus || analysisStatus === `pending`")
-        | Waiting for server to analyze game...
+        | Waiting for server to start analyzing game...
       template(v-if="analysisStatus === `in_progress`")
         | Analyzing game... {{ progressText }}
 
@@ -93,7 +93,7 @@
         return !this.currentGame.scores.length
       },
       progressText() {
-        return this.percentComplete && `${this.percentComplete}% done`
+        return this.percentComplete && `${this.percentComplete}% complete`
       }
     },
 

@@ -1,13 +1,13 @@
 <template lang="pug">
   .annotation-commands
-    .edit-annotation(@click="editAnnotation")
-    .delete-annotation(@click="deleteAnnotation") ×
+    .edit-annotation(@click="editAnnotation") Edit
+    .delete-annotation(@click="deleteAnnotation") Delete
 
 </template>
 
 <script>
-  import Game from '../models/game'
   import Annotation from '../models/annotation'
+  import Game from '../models/game'
   import { deleteAnnotation } from '../api/requests'
 
   export default {
@@ -23,13 +23,13 @@
     },
 
     methods: {
-      editAnnotation: function() {
+      editAnnotation() {
         // make annotation input show up with text inside
         // console.log('editing')
         // this.$emit("edit-annotation", 'whoa')
       },
-      deleteAnnotation: function() {
-        if (this.annotation.id) {
+      deleteAnnotation() {
+        if (this.annotation.id && confirm("Delete this annotation?")) {
           deleteAnnotation(this.annotation)
         }
         this.game.removeAnnotation(this.annotation)
@@ -40,12 +40,11 @@
 
 <style lang="stylus" scoped>
   .annotation-commands
-    position absolute
-    top 5px
-    right 7px
-    display none
+    margin-left auto
+    display flex
 
     div
+      margin-left 15px
       opacity 0.3
       transition opacity 0.15s ease
 

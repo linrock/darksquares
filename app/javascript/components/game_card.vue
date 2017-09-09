@@ -99,6 +99,7 @@
   .more-annotations
     color highlight-color
     font-size 12px
+    font-weight bold
     margin-top 15px
 
   .game-info

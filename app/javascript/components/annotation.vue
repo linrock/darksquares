@@ -1,7 +1,6 @@
 <template lang="pug">
   .annotation
-    annotation-content(:annotation="annotation")
-    annotation-commands(:game="game" :annotation="annotation")
+    annotation-content(:annotation="annotation" :game="game")
 
 </template>
 
@@ -9,7 +8,6 @@
   import Game from '../models/game'
   import Annotation from '../models/annotation'
   import AnnotationContent from './annotation_content.vue'
-  import AnnotationCommands from './annotation_commands.vue'
 
   export default {
     props: {
@@ -22,9 +20,9 @@
         required: true
       }
     },
+
     components: {
       AnnotationContent,
-      AnnotationCommands
     }
   }
 </script>
