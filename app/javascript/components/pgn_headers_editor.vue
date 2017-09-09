@@ -34,6 +34,9 @@
         }).forEach(pair => {
           const header = pair[0]
           const value = pair[1]
+          if (!header && !value) {
+            return
+          }
           newPgnHeaders[header] = value
         })
         this.game.pgnHeaders = newPgnHeaders
@@ -41,8 +44,12 @@
       addBlankHeader() {
         const blank = this.game.pgnHeaders[""]
         if (!blank) {
-          this.game.pgnHeaders[""] = ""
+          this.game.pgnHeaders[""] = " "
           this.$forceUpdate()
+          requestAnimationFrame(() => {
+            const headerInputs = this.$el.querySelectorAll("input.header")
+            headerInputs[headerInputs.length - 1].focus()
+          })
         }
       }
     },
