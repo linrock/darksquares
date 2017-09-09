@@ -15,7 +15,7 @@ export const gameVoteCache = new GameVoteCache()
 export const saveGame = function(newGameData: any): Promise<Game> {
   return createGame(newGameData).then(response => {
     const game = new Game(response.data.game)
-    gameCache.cacheGame(game)
+    gameCache.addGameToSet(`user-${game.username}`, game)
     return game
   })
 }

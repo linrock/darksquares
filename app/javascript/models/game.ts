@@ -106,7 +106,7 @@ export default class Game {
 
   get annotator(): string {
     const annotator = this.pgnHeaders["Annotator"]
-    return annotator && annotator.match(/[\w\s]+/) ? annotator : null
+    return annotator && annotator.match(/^[\w\s]+$/) ? annotator : null
   }
 
   // annotations
