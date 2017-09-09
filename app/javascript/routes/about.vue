@@ -1,11 +1,20 @@
 <template lang="pug">
   main#about
-    sub-header
-      div About
-
     .content
-      | Welcome to Dark squares, a community for collaboratively
-      | annotating chess games.
+      p
+        | Dark Squares is a community for sharing and
+        br
+        | collaboratively annotating chess games.
+
+      p
+        | It's currently in beta. Feel free to email me
+        br
+        | with your thoughts and suggestions.
+
+      p
+        a(href="mailto:admin@darksquares.com")
+          | admin@darksquares.com
+
 </template>
 
 <script>
@@ -19,10 +28,24 @@
 </script>
 
 <style lang="stylus" scoped>
+  @import "../common.styl"
+
   .content
-    display flex
     width 1200px
     margin-left 80px
-    padding-top 30px
+    padding-top 80px
+    font-size 14px
+    line-height 22px
+
+    p
+      display block
+      margin-bottom 22px
+
+    a
+      color highlight-color
+      text-decoration none
+
+      &:hover
+        text-decoration underline
 
 </style>

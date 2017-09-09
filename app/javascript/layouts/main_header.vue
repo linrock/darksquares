@@ -12,8 +12,8 @@
           router-link(to="/submit")
             img(src="/icons/submit.svg" class="submit")
             | Submit game
-          // router-link(to="/about")
-            img(src="/assets/about.svg" class="about")
+          router-link(to="/about")
+            img(src="/icons/about.svg" class="about")
             | About
         .far-right
           router-link(:to="userPath")
