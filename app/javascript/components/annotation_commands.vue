@@ -29,7 +29,10 @@
         // this.$emit("edit-annotation", 'whoa')
       },
       deleteAnnotation() {
-        if (this.annotation.id && confirm("Delete this annotation?")) {
+        if (!confirm("Delete this annotation?")) {
+          return
+        }
+        if (this.annotation.id) {
           deleteAnnotation(this.annotation)
         }
         this.game.removeAnnotation(this.annotation)
