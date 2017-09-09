@@ -2,7 +2,7 @@
   .infinite-scroll
     slot
     transition(name="fade")
-      loading(v-if="!isComplete")
+      loading(v-if="isFetching && !isComplete")
     .bottom(ref="bottom" style="height: 200px")
   
 </template>

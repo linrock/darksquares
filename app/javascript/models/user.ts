@@ -34,15 +34,11 @@ export default class User {
     if (options.games) {
       this.games = options.games.map(data => new Game(data))
     }
-    if (options.games_count) {
-      this.gamesCount = options.games_count
-    }
+    this.gamesCount = options.games_count || 0
     if (options.annotations) {
       this.annotations = options.annotations.map(data => new Annotation(data))
     }
-    if (options.annotations_count) {
-      this.annotationsCount = options.annotations_count
-    }
+    this.annotationsCount = options.annotations_count || 0
     if (options.created_at) {
       this.createdAt = parseDate(options.created_at)
     }

@@ -1,7 +1,12 @@
 <template lang="pug">
   section#user_annotations(v-if="user.username")
-    infinite-scroll(:apiCaller="loadUserAnnotationsFromPage")
+    template(v-if="annotationsCount >= PAGE_SIZE")
+      infinite-scroll(:apiCaller="loadUserAnnotationsFromPage")
+        card-list(:annotations="annotations")
+    template(v-if="annotationsCount > 0 && annotationsCount < PAGE_SIZE")
       card-list(:annotations="annotations")
+    template(v-if="annotationsCount === 0")
+      .empty {{ user.username }} hasn't created any annotations
 
 </template>
 
@@ -10,6 +15,7 @@
   import InfiniteScroll from '../components/infinite_scroll.vue'
   import CardList from '../components/card_list.vue'
   import { loadUserAnnotations } from '../store/annotations'
+  import { PAGE_SIZE } from '../constants'
 
   export default {
     props: {
@@ -22,7 +28,9 @@
     data() {
       const annotations = this.user.annotations
       return {
+        PAGE_SIZE,
         annotationSet: new Set(annotations),
+        annotationsCount: annotations.length,
         annotations,
       }
     },
@@ -48,3 +56,10 @@
     }
   }
 </script>
+
+<style lang="stylus" scoped>
+  .empty
+    opacity 0.3
+    padding 60px 0 0 60px
+
+</style>

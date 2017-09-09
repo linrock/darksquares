@@ -7,7 +7,7 @@ export const groupBy = function(xs, key) {
   }, {})
 }
 
-export const isElementInViewport = function(el): boolean {
+export const isElementInViewport = function(el: HTMLElement): boolean {
   const rect = el.getBoundingClientRect()
   return (
     rect.top >= 0 &&

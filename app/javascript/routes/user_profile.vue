@@ -1,7 +1,10 @@
 <template lang="pug">
   section#user_overview
-    loading(v-if="isLoading")
-    card-list(:annotations="user.annotations" :games="user.games")
+    template(v-if="itemsCount > 0")
+      loading(v-if="isLoading")
+      card-list(:annotations="user.annotations" :games="user.games")
+    template(v-if="itemsCount === 0")
+      .empty {{ user.username }} hasn't created any games or annotations
 
 </template>
 
@@ -21,6 +24,12 @@
       }
     },
 
+    data() {
+      return {
+        itemsCount: this.user.games.length + this.user.annotations.length
+      }
+    },
+
     mounted() {
       window.scrollTo(0, 0)
     },
@@ -36,5 +45,9 @@
   .loading
     margin 0 auto
     padding 60px 0
+
+  .empty
+    opacity 0.3
+    padding 60px 0 0 60px
 
 </style>

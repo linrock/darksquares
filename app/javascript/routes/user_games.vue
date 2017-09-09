@@ -1,7 +1,12 @@
 <template lang="pug">
   section#user_games(v-if="user.username")
-    infinite-scroll(:apiCaller="loadUserGamesFromPage")
+    template(v-if="gamesCount >= PAGE_SIZE")
+      infinite-scroll(:apiCaller="loadUserGamesFromPage")
+        card-list(:games="games")
+    template(v-if="gamesCount > 0 && gamesCount < PAGE_SIZE")
       card-list(:games="games")
+    template(v-if="gamesCount === 0")
+      .empty {{ user.username }} hasn't created any games
 
 </template>
 
@@ -10,6 +15,7 @@
   import InfiniteScroll from '../components/infinite_scroll.vue'
   import CardList from '../components/card_list.vue'
   import { gameCache, loadUserGames } from '../store/games'
+  import { PAGE_SIZE } from '../constants'
 
   export default {
     props: {
@@ -21,6 +27,8 @@
 
     data() {
       return {
+        PAGE_SIZE,
+        gamesCount: this.user.games.length,
         games: this.user.games
       }
     },
@@ -44,3 +52,10 @@
     }
   }
 </script>
+
+<style lang="stylus" scoped>
+  .empty
+    opacity 0.3
+    padding 60px 0 0 60px
+
+</style>
