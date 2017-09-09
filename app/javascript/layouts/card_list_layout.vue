@@ -47,7 +47,7 @@
     width 100%
     height 100%
     padding-left 420px
-    background #f4f4f4
+    background #f7f7f7
 
     header.main
       background #393939

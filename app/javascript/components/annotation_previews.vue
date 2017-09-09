@@ -35,13 +35,11 @@
     },
 
     methods: {
-      gamePositionPath: function(moveString) {
+      gamePositionPath(moveString) {
         const j = Game.moveStringToPositionIndex(moveString)
         return `${this.game.path}#${j}`
       },
-      userPath: function(username) {
-        return `/u/${username}`
-      }
+      userPath: (username) => `/u/${username}`
     }
   }
 </script>
