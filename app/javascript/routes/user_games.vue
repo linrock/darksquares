@@ -1,5 +1,5 @@
 <template lang="pug">
-  section#user_games(v-if="user.username")
+  section#user_games
     template(v-if="gamesCount >= PAGE_SIZE")
       infinite-scroll(:apiCaller="loadUserGamesFromPage")
         card-list(:games="games")
@@ -26,9 +26,10 @@
     },
 
     data() {
+      debugger
       return {
         PAGE_SIZE,
-        gamesCount: this.user.games.length,
+        gamesCount: this.user.gamesCount,
         games: this.user.games
       }
     },

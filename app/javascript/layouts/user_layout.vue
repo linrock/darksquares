@@ -13,7 +13,7 @@
           router-link(:to="gamesLink") {{ user.gamesCount }} Games
           router-link(:to="annotationsLink") {{ user.annotationsCount }} Annotations
       .content
-        router-view(:isLoading="isLoading" :user="user")
+        router-view(v-if="user.username" :isLoading="isLoading" :user="user")
 
 </template>
 

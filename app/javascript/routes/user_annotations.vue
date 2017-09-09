@@ -1,5 +1,5 @@
 <template lang="pug">
-  section#user_annotations(v-if="user.username")
+  section#user_annotations
     template(v-if="annotationsCount >= PAGE_SIZE")
       infinite-scroll(:apiCaller="loadUserAnnotationsFromPage")
         card-list(:annotations="annotations")
@@ -30,7 +30,7 @@
       return {
         PAGE_SIZE,
         annotationSet: new Set(annotations),
-        annotationsCount: annotations.length,
+        annotationsCount: this.user.annotationsCount,
         annotations,
       }
     },
