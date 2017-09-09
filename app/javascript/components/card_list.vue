@@ -2,7 +2,7 @@
   section.card-list
     transition(name="fade")
       .cards(v-if="cardList && cardList.length")
-        .card-wrapper(v-for="item in cardList")
+        .card-wrapper(v-for="item in cardList" :key="item.key")
           votes(v-if="item.submittedAt" :item="item")
           .annotation-card-container(v-if="item.text")
             annotation-card(
