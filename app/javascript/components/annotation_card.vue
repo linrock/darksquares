@@ -1,7 +1,7 @@
 <template lang="pug">
   .annotation-card-container
     header
-      span annotated by
+      span created by
       span.annotator
         router-link(:to="userPath") {{ annotation.username }}
       span {{ annotation.timeAgo }}
