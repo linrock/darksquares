@@ -6,7 +6,7 @@
       header
         template(v-if="headerText")
           h1 {{ headerText }}
-          h2 Member since {{ user.memberSince }}
+          h2(v-if="!errorMessage") Member since {{ user.memberSince }}
       nav
         template(v-if="user.username")
           router-link(:to="overviewLink") Overview
@@ -36,7 +36,8 @@
         currentUsername: this.username,
         isLoading: true,
         headerText: null,
-        user: new User()
+        errorMessage: null,
+        user: new User(),
       }
     },
 
@@ -62,7 +63,8 @@
           this.isLoading = false
         }).catch(error => {
           const statusCode = error.response.status
-          this.headerText = statusCode === 404 && "User not found" || `Error ${statusCode}`
+          this.errorMessage = statusCode === 404 && "User not found" || `Error ${statusCode}`
+          this.headerText = this.errorMessage
         })
       }
     },

@@ -86,7 +86,12 @@
 
     created() {
       resetBoardState()
-      getOrFetchGame(Number(this.id)).then(game => {
+      const gameId = Number(this.id)
+      if (Number.isNaN(gameId)) {
+        this.errorMessage = "Game not found"
+        return
+      }
+      getOrFetchGame(gameId).then(game => {
         applyStateChange(game.stateAtPositionIndex(this.gameState.i))
         this.game = game
         activeGame.setKey(this.game.key)
