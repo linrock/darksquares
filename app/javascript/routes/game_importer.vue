@@ -14,11 +14,13 @@
           .commands
             input(type="submit" :value="buttonText" :disabled="isSubmitting")
             .error-message {{ errorMessage }}
+    page-title(title="Import game")
 
 </template>
 
 <script>
   import Chess from 'chess.js'
+  import PageTitle from '../layouts/page_title'
   import router from '../router'
   import SubHeader from '../layouts/sub_header'
   import requireLogin from './guards/require_login'
@@ -72,6 +74,7 @@
     },
 
     components: {
+      PageTitle,
       SubHeader,
       Chessboard
     }

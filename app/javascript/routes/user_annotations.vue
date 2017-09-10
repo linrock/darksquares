@@ -7,10 +7,12 @@
       card-list(:annotations="annotations")
     template(v-if="annotationsCount === 0")
       .empty {{ user.username }} hasn't created any annotations
+    page-title(:title="pageTitle" v-if="pageTitle")
 
 </template>
 
 <script>
+  import PageTitle from '../layouts/page_title'
   import User from '../models/user'
   import InfiniteScroll from '../components/infinite_scroll.vue'
   import CardList from '../components/card_list.vue'
@@ -50,7 +52,14 @@
       }
     },
 
+    computed: {
+      pageTitle() {
+        return this.user.username && `${this.user.username} - Annotations`
+      }
+    },
+
     components: {
+      PageTitle,
       InfiniteScroll,
       CardList,
     }

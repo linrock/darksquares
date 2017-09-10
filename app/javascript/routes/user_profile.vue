@@ -5,10 +5,12 @@
       card-list(:annotations="user.annotations" :games="user.games")
     template(v-if="itemsCount === 0")
       .empty {{ user.username }} hasn't created any games or annotations
+    page-title(:title="pageTitle" v-if="pageTitle")
 
 </template>
 
 <script>
+  import PageTitle from '../layouts/page_title'
   import User from '../models/user'
   import Loading from '../components/loading'
   import CardList from '../components/card_list'
@@ -34,7 +36,14 @@
       window.scrollTo(0, 0)
     },
 
+    computed: {
+      pageTitle() {
+        return this.user.username && `${this.user.username} - Overview`
+      }
+    },
+
     components: {
+      PageTitle,
       Loading,
       CardList
     }

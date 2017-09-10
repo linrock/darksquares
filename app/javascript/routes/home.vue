@@ -11,10 +11,12 @@
       | to get started.
     infinite-scroll(:apiCaller="loadHomeGamesFromPage")
       card-list(:games="games")
+    page-title(title="Dark Squares - share and annotate chess games")
 
 </template>
 
 <script>
+  import PageTitle from '../layouts/page_title'
   import CardListLayout from '../layouts/card_list_layout.vue'
   import InfiniteScroll from '../components/infinite_scroll.vue'
   import CardList from '../components/card_list.vue'
@@ -54,6 +56,7 @@
     },
 
     components: {
+      PageTitle,
       CardListLayout,
       InfiniteScroll,
       CardList,

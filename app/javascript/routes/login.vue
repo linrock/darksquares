@@ -12,10 +12,12 @@
     .bottom-instructions
       | Don't have an account? &mdash;
       router-link(to="/sign_up") Sign up
+    page-title(title="Log in")
 
 </template>
 
 <script>
+  import PageTitle from '../layouts/page_title'
   import router from '../router'
   import requireAnonymous from './guards/require_anonymous'
   import { createSession, getMyUserInfo } from '../api/requests'
@@ -50,6 +52,10 @@
         })
       }
     },
+
+    components: {
+      PageTitle
+    }
   }
 </script>
 

@@ -38,11 +38,13 @@
         game-edit-prompt(:game="game" :gameState="gameState" v-if="gameState.isEditing")
         game-submit-prompt(:game="game" :gameState="gameState" v-if="gameState.isSubmitting")
         game-view-pgn-prompt(:game="game" :gameState="gameState" v-if="gameState.isViewingPgn")
+    page-title(:title="pageTitle")
 
 </template>
 
 <script>
   import Mousetrap from 'mousetrap'
+  import PageTitle from '../layouts/page_title'
   import SubHeader from '../layouts/sub_header'
   import GraphOrLoading from '../components/graph_or_loading.vue'
   import MiniBoardDetailed from '../components/mini_board_detailed.vue'
@@ -149,6 +151,17 @@
       isPromptOpen() {
         return this.gameState.isEditing || this.gameState.isDeleting ||
                this.gameState.isSubmitting || this.gameState.isViewingPgn
+      },
+      pageTitle() {
+        if (this.errorMessage) {
+          return "Error"
+        } else if (this.game) {
+          if (this.game.name) {
+            return this.game.name
+          } else if (this.game.id) {
+            return `Game ${this.game.id}`
+          }
+        }
       }
     },
 
@@ -208,6 +221,7 @@
     },
 
     components: {
+      PageTitle,
       SubHeader,
       GameInfo,
       MoveList,

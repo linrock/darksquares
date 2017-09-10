@@ -6,10 +6,12 @@
     card-list(:games="games")
     .directions(v-if="gamesLoaded && !games.length")
       | You must import some games before you can submit one!
+    page-title(title="Submit game")
 
 </template>
 
 <script>
+  import PageTitle from '../layouts/page_title'
   import CardListLayout from '../layouts/card_list_layout.vue'
   import CardList from '../components/card_list.vue'
   import requireLogin from './guards/require_login'
@@ -41,6 +43,7 @@
     },
 
     components: {
+      PageTitle,
       CardListLayout,
       CardList,
     }

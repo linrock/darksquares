@@ -7,10 +7,12 @@
       card-list(:games="games")
     template(v-if="gamesCount === 0")
       .empty {{ user.username }} hasn't created any games
+    page-title(:title="pageTitle" v-if="pageTitle")
 
 </template>
 
 <script>
+  import PageTitle from '../layouts/page_title'
   import User from '../models/user'
   import InfiniteScroll from '../components/infinite_scroll.vue'
   import CardList from '../components/card_list.vue'
@@ -26,7 +28,6 @@
     },
 
     data() {
-      debugger
       return {
         PAGE_SIZE,
         gamesCount: this.user.gamesCount,
@@ -47,7 +48,14 @@
       }
     },
 
+    computed: {
+      pageTitle() {
+        return this.user.username && `${this.user.username} - Games`
+      }
+    },
+
     components: {
+      PageTitle,
       InfiniteScroll,
       CardList,
     }

@@ -2,13 +2,14 @@
   main#user_settings
     .content
       h1 User settings
-
       div
         a(@click="signOut") sign out
+    page-title(title="Settings")
 
 </template>
 
 <script>
+  import PageTitle from '../layouts/page_title'
   import requireLogin from './guards/require_login'
   import router from '../router'
 
@@ -21,6 +22,10 @@
         setUsername(null)
         router.push({ path: '/' })
       }
+    },
+
+    components: {
+      PageTitle
     }
   }
 </script>

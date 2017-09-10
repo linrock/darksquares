@@ -5,23 +5,24 @@
         | Dark Squares is a community for sharing and
         br
         | collaboratively annotating chess games.
-
       p
         | It's currently in beta. Feel free to email me
         br
         | with your thoughts and suggestions.
-
       p
         a(href="mailto:admin@darksquares.com")
           | admin@darksquares.com
+    page-title(title="About")
 
 </template>
 
 <script>
+  import PageTitle from '../layouts/page_title'
   import SubHeader from '../layouts/sub_header'
 
   export default {
     components: {
+      PageTitle,
       SubHeader,
     }
   }
