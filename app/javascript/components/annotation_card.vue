@@ -2,7 +2,7 @@
   .annotation-card-container
     header
       span created by
-      span.annotator
+      span.created-by
         router-link(:to="userPath") {{ annotation.username }}
       span {{ annotation.timeAgo }}
 
@@ -13,6 +13,7 @@
       )
         .move-string {{ annotation.move_string }}
         .text {{ annotation.text }}
+        .annotator(v-if="annotation.annotator") &ndash; {{ annotation.annotator }}
 
 </template>
 
@@ -65,7 +66,7 @@
     margin-bottom 8px
     margin-left 3px
     
-  .annotator
+  .created-by
     font-weight bold
     margin 0 5px
 
@@ -93,5 +94,10 @@
 
     .text
       color rgba(0,0,0,0.7)
+
+    .annotator
+      color rgba(0,0,0,0.3)
+      font-size 12px
+      margin-top 12px
 
 </style>
