@@ -129,7 +129,7 @@
         margin 10px 0
 
     nav
-      background #E3E3E3
+      background #eaeaea
       padding-left 30px + 30px
       height 41px
       line-height 44px
@@ -137,7 +137,7 @@
       font-weight bold
 
       a
-        color #1A1A1A
+        color #1a1a1a
         display block
         opacity 0.5
         font-size 14px
@@ -152,7 +152,7 @@
         opacity 1
 
     .content
-      background #F1F1F1
+      background card-list-bg-color
       min-height 1000px
       height 100%
 

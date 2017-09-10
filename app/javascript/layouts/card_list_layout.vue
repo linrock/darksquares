@@ -47,7 +47,7 @@
     width 100%
     height 100%
     padding-left 420px
-    background #f7f7f7
+    background card-list-bg-color
 
     header.main
       background #393939
