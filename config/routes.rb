@@ -7,14 +7,13 @@ Rails.application.routes.draw do
 
   root to: "application#home"
 
-  get "/import"       => "application#index"
-  get "/submit"       => "application#index"
-  get "/games/:id"    => "application#index"
-  get "/annotations"  => "application#index"
   get "/login"        => "application#index"
   get "/sign_up"      => "application#index"
+  get "/import"       => "application#index"
+  get "/submit"       => "application#index"
   get "/profile"      => "application#index"
   get "/about"        => "application#index"
+  get "/games/:id"    => "application#index"
 
   get "/u/:username"             => "application#index"
   get "/u/:username/games"       => "application#index"
