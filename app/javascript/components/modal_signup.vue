@@ -88,6 +88,8 @@
 </script>
 
 <style lang="stylus" scoped>
+  @import "../common.styl"
+
   #modal-background
     width 100%
     height 100%
@@ -127,7 +129,7 @@
 
       &[type="submit"]
         color white
-        background rgb(58, 137, 201)
+        background highlight-color
         border none
         border-radius 2px
         font-size 18px

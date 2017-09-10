@@ -60,6 +60,8 @@
 </script>
 
 <style lang="stylus" scoped>
+  @import "../common.styl"
+
   main#login
     margin 100px auto
     width 600px
@@ -85,7 +87,7 @@
 
     &[type="submit"]
       color white
-      background rgb(58, 137, 201)
+      background highlight-color
       border none
       border-radius 2px
       font-size 18px

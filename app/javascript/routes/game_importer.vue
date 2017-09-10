@@ -82,6 +82,8 @@
 </script>
 
 <style lang="stylus" scoped>
+  @import "../common.styl"
+
   textarea
     width 560px
     height 336px
@@ -97,7 +99,7 @@
 
   input[type="submit"]
     color white
-    background rgb(58, 137, 201)
+    background highlight-color
     border none
     border-radius 2px
     font-size 17px

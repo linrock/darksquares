@@ -40,6 +40,8 @@
 </script>
 
 <style lang="stylus" scoped>
+  @import "../common.styl"
+
   button
     border none
     border-radius 2px
@@ -54,7 +56,7 @@
       opacity 1
 
   .confirm
-    background rgb(58, 137, 201)
+    background highlight-color
     width 150px
 
   .cancel

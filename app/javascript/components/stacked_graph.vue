@@ -72,7 +72,8 @@
 
       getColor(i) {
         // let rgb = [70, 130, 180]  // steel blue
-        let rgb = [58, 137, 201]  // vivid blue - colourlovers.com/palette/27905
+        // let rgb = [58, 137, 201]  // vivid blue - colourlovers.com/palette/27905
+        let rgb = [87, 148, 255]
         // let rgb = [242,108,79]  // vivid orange - colourlovers.com/paeltte/27905
         if (i === this.nLines - 1) {
           return `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.5)`

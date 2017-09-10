@@ -61,6 +61,8 @@
 </script>
 
 <style lang="stylus" scoped>
+  @import "../common.styl"
+
   .game-edit-prompt
     margin-top 50px
 
@@ -93,7 +95,7 @@
       opacity 1
 
     &.save
-      background rgb(58, 137, 201)
+      background highlight-color
       width 90px
 
     &.cancel
