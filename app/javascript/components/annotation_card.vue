@@ -38,6 +38,8 @@
         boardState.highlights = [this.annotation.move.from, this.annotation.move.to]
         boardState.move = this.annotation.move_string
         boardState.pgnHeaders = this.annotation.game.pgnHeaders || {}
+        boardState.bestMove = ``
+        boardState.score = ``
         activeGame.setKey(this.annotation.key)
       },
     },
