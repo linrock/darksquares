@@ -104,12 +104,14 @@
     height 360px
     background white
     position absolute
-    padding 50px
+    padding 40px 50px
     left 50%
     top 50%
     margin-left -300px
     margin-top -180px
     box-shadow 0 0 10px 5px rgba(0,0,0,0.1)
+    border-top 5px solid black
+    border-radius 2px
 
     h1
       display block

@@ -141,6 +141,7 @@
         display block
         opacity 0.5
         font-size 14px
+        letter-spacing 0.2px
         text-decoration none
         text-transform uppercase
         margin-right 40px
