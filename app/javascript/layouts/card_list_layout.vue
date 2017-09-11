@@ -37,7 +37,7 @@
     position fixed
     top main-header-height
     padding-bottom 20px
-    overflow-y scroll
+    overflow-y auto
 
     .mini-board-view
       margin 30px 0 0 40px
