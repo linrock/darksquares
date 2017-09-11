@@ -26,7 +26,6 @@
   import MoveList from './move_list'
   import Game from '../models/game'
   import { applyStateChange } from '../store/miniboard'
-  import { activeGame } from '../store/active_game'
 
   export default {
     props: {
@@ -60,7 +59,7 @@
 
     computed: {
       shouldShowLine() {
-        return activeGame.key === this.game.key
+        return this.$store.state.activeGameKey === this.game.key
       },
     },
 

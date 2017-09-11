@@ -23,7 +23,6 @@
   import { gameCache, loadHomeGames } from '../store/games'
   import { userState } from '../store/user_state'
   import { applyStateChange } from '../store/miniboard'
-  import { activeGame } from '../store/active_game'
 
   export default {
     data() {
@@ -54,7 +53,7 @@
           game.stateAtPositionIndex(positionIndex),
         )
         applyStateChange(state)
-        activeGame.setKey(game.key)
+        this.$store.dispatch(`setActiveGameKey`, game.key)
       }
     },
 

@@ -26,7 +26,6 @@
   import AnnotationPreviews from './annotation_previews.vue'
   import Game from '../models/game'
   import { boardState } from '../store/miniboard'
-  import { activeGame } from '../store/active_game'
 
   export default {
     props: {
@@ -50,7 +49,7 @@
       previewGame() {
         this.boardState.pgn = this.game.pgn
         this.boardState.pgnHeaders = this.game.pgnHeaders
-        activeGame.setKey(this.game.key)
+        this.$store.dispatch(`setActiveGameKey`, this.game.key)
       },
     },
 

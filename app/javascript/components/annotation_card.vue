@@ -21,7 +21,6 @@
   import Game from '../models/game'
   import Annotation from '../models/annotation'
   import { boardState } from '../store/miniboard'
-  import { activeGame } from '../store/active_game'
 
   export default {
     props: {
@@ -40,7 +39,7 @@
         boardState.pgnHeaders = this.annotation.game.pgnHeaders || {}
         boardState.bestMove = ``
         boardState.score = ``
-        activeGame.setKey(this.annotation.key)
+        this.$store.dispatch(`setActiveGameKey`, this.annotation.key)
       },
     },
 

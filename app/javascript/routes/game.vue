@@ -56,7 +56,6 @@
   import GameViewPgnPrompt from '../components/game_view_pgn_prompt'
   import { userState } from '../store/user_state'
   import { resetBoardState, applyStateChange } from '../store/miniboard'
-  import { activeGame } from '../store/active_game'
   import { getOrFetchGame } from '../store/games'
   import { isElementInViewport } from '../util'
 
@@ -94,7 +93,7 @@
       getOrFetchGame(gameId).then(game => {
         applyStateChange(game.stateAtPositionIndex(this.gameState.i))
         this.game = game
-        activeGame.setKey(this.game.key)
+        this.$store.dispatch(`setActiveGameKey`, this.game.key)
       }).catch(error => {
         this.errorMessage = error.response.data.error
         console.log(this.errorMessage)
