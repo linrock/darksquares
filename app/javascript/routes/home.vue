@@ -22,13 +22,16 @@
   import CardList from '../components/card_list.vue'
   import { gameCache, loadHomeGames } from '../store/games'
   import { userState } from '../store/user_state'
+  import { applyStateChange } from '../store/miniboard'
+  import { activeGame } from '../store/active_game'
 
   export default {
     data() {
       return {
         loadHomeGames,
         userState,
-        games: this.filteredGames()
+        games: this.filteredGames(),
+        gamesLoaded: false,
       }
     },
 
@@ -40,9 +43,26 @@
       },
       loadHomeGamesFromPage(options) {
         return loadHomeGames(options.page).then(data => {
+          this.gamesLoaded = true
           this.games = this.filteredGames()
           return data
         })
+      },
+      previewGame(game, positionIndex) {
+        const state = Object.assign(
+          { pgnHeaders: game.pgnHeaders },
+          game.stateAtPositionIndex(positionIndex),
+        )
+        applyStateChange(state)
+        activeGame.setKey(game.key)
+      }
+    },
+
+    watch: {
+      gamesLoaded() {
+        const gameToPreview = this.games[0]
+        const positionIndex = 5 + ~~(Math.random() * (gameToPreview.nPoints - 5))
+        this.previewGame(gameToPreview, positionIndex)
       }
     },
 
