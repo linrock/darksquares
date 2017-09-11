@@ -289,7 +289,6 @@
   section.right-side
     padding 0 0 10px 40px
     margin-left 480px
-    border-left 1px solid rgba(0,0,0,0.07)
     width 560px
     padding-left 40px
     min-height 472px

@@ -47,9 +47,18 @@
     },
 
     methods: {
+      cleanedPgn() {
+        return this.$refs.pgn.value.trim()
+          .replace("0-0-0", "O-O-O")
+          .replace("0-0", "O-O")
+          .replace("‒", "-")
+          .replace("–", "-")
+          .replace("½-½", "1/2-1/2")
+          .replace("0.5-0.5", "1/2-1/2")
+      },
       importGame(e) {
         e.preventDefault()
-        const pgn = this.$refs.pgn.value.trim()
+        const pgn = this.cleanedPgn()
         const cjs = new Chess()
         if (!cjs.load_pgn(pgn)) {
           this.errorMessage = "Import failed. PGN is invalid!"
@@ -58,7 +67,7 @@
         this.isSubmitting = true
         const data = {
           game: {
-            pgn: pgn
+            pgn,
           }
         }
         saveGame(data).then(game => {
