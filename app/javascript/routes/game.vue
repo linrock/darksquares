@@ -38,7 +38,7 @@
         game-edit-prompt(:game="game" :gameState="gameState" v-if="gameState.isEditing")
         game-submit-prompt(:game="game" :gameState="gameState" v-if="gameState.isSubmitting")
         game-view-pgn-prompt(:game="game" :gameState="gameState" v-if="gameState.isViewingPgn")
-    page-title(:title="pageTitle")
+    page-title(:title="pageTitle" v-if="errorMessage || game")
 
 </template>
 
