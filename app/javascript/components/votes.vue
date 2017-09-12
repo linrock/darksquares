@@ -17,7 +17,6 @@
   import Annotation from '../models/annotation'
   import { createGameVote, createAnnotationVote } from '../api/requests'
   import { gameVoteCache } from '../store/games'
-  import { modalState } from '../store/modal_state'
 
   const Vote = {
     None: 'none',
@@ -78,7 +77,7 @@
           return
         }
         if (!this.username) {
-          modalState.open = true
+          this.$store.dispatch('openModal')
           return
         }
         this.voteState = this.voteState === voteType ? Vote.None : voteType

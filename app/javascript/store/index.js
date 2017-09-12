@@ -9,6 +9,9 @@ const store = new Vuex.Store({
     currentUser: {
       username: null,
     },
+    modal: {
+      isOpen: false,
+    },
   },
 
   mutations: {
@@ -17,6 +20,9 @@ const store = new Vuex.Store({
     },
     setCurrentUser(state, payload) {
       state.currentUser.username = payload.username
+    },
+    setModalOpenState(state, isOpen) {
+      state.modal.isOpen = isOpen
     },
   },
 
@@ -27,6 +33,12 @@ const store = new Vuex.Store({
     setCurrentUser({ commit }, payload) {
       commit('setCurrentUser', payload)
     },
+    openModal({ commit }) {
+      commit('setModalOpenState', true)
+    },
+    closeModal({ commit }) {
+      commit('setModalOpenState', false)
+    }
   }
 })
 

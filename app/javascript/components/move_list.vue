@@ -31,7 +31,6 @@
   import MoveAnnotations from './move_annotations.vue'
   import AnnotationInput from './annotation_input.vue'
   import Game from '../models/game'
-  import { modalState } from '../store/modal_state'
 
   export default {
     props: {
@@ -60,7 +59,7 @@
       },
       toggleAnnotationInput(i) {
         if (!this.$store.state.currentUser.username) {
-          modalState.open = true
+          this.$store.dispatch('openModal')
           return
         }
         this.annotationInputIndex = this.annotationInputIndex === i ? -1 : i

@@ -30,7 +30,6 @@
 <script>
   import Mousetrap from 'mousetrap'
   import { createUser, getMyUserInfo } from '../api/requests'
-  import { modalState } from '../store/modal_state'
 
   export default {
     data() {
@@ -42,7 +41,7 @@
 
     created() {
       document.body.style.overflow = 'hidden'
-      Mousetrap.bind('esc', () => modalState.open = false)
+      Mousetrap.bind('esc', () => this.$store.dispatch('closeModal'))
     },
 
     destroyed() {
@@ -51,9 +50,8 @@
     },
 
     methods: {
-      closeModal(e) {
-        modalState.open = false
-        console.log('clicked modal bg')
+      closeModal() {
+        this.$store.dispatch('closeModal')
       },
       setError(message) {
         this.errorMessage = message
@@ -80,7 +78,7 @@
         }
         createUser(credentials).then(() => {
           getMyUserInfo()
-          modalState.open = false
+          this.$store.dispatch('closeModal')
         }).catch(error => this.setError(error.response.data.error))
       }
     },
