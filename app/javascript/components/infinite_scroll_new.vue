@@ -29,6 +29,9 @@
     },
 
     created() {
+      if (this.isComplete) {
+        return
+      }
       this.fetchFromServer()
       this.interval = setInterval(() => {
         if (this.distanceFromBottom() < THRESHOLD) {

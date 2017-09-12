@@ -11,7 +11,7 @@ const store = {
         lastPageNum: 0,
         isFetching: false,
         hasMorePages: true,
-        scrollTop: 0,
+        scrollY: 0,
       }
     }
   },
@@ -32,8 +32,8 @@ const store = {
         hasMorePages: payload.hasMorePages,
       })
     },
-    setScrollTop(state, { routeKey, scrollTop }) {
-      state.routes[routeKey].scrollTop = scrollTop
+    saveScrollPosition(state, { routeKey, scrollY }) {
+      state.routes[routeKey].scrollY = scrollY
     }
   },
 
@@ -56,14 +56,17 @@ const store = {
         setTimeout(() => commit('stopFetching', routeKey), 1000)
       })
     },
-    setScrollTop({ commit }, payload) {
-      commit('setScrollTop', payload)
+    saveScrollPosition({ commit }, payload) {
+      commit('saveScrollPosition', payload)
     }
   },
 
   getters: {
     games: state => routeKey => {
       return Array.from(state.routes[routeKey].gameIds).map(id => gameCache.getGame(id))
+    },
+    scrollPosition: state => routeKey => {
+      return state.routes[routeKey].scrollY
     },
     isFetching: state => routeKey => {
       return state.routes[routeKey].isFetching

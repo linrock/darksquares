@@ -30,6 +30,18 @@
       }
     },
 
+    beforeRouteLeave(to, from, next) {
+      this.$store.dispatch("saveScrollPosition", {
+        routeKey: "/",
+        scrollY: window.scrollY
+      })
+      next()
+    },
+
+    mounted() {
+      window.scrollTo(0, this.lastScrollPosition)
+    },
+
     methods: {
       previewGame(game, positionIndex) {
         const state = Object.assign(
@@ -58,6 +70,9 @@
         return this.$store.getters.games("/").filter(game => {
           return game.graphPoints || game.user.username === this.username
         })
+      },
+      lastScrollPosition() {
+        return this.$store.getters.scrollPosition("/")
       },
       username() {
         return this.$store.state.currentUser.username
