@@ -10,9 +10,8 @@
 <script>
   import MainHeader from './main_header'
   import ModalSignup from '../components/modal_signup'
-  import { getUsername } from '../store/local_storage'
+  import { getAccessToken, getUsername } from '../store/local_storage'
   import { modalState } from '../store/modal_state'
-  import { userState } from '../store/user_state'
 
   export default {
     data() {
@@ -22,7 +21,8 @@
     },
 
     created() {
-      userState.username = getUsername()
+      const username = getAccessToken() && getUsername()
+      this.$store.dispatch('setCurrentUser', { username })
     },
 
     components: {

@@ -24,18 +24,10 @@
 </template>
 
 <script>
-  import { userState } from '../store/user_state'
-
   export default {
-    data() {
-      return {
-        userState
-      }
-    },
-
     computed: {
       username() {
-        return this.userState.username
+        return this.$store.state.currentUser.username
       },
       userPath() {
         return this.username ? `/u/${this.username}` : `/sign_up`

@@ -18,7 +18,6 @@
   import { createGameVote, createAnnotationVote } from '../api/requests'
   import { gameVoteCache } from '../store/games'
   import { modalState } from '../store/modal_state'
-  import { userState } from '../store/user_state'
 
   const Vote = {
     None: 'none',
@@ -46,13 +45,15 @@
         Vote,
         initialScore: this.item.score - voteValue,
         voteState,
-        userState,
       }
     },
 
     computed: {
+      username() {
+        return this.$store.state.currentUser.username
+      },
       disabled() {
-        return this.item.username === userState.username
+        return this.item.username === this.username
       },
       score() {
         let score = this.initialScore
@@ -76,7 +77,7 @@
         if (this.disabled) {
           return
         }
-        if (!userState.username) {
+        if (!this.username) {
           modalState.open = true
           return
         }

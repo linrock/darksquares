@@ -21,14 +21,12 @@
   import InfiniteScroll from '../components/infinite_scroll.vue'
   import CardList from '../components/card_list.vue'
   import { gameCache, loadHomeGames } from '../store/games'
-  import { userState } from '../store/user_state'
   import { applyStateChange } from '../store/miniboard'
 
   export default {
     data() {
       return {
         loadHomeGames,
-        userState,
         games: this.filteredGames(),
         gamesLoaded: false,
       }
@@ -67,7 +65,7 @@
 
     computed: {
       username() {
-        return this.userState.username
+        return this.$store.state.currentUser.username
       },
       isLoggedIn() {
         return !!this.username

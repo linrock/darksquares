@@ -9,7 +9,7 @@
     )
     .under-input
       input(type="submit" value="Save")
-      template(v-if="userState.username === game.username")
+      template(v-if="username === game.username")
         input(type="text" placeholder="Annotator (optional)" ref="annotator")
 
 </template>
@@ -18,7 +18,6 @@
   import Annotation from '../models/annotation'
   import Game from '../models/game'
   import { createAnnotation } from '../api/requests'
-  import { userState } from '../store/user_state'
 
   export default {
     props: {
@@ -36,7 +35,6 @@
       return {
         textareaHeight: 64,
         textareaStyle: `height: auto`,
-        userState,
       }
     },
 
@@ -51,7 +49,7 @@
       createAnnotation(ev) {
         ev.preventDefault()
         const annotation = new Annotation({
-          username: userState.username,
+          username: this.username,
           move_string: this.moveString,
           text: this.$refs.input.value
         })
@@ -76,6 +74,9 @@
     },
 
     computed: {
+      username() {
+        return this.$store.state.currentUser.username
+      },
       textareaPlaceholder() {
         return `Write an annotation for ${this.moveString}`
       },
