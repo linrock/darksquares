@@ -1,4 +1,4 @@
-const initialState = {
+const initialBoardState = {
   fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
   pgn: "",
   pgnHeaders: {},
@@ -8,7 +8,7 @@ const initialState = {
   highlights: [],
 }
 
-const blankState = () => Object.assign({}, initialState)
+const blankState = () => Object.assign({}, initialBoardState)
 
 const resetBoardState = () => boardState = blankState()
 

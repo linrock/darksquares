@@ -53,10 +53,19 @@
 
     computed: {
       isFetching() {
-        return this.$store.state.routes.getters.isFetching(this.routeKey)
+        return this.$store.getters.isFetching(this.routeKey)
       },
       isComplete() {
-        return this.$store.state.routes.getters.isComplete(this.routeKey)
+        return this.$store.getters.isComplete(this.routeKey)
+      }
+    },
+
+    watch: {
+      isComplete() {
+        if (this.isComplete) {
+          console.log('infinite scroll complete!')
+          clearInterval(this.interval)
+        }
       }
     },
 

@@ -1,6 +1,7 @@
-import Game from '../models/game'
-import { gameCache } from './game_cache'
-import { getGames } from '../api/requests'
+import Vue from 'vue'
+import Game from '../../models/game'
+import { getGames } from '../../api/requests'
+import { gameCache } from '../game_cache'
 
 const store = {
   state: {
@@ -25,8 +26,11 @@ const store = {
     addGames(state, payload) {
       const routeData = state.routes[payload.routeKey]
       payload.gameIds.forEach(id => routeData.gameIds.add(id))
-      routeData.lastPageNum = payload.lastPageNum
-      routeData.hasMorePages = payload.hasMorePages
+      Vue.set(state.routes, payload.routeKey, {
+        gameIds: routeData.gameIds,
+        lastPageNum: payload.lastPageNum,
+        hasMorePages: payload.hasMorePages,
+      })
     },
     setScrollTop(state, { routeKey, scrollTop }) {
       state.routes[routeKey].scrollTop = scrollTop
@@ -35,6 +39,7 @@ const store = {
 
   actions: {
     fetchGames({ commit, state }, routeKey) {
+      console.log(`fetchGames action triggered at ${routeKey}`)
       const routeData = state.routes[routeKey]
       const pageNum = routeData.lastPageNum + 1
       commit('startFetching', routeKey)
@@ -58,7 +63,7 @@ const store = {
 
   getters: {
     games: state => routeKey => {
-      return state.routes[routeKey].gameIds.map(id => gameCache.getGame(id))
+      return Array.from(state.routes[routeKey].gameIds).map(id => gameCache.getGame(id))
     },
     isFetching: state => routeKey => {
       return state.routes[routeKey].isFetching
@@ -69,4 +74,4 @@ const store = {
   }
 }
 
-export default const store
+export default store

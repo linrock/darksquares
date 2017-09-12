@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import cardLists from './modules/card_lists'
+
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
@@ -52,6 +54,10 @@ const store = new Vuex.Store({
     getGameVote: state => gameId => {
       return state.gameVotes[gameId] || 0
     }
+  },
+
+  modules: {
+    cardLists
   }
 })
 

@@ -15,6 +15,7 @@
   import PageTitle from '../layouts/page_title'
   import User from '../models/user'
   import InfiniteScroll from '../components/infinite_scroll.vue'
+  import InfiniteScrollNew from '../components/infinite_scroll_new.vue'
   import CardList from '../components/card_list.vue'
   import { loadUserAnnotations } from '../store/annotations'
   import { PAGE_SIZE } from '../constants'
@@ -61,6 +62,7 @@
     components: {
       PageTitle,
       InfiniteScroll,
+      InfiniteScrollNew,
       CardList,
     }
   }

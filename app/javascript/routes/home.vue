@@ -9,8 +9,8 @@
       | Share and annotate chess games with the community.
       router-link(to="/sign_up") Sign up
       | to get started.
-    infinite-scroll(:apiCaller="loadHomeGamesFromPage")
-      card-list(:games="games")
+    infinite-scroll-new(routeKey="/")
+      card-list(:games="homeGames")
     page-title(title="Dark Squares - share and annotate chess games")
 
 </template>
@@ -18,33 +18,19 @@
 <script>
   import PageTitle from '../layouts/page_title'
   import CardListLayout from '../layouts/card_list_layout.vue'
-  import InfiniteScroll from '../components/infinite_scroll.vue'
+  import InfiniteScrollNew from '../components/infinite_scroll_new.vue'
   import CardList from '../components/card_list.vue'
-  import { gameCache, loadHomeGames } from '../store/games'
   import { applyStateChange } from '../store/miniboard'
+  import { gameCache } from '../store/game_cache'
 
   export default {
     data() {
       return {
-        loadHomeGames,
-        games: this.filteredGames(),
         gamesLoaded: false,
       }
     },
 
     methods: {
-      filteredGames() {
-        return gameCache.getGamesFromSet(`home`).filter(game => {
-          return game.graphPoints || game.user.username === this.username
-        })
-      },
-      loadHomeGamesFromPage(options) {
-        return loadHomeGames(options.page).then(data => {
-          this.gamesLoaded = true
-          this.games = this.filteredGames()
-          return data
-        })
-      },
       previewGame(game, positionIndex) {
         const state = Object.assign(
           { pgnHeaders: game.pgnHeaders },
@@ -56,14 +42,23 @@
     },
 
     watch: {
-      gamesLoaded() {
-        const gameToPreview = this.games[0]
-        const positionIndex = 5 + ~~(Math.random() * (gameToPreview.nPoints - 5))
-        this.previewGame(gameToPreview, positionIndex)
+      homeGames() {
+        if (!this.gamesLoaded && this.homeGames.length > 0) {
+          this.gamesLoaded = true
+          const gameToPreview = this.homeGames[0]
+          const positionIndex = 5 + ~~(Math.random() * (gameToPreview.nPoints - 5))
+          this.previewGame(gameToPreview, positionIndex)
+        }
       }
     },
 
     computed: {
+      homeGames() {
+        console.log(`updating home games - ${this.$store.getters.games("/").length}`)
+        return this.$store.getters.games("/").filter(game => {
+          return game.graphPoints || game.user.username === this.username
+        })
+      },
       username() {
         return this.$store.state.currentUser.username
       },
@@ -75,7 +70,7 @@
     components: {
       PageTitle,
       CardListLayout,
-      InfiniteScroll,
+      InfiniteScrollNew,
       CardList,
     }
   }
