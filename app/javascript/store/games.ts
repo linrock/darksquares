@@ -1,6 +1,5 @@
 import Game from '../models/game'
 import GameCache from './game_cache'
-import GameVoteCache from './game_vote_cache'
 import {
   createGame,
   getGame,
@@ -8,9 +7,9 @@ import {
   getMyGames,
   getUserGames,
 } from '../api/requests'
+import store from './index'
 
 export const gameCache = new GameCache()
-export const gameVoteCache = new GameVoteCache()
 
 export const saveGame = function(newGameData: any): Promise<Game> {
   return createGame(newGameData).then(response => {
@@ -38,7 +37,7 @@ export const loadHomeGames = function(page: number = 1): Promise<any> {
     gameCache.addGamesToSet('home', games)
     const gameVotes = response.data.game_votes
     if (gameVotes) {
-      gameVotes.forEach(vote => gameVoteCache.setValue(vote.game_id, vote.value))
+      gameVotes.forEach(vote => store.dispatch('setGameVote', { gameId: vote.game_id, value: vote.value }))
     }
     return {
       results: games.map(game => game.id),
@@ -61,7 +60,7 @@ export const loadUserGames = function(options: any = { username: ``, page: 1 }):
     gameCache.addGamesToSet(`user-${options.username}`, games)
     const gameVotes = response.data.game_votes
     if (gameVotes) {
-      gameVotes.forEach(vote => gameVoteCache.setValue(vote.game_id, vote.value))
+      gameVotes.forEach(vote => store.dispatch('setGameVote', { gameId: vote.game_id, value: vote.value }))
     }
     return {
       results: games.map(game => game.id),

@@ -6,6 +6,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     activeGameKey: null,
+    gameVotes: {},
     currentUser: {
       username: null,
     },
@@ -18,12 +19,15 @@ const store = new Vuex.Store({
     setActiveGameKey(state, key) {
       state.activeGameKey = key
     },
-    setCurrentUser(state, payload) {
-      state.currentUser.username = payload.username
+    setCurrentUser(state, { username }) {
+      state.currentUser.username = username
     },
     setModalOpenState(state, isOpen) {
       state.modal.isOpen = isOpen
     },
+    setGameVote(state, { gameId, value }) {
+      Vue.set(state.gameVotes, gameId, value)
+    }
   },
 
   actions: {
@@ -38,6 +42,15 @@ const store = new Vuex.Store({
     },
     closeModal({ commit }) {
       commit('setModalOpenState', false)
+    },
+    setGameVote({ commit }, payload) {
+      commit('setGameVote', payload)
+    },
+  },
+
+  getters: {
+    getGameVote: state => gameId => {
+      return state.gameVotes[gameId] || 0
     }
   }
 })

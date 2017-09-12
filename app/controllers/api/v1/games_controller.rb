@@ -89,10 +89,12 @@ class API::V1::GamesController < API::V1::BaseController
       if game.submitted_at.present?
         render_json({}, status: 400)
         return
-      else
+      elsif patch_game_params[:name].present?
         game.update_attributes!(patch_game_params.merge({
           submitted_at: Time.now
         }))
+      else
+        game.update_attributes!(submitted_at: Time.now)
       end
     else
       game.update_attributes!(patch_game_params)

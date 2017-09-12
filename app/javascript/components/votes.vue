@@ -16,7 +16,6 @@
   import Game from '../models/game'
   import Annotation from '../models/annotation'
   import { createGameVote, createAnnotationVote } from '../api/requests'
-  import { gameVoteCache } from '../store/games'
 
   const Vote = {
     None: 'none',
@@ -33,17 +32,9 @@
     },
 
     data() {
-      const voteValue = gameVoteCache.getValue(this.item.id)
-      let voteState = Vote.None
-      if (voteValue === 1) {
-        voteState = Vote.Upvoted
-      } else if (voteValue === -1) {
-        voteState = Vote.Downvoted
-      }
       return {
         Vote,
-        initialScore: this.item.score - voteValue,
-        voteState,
+        initialScore: this.item.score - this.$store.getters.getGameVote(this.item.id)
       }
     },
 
@@ -51,17 +42,23 @@
       username() {
         return this.$store.state.currentUser.username
       },
+      voteValue() {
+        return this.$store.getters.getGameVote(this.item.id)
+      },
+      voteState() {
+        let voteState = Vote.None
+        if (this.voteValue === 1) {
+          voteState = Vote.Upvoted
+        } else if (this.voteValue === -1) {
+          voteState = Vote.Downvoted
+        }
+        return voteState
+      },
       disabled() {
         return this.item.username === this.username
       },
       score() {
-        let score = this.initialScore
-        if (this.voteState === Vote.Upvoted) {
-          score = score + 1
-        } else if (this.voteState === Vote.Downvoted) {
-          score = score - 1
-        }
-        return score
+        return this.initialScore + this.voteValue
       }
     },
 
@@ -80,8 +77,7 @@
           this.$store.dispatch('openModal')
           return
         }
-        this.voteState = this.voteState === voteType ? Vote.None : voteType
-        this.createVote(this.voteState === Vote.None ? 0 : value)
+        this.createVote(this.voteValue === value ? 0 : value)
       },
       createVote(value) {
         const data = {
@@ -90,6 +86,7 @@
           }
         }
         if (this.item.pgn) {
+          this.$store.dispatch('setGameVote', { gameId: this.item.id, value })
           createGameVote(this.item.id, data)
         } else {
           createAnnotationVote(this.item.id, data)
