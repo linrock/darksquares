@@ -1,6 +1,6 @@
 import Game from '../models/game'
 
-export default class GameCache {
+class GameCache {
   public gamesMap: Map<number, Game>
   public gameIdSet: Map<string, Set<number>>
   public games: Map<string, Object>
@@ -60,3 +60,5 @@ export default class GameCache {
     }
   }
 }
+
+export const gameCache = new GameCache()
