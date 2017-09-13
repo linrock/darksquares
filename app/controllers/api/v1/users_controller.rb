@@ -36,7 +36,7 @@ class API::V1::UsersController < API::V1::BaseController
   end
 
   # GET /api/v1/users/me/annotations
-  def annotations
+  def my_annotations
     annotations = current_user.annotations.order('id DESC').offset(offset).limit(PAGE_SIZE)
     render_json({
       annotations: annotations,
@@ -91,7 +91,8 @@ class API::V1::UsersController < API::V1::BaseController
             annotations: game.annotations,
             score: game.votes.sum('value')
           })
-        }
+        },
+        more_results: games.length == PAGE_SIZE
       })
     end
   end
@@ -110,6 +111,7 @@ class API::V1::UsersController < API::V1::BaseController
           }
         })
       },
+      more_results: annotations.length == PAGE_SIZE
     })
   end
 

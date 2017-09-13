@@ -24,7 +24,7 @@ Rails.application.routes.draw do
       scope :users do
         get "/me"                    => "users#me"
         get "/me/games"              => "users#my_games"
-        get "/me/annotations"        => "users#annotations"
+        get "/me/annotations"        => "users#my_annotations"
 
         get "/:username"             => "users#profile"
         get "/:username/games"       => "users#games"

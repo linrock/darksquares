@@ -1,11 +1,13 @@
 import Vue from 'vue'
 import Game from '../../models/game'
+import Annotation from '../../models/annotation'
 import {
   getGames,
   getUserGames,
   getUserAnnotations,
 } from '../../api/requests'
 import { gameCache } from '../game_cache'
+import { annotationCache } from '../annotation_cache'
 
 
 const getFetcher = (routeKey) => {
@@ -23,6 +25,7 @@ const getFetcher = (routeKey) => {
 
 const initialRouteState = () => ({
   gameIds: new Set(),
+  annotationIds: new Set(),
   lastPageNum: 0,
   isFetching: false,
   hasMorePages: true,
@@ -55,13 +58,22 @@ const store = {
         hasMorePages,
       }))
     },
+    addAnnotations(state, { routeKey, annotationIds, lastPageNum, hasMorePages }) {
+      const routeData = state.routes[routeKey]
+      annotationIds.forEach(id => routeData.annotationIds.add(id))
+      Vue.set(state.routes, routeKey, Object.assign({}, routeData, {
+        annotationIds: routeData.annotationIds,
+        lastPageNum,
+        hasMorePages,
+      }))
+    },
     saveScrollPosition(state, { routeKey, scrollY }) {
       state.routes[routeKey].scrollY = scrollY
     }
   },
 
   actions: {
-    fetchGames({ commit, state }, routeKey) {
+    fetchFromServer({ commit, state }, routeKey) {
       if (!state.routes[routeKey]) {
         commit('initRouteData', routeKey)
       }
@@ -80,6 +92,16 @@ const store = {
             hasMorePages: response.data.more_results,
           })
         }
+        if (response.data.annotations) {
+          const annotations = response.data.annotations.map(data => new Annotation(data))
+          annotations.forEach(annotation => annotationCache.add(annotation))
+          commit('addAnnotations', {
+            routeKey,
+            annotationIds: annotations.map(annotation => annotation.id),
+            lastPageNum: pageNum,
+            hasMorePages: response.data.more_results,
+          })
+        }
         setTimeout(() => commit('stopFetching', routeKey), 1000)
       })
     },
@@ -92,6 +114,10 @@ const store = {
     games: state => routeKey => {
       const gameIds = state.routes[routeKey] ? state.routes[routeKey].gameIds : []
       return Array.from(gameIds).map(id => gameCache.getGame(id))
+    },
+    annotations: state => routeKey => {
+      const annotationIds = state.routes[routeKey] ? state.routes[routeKey].annotationIds : []
+      return Array.from(annotationIds).map(id => annotationCache.get(id))
     },
     scrollPosition: state => routeKey => {
       return state.routes[routeKey] ? state.routes[routeKey].scrollY : 0

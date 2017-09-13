@@ -43,7 +43,7 @@
     methods: {
       fetchFromServer() {
         if (!this.isFetching) {
-          this.$store.dispatch('fetchGames', this.routeKey)
+          this.$store.dispatch('fetchFromServer', this.routeKey)
         }
       },
       distanceFromBottom() {

@@ -1,8 +1,8 @@
 <template lang="pug">
   section#user_annotations
     template(v-if="annotationsCount >= PAGE_SIZE")
-      infinite-scroll(:apiCaller="loadUserAnnotationsFromPage")
-        card-list(:annotations="annotations")
+      infinite-scroll-new(:routeKey="userAnnotationsPath")
+        card-list(:annotations="userAnnotations")
     template(v-if="annotationsCount > 0 && annotationsCount < PAGE_SIZE")
       card-list(:annotations="annotations")
     template(v-if="annotationsCount === 0")
@@ -17,7 +17,6 @@
   import InfiniteScroll from '../components/infinite_scroll.vue'
   import InfiniteScrollNew from '../components/infinite_scroll_new.vue'
   import CardList from '../components/card_list.vue'
-  import { loadUserAnnotations } from '../store/annotations'
   import { PAGE_SIZE } from '../constants'
 
   export default {
@@ -29,39 +28,27 @@
     },
 
     data() {
-      const annotations = this.user.annotations
       return {
         PAGE_SIZE,
-        annotationSet: new Set(annotations),
         annotationsCount: this.user.annotationsCount,
-        annotations,
-      }
-    },
-
-    methods: {
-      loadUserAnnotationsFromPage(options) {
-        const username = this.user.username
-        return loadUserAnnotations(username, options.page).then(data => {
-          const annotations = data.results
-          annotations.forEach(annotation => this.annotationSet.add(annotation))
-          this.annotations = Array.from(this.annotationSet)
-          return {
-            results: annotations.map(annotation => annotation.id),
-            moreResults: data.moreResults
-          }
-        })
+        annotations: this.user.annotations,
       }
     },
 
     computed: {
       pageTitle() {
         return this.user.username && `${this.user.username} - Annotations`
+      },
+      userAnnotationsPath() {
+        return `/u/${this.user.username}/annotations`
+      },
+      userAnnotations() {
+        return this.$store.getters.annotations(this.userAnnotationsPath)
       }
     },
 
     components: {
       PageTitle,
-      InfiniteScroll,
       InfiniteScrollNew,
       CardList,
     }
