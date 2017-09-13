@@ -8,20 +8,17 @@
           h1 {{ headerText }}
           h2(v-if="!errorMessage") Member since {{ user.memberSince }}
       nav
-        template(v-if="user.username")
-          router-link(:to="overviewLink") Overview
+        template(v-if="user && user.username")
+          router-link(:to="userLink") Overview
           router-link(:to="gamesLink") {{ user.gamesCount }} Games
           router-link(:to="annotationsLink") {{ user.annotationsCount }} Annotations
       .content
-        router-view(v-if="user.username" :isLoading="isLoading" :user="user")
+        router-view(v-if="user && user.username" :isLoading="isLoading" :user="user")
 
 </template>
 
 <script>
   import MiniBoardDetailed from '../components/mini_board_detailed.vue'
-  import User from '../models/user'
-  import { getUserProfile } from '../api/requests'
-  import router from '../router'
 
   export default {
     props: {
@@ -34,15 +31,12 @@
     data() {
       return {
         currentUsername: this.username,
-        isLoading: true,
-        headerText: null,
         errorMessage: null,
-        user: new User(),
       }
     },
 
     created() {
-      this.fetchUserProfile(this.currentUsername)
+      this.loadUserProfile(this.currentUsername)
     },
 
     beforeRouteUpdate(to, from, next) {
@@ -50,35 +44,42 @@
       // navigating to a different user profile
       if (to.params.username !== this.currentUsername) {
         this.currentUsername = to.params.username
-        this.fetchUserProfile(to.params.username)
+        this.loadUserProfile(to.params.username)
       }
       next()
     },
 
     methods: {
-      fetchUserProfile(username) {
-        getUserProfile(username).then(response => {
-          this.user = new User(response.data.user)
-          this.headerText = this.user.username
-          this.isLoading = false
-        }).catch(error => {
+      loadUserProfile(username) {
+        if (this.user) {
+          return
+        }
+        this.$store.dispatch('fetchUserProfile', this.username).catch(error => {
           const statusCode = error.response.status
           this.errorMessage = statusCode === 404 && "User not found" || `Error ${statusCode}`
-          this.headerText = this.errorMessage
         })
       }
     },
 
     computed: {
-      overviewLink() {
+      user() {
+        return this.$store.getters.getUser(this.username)
+      },
+      userLink() {
         return `/u/${this.user.username}`
       },
       gamesLink() {
-        return `${this.overviewLink}/games`
+        return `${this.userLink}/games`
       },
       annotationsLink() {
-        return `${this.overviewLink}/annotations`
-      }
+        return `${this.userLink}/annotations`
+      },
+      isLoading() {
+        return !this.user
+      },
+      headerText() {
+        return this.errorMessage ? this.errorMessage : this.user ? this.user.username : ''
+      },
     },
 
     components: {

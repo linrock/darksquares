@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import cardLists from './modules/card_lists'
+import userCache from './modules/user_cache'
 
 Vue.use(Vuex)
 
@@ -57,7 +58,8 @@ const store = new Vuex.Store({
   },
 
   modules: {
-    cardLists
+    cardLists,
+    userCache,
   }
 })
 
