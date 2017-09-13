@@ -16,7 +16,6 @@
   import User from '../models/user'
   import InfiniteScroll from '../components/infinite_scroll.vue'
   import CardList from '../components/card_list.vue'
-  import { loadUserGames } from '../store/games'
   import { PAGE_SIZE } from '../constants'
 
   export default {
