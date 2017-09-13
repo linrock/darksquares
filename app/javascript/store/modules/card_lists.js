@@ -6,7 +6,6 @@ import {
   getUserGames,
   getUserAnnotations,
 } from '../../api/requests'
-import { gameCache } from '../game_cache'
 import { annotationCache } from '../annotation_cache'
 
 
@@ -61,6 +60,15 @@ const cardListsStore = {
         hasMorePages,
       }))
     },
+    removeGameFromSets(state, { gameId }) {
+      Object.keys(state.routes).forEach(routeKey => {
+        const gameIds = state.routes[routeKey].gameIds
+        if (gamesIds.has(gameId)) {
+          gameIds.delete(gameId)
+          Vue.set(state.routes[routeKey], 'gameIds', gameIds)
+        }
+      })
+    },
     addAnnotations(state, { routeKey, annotationIds, lastPageNum, hasMorePages }) {
       const routeData = state.routes[routeKey]
       annotationIds.forEach(id => routeData.annotationIds.add(id))
@@ -86,10 +94,9 @@ const cardListsStore = {
       getFetcher(routeKey)(pageNum).then(response => {
         if (response.data.games) {
           const games = Game.loadGamesFromData(response.data.games)
-          games.forEach(game => gameCache.cacheGame(game))
-          commit('addGames', {
+          dispatch('addGames', {
             routeKey,
-            gameIds: games.map(game => game.id),
+            games,
             lastPageNum: pageNum,
             hasMorePages: response.data.more_results,
           })
@@ -116,12 +123,12 @@ const cardListsStore = {
     saveScrollPosition({ commit }, payload) {
       commit('saveScrollPosition', payload)
     },
-    addGames({ state, commit }, { routeKey, games }) {
+    addGames({ state, commit }, { routeKey, games, lastPageNum, hasMorePages }) {
       if (!state.routes[routeKey]) {
         commit('initRouteData', routeKey)
       }
-      const { lastPageNum, hasMorePages } = state.routes[routeKey]
-      games.forEach(game => gameCache.cacheGame(game))
+      lastPageNum = lastPageNum || state.routes[routeKey].lastPageNum
+      hasMorePages = hasMorePages || state.routes[routeKey].hasMorePages
       commit('addGames', {
         routeKey,
         gameIds: games.map(game => game.id),
@@ -142,12 +149,15 @@ const cardListsStore = {
         hasMorePages
       })
     },
+    removeGame({ commit }, game) {
+      commit('removeGameFromSets', game)
+    }
   },
 
   getters: {
-    games: state => routeKey => {
+    games: (state, getters) => routeKey => {
       const gameIds = state.routes[routeKey] ? state.routes[routeKey].gameIds : []
-      return Array.from(gameIds).map(id => gameCache.getGame(id))
+      return Array.from(gameIds).map(id => getters.getGame(id))
     },
     annotations: state => routeKey => {
       const annotationIds = state.routes[routeKey] ? state.routes[routeKey].annotationIds : []
@@ -155,6 +165,9 @@ const cardListsStore = {
     },
     scrollPosition: state => routeKey => {
       return state.routes[routeKey] ? state.routes[routeKey].scrollY : 0
+    },
+    hasFetched: state => routeKey => {
+      return state.routes[routeKey] && state.routes[routeKey].lastPageNum > 0
     },
     isFetching: state => routeKey => {
       return state.routes[routeKey] ? state.routes[routeKey].isFetching : false

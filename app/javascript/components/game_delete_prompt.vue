@@ -10,8 +10,6 @@
 
 <script>
   import router from '../router'
-  import { deleteGame } from '../api/requests'
-  import { gameCache } from '../store/games'
   import Game from '../models/game'
 
   export default {
@@ -27,8 +25,7 @@
     },
     methods: {
       deleteGame() {
-        deleteGame(this.game)
-        gameCache.removeGame(this.game.id)
+        this.$store.dispatch('deleteGame', this.game)
         router.go(-1) || router.replace({ path: '/' })
         this.gameState.isDeleting = false
       },

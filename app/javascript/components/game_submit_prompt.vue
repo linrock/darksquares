@@ -13,7 +13,6 @@
 <script>
   import router from '../router'
   import { patchGame } from '../api/requests'
-  import { gameIdLists } from '../store/games'
   import Game from '../models/game'
 
   export default {

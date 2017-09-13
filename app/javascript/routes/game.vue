@@ -55,7 +55,6 @@
   import GameDeletePrompt from '../components/game_delete_prompt'
   import GameViewPgnPrompt from '../components/game_view_pgn_prompt'
   import { resetBoardState, applyStateChange } from '../store/miniboard'
-  import { getOrFetchGame } from '../store/games'
   import { isElementInViewport } from '../util'
 
   export default {
@@ -68,7 +67,6 @@
 
     data() {
       return {
-        game: null,
         gameState: {
           i: this.initialMoveIndex() || 0,
           isDeleting: false,
@@ -89,18 +87,22 @@
         this.errorMessage = "Game not found"
         return
       }
-      getOrFetchGame(gameId).then(game => {
-        applyStateChange(game.stateAtPositionIndex(this.gameState.i))
-        this.game = game
-        this.$store.dispatch(`setActiveGameKey`, this.game.key)
-      }).catch(error => {
-        this.errorMessage = error.response.data.error
-        console.log(this.errorMessage)
-      })
+      if (this.game) {
+        this.initializeGame()
+      } else {
+        this.$store.dispatch('fetchGame', gameId).catch(error => {
+          this.errorMessage = error.response.data.error
+          console.log(this.errorMessage)
+        })
+      }
     },
 
     mounted() {
       window.scrollTo(0, 0)
+      if (!this.scrolledToMove) {
+        this.scrollToMoveIfFar(this.initialMoveIndex())
+        this.scrolledToMove = true
+      }
       Mousetrap.bind('left', () => {
         const i = this.gameState.i
         if (i > 0) {
@@ -134,12 +136,18 @@
         history.replaceState(null, null, `#${this.i}`)
         this.scrollToMoveIfFar(this.i)
         applyStateChange(this.game.stateAtPositionIndex(this.i))
-      }
+      },
+      game() {
+        this.initializeGame()
+      },
     },
 
     computed: {
       i() {
         return this.gameState.i
+      },
+      game() {
+        return this.$store.getters.getGame(this.id)
       },
       username() {
         return this.$store.state.currentUser.username
@@ -172,6 +180,10 @@
     },
 
     methods: {
+      initializeGame() {
+        applyStateChange(this.game.stateAtPositionIndex(this.gameState.i))
+        this.$store.dispatch(`setActiveGameKey`, this.game.key)
+      },
       initialMoveIndex() {
         const hash = window.location.hash
         if (hash) {

@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 import cardLists from './modules/card_lists'
 import userCache from './modules/user_cache'
+import gameCache from './modules/game_cache'
 
 Vue.use(Vuex)
 
@@ -52,14 +53,13 @@ const store = new Vuex.Store({
   },
 
   getters: {
-    getGameVote: state => gameId => {
-      return state.gameVotes[gameId] || 0
-    }
+    getGameVote: state => gameId => state.gameVotes[gameId] || 0
   },
 
   modules: {
     cardLists,
     userCache,
+    gameCache
   }
 })
 

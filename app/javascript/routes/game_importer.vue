@@ -21,12 +21,11 @@
 <script>
   import Chess from 'chess.js'
   import PageTitle from '../layouts/page_title'
-  import router from '../router'
   import SubHeader from '../layouts/sub_header'
+  import Chessboard from '../components/chessboard.vue'
   import requireLogin from './guards/require_login'
   import { boardState } from '../store/miniboard'
-  import Chessboard from '../components/chessboard.vue'
-  import { saveGame } from '../store/games'
+  import router from '../router'
 
   export default {
     beforeRouteEnter: requireLogin,
@@ -70,7 +69,7 @@
             pgn,
           }
         }
-        saveGame(data).then(game => {
+        this.$store.dispatch('createGame', data).then(game => {
           router.push({ path: `/games/${game.id}` })
           this.isSubmitting = false
         }).catch(error => {
