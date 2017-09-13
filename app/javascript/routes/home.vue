@@ -21,7 +21,6 @@
   import InfiniteScroll from '../components/infinite_scroll.vue'
   import CardList from '../components/card_list.vue'
   import { applyStateChange } from '../store/miniboard'
-  import { gameCache } from '../store/game_cache'
 
   export default {
     data() {

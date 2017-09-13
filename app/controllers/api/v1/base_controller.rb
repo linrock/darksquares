@@ -10,8 +10,12 @@ class API::V1::BaseController < ActionController::Base
 
   private
 
-  def offset
-    ((params[:page] || 1).to_i - 1) * PAGE_SIZE
+  def page_num
+    (params[:page] || 1).to_i
+  end
+
+  def page_offset
+    (page_num - 1) * PAGE_SIZE
   end
 
   def render_json(data, options = { status: 200 })

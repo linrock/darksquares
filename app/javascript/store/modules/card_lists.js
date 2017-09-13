@@ -32,7 +32,7 @@ const initialRouteState = () => ({
   scrollY: 0,
 })
 
-const store = {
+const cardListsStore = {
   state: {
     routes: {
       '/': initialRouteState()
@@ -73,7 +73,7 @@ const store = {
   },
 
   actions: {
-    fetchFromServer({ commit, state }, routeKey) {
+    fetchFromServer({ dispatch, commit, state }, routeKey) {
       if (!state.routes[routeKey]) {
         commit('initRouteData', routeKey)
       }
@@ -84,13 +84,18 @@ const store = {
         if (response.data.games) {
           const games = Game.loadGamesFromData(response.data.games)
           games.forEach(game => gameCache.cacheGame(game))
-          // TODO handle game votes
           commit('addGames', {
             routeKey,
             gameIds: games.map(game => game.id),
             lastPageNum: pageNum,
             hasMorePages: response.data.more_results,
           })
+        }
+        if (response.data.game_votes) {
+          response.data.game_votes.forEach(vote => dispatch('setGameVote', {
+            gameId: vote.game_id,
+            value: vote.value
+          }))
         }
         if (response.data.annotations) {
           const annotations = response.data.annotations.map(data => new Annotation(data))
@@ -131,4 +136,4 @@ const store = {
   }
 }
 
-export default store
+export default cardListsStore

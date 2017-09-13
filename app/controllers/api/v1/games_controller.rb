@@ -3,7 +3,7 @@ class API::V1::GamesController < API::V1::BaseController
 
   # GET /api/v1/games
   def index
-    games = Game.includes(:user, annotations: :user).order('id DESC').offset(offset).limit(PAGE_SIZE)
+    games = Game.includes(:user, annotations: :user).order('id DESC').offset(page_offset).limit(PAGE_SIZE)
     results = {
       games: games.includes(:annotations).map {|game|
         game.as_json.merge({
@@ -11,7 +11,7 @@ class API::V1::GamesController < API::V1::BaseController
           score: game.votes.sum('value')
         })
       },
-      more_results: games.length == PAGE_SIZE
+      more_results: games.length == PAGE_SIZE && (PAGE_SIZE * page_num != Game.count)
     }
     if current_user
       game_votes = current_user.game_votes.includes(:user).where(game_id: games.map(&:id))

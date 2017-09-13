@@ -17,7 +17,6 @@
   import InfiniteScroll from '../components/infinite_scroll.vue'
   import CardList from '../components/card_list.vue'
   import { loadUserGames } from '../store/games'
-  import { gameCache } from '../store/game_cache'
   import { PAGE_SIZE } from '../constants'
 
   export default {

@@ -23,7 +23,7 @@ class API::V1::UsersController < API::V1::BaseController
 
   # GET /api/v1/users/me/games
   def my_games
-    games = current_user.games.order('id DESC').offset(offset).limit(PAGE_SIZE)
+    games = current_user.games.order('id DESC').offset(page_offset).limit(PAGE_SIZE)
     render_json({
       games: games.map {|game|
         game.as_json.merge({
@@ -31,16 +31,16 @@ class API::V1::UsersController < API::V1::BaseController
           score: game.votes.sum('value')
         })
       },
-      more_results: games.length == PAGE_SIZE
+      more_results: games.length == PAGE_SIZE && (PAGE_SIZE * page_num != current_user.games.count)
     })
   end
 
   # GET /api/v1/users/me/annotations
   def my_annotations
-    annotations = current_user.annotations.order('id DESC').offset(offset).limit(PAGE_SIZE)
+    annotations = current_user.annotations.order('id DESC').offset(page_offset).limit(PAGE_SIZE)
     render_json({
       annotations: annotations,
-      more_results: annotations.length == PAGE_SIZE
+      more_results: annotations.length == PAGE_SIZE && (PAGE_SIZE * page_num != current_user.annotations.count)
     })
   end
 
@@ -81,7 +81,7 @@ class API::V1::UsersController < API::V1::BaseController
   # GET /api/v1/users/:username/games
   def games
     user = User.find_by(username: params[:username])
-    games = user.games.includes(:annotations).order('id DESC').offset(offset).limit(PAGE_SIZE)
+    games = user.games.includes(:annotations).order('id DESC').offset(page_offset).limit(PAGE_SIZE)
     if !user
       render_json({}, status: 404)
     else
@@ -92,7 +92,7 @@ class API::V1::UsersController < API::V1::BaseController
             score: game.votes.sum('value')
           })
         },
-        more_results: games.length == PAGE_SIZE
+        more_results: games.length == PAGE_SIZE && (PAGE_SIZE * page_num != user.games.count)
       })
     end
   end
@@ -100,7 +100,7 @@ class API::V1::UsersController < API::V1::BaseController
   # GET /api/v1/users/:username/annotations
   def annotations
     user = User.find_by(username: params[:username])
-    annotations = user.annotations.includes(:game).order('id DESC').offset(offset).limit(PAGE_SIZE)
+    annotations = user.annotations.includes(:game).order('id DESC').offset(page_offset).limit(PAGE_SIZE)
     render_json({
       annotations: annotations.map {|annotation|
         # TODO deal with deleted games later
@@ -111,7 +111,7 @@ class API::V1::UsersController < API::V1::BaseController
           }
         })
       },
-      more_results: annotations.length == PAGE_SIZE
+      more_results: annotations.length == PAGE_SIZE && (PAGE_SIZE * page_num != user.annotations.count)
     })
   end
 
