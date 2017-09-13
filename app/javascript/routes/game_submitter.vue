@@ -3,8 +3,9 @@
     template(slot="header")
       h1 Submit game
       h2 Choose a game and click `submit game` to share it on the homepage.
-    card-list(:games="games")
-    .directions(v-if="gamesLoaded && !games.length")
+    infinite-scroll(:routeKey="userLink")
+      card-list(:games="unsubmittedGames")
+    .directions(v-if="gamesLoaded && !unsubmittedGames.length")
       | You must import some games before you can submit one!
     page-title(title="Submit game")
 
@@ -14,32 +15,29 @@
   import PageTitle from '../layouts/page_title'
   import CardListLayout from '../layouts/card_list_layout.vue'
   import CardList from '../components/card_list.vue'
+  import InfiniteScroll from '../components/infinite_scroll.vue'
   import requireLogin from './guards/require_login'
-  import { loadMyGames } from '../store/games'
-  import { gameCache } from '../store/game_cache'
+  import { getUsername } from '../store/local_storage'
 
   export default {
     beforeRouteEnter: requireLogin,
 
     mounted() {
       window.scrollTo(0, 0)
-      loadMyGames().then(() => {
-        this.games = this.myUnsubmittedGames(),
-        this.gamesLoaded = true
-      })
     },
 
-    data() {
-      const games = this.myUnsubmittedGames()
-      return {
-        games,
-        gamesLoaded: games.length !== 0,
-      }
-    },
-
-    methods: {
-      myUnsubmittedGames() {
-        return gameCache.getGamesFromSet('my_games').filter(game => !game.submittedAt)
+    computed: {
+      userLink() {
+        return `/u/${getUsername()}/games`
+      },
+      gamesLoaded() {
+        return this.$store.getters.hasFetched(this.userLink)
+      },
+      userGames() {
+        return this.$store.getters.games(this.userLink)
+      },
+      unsubmittedGames() {
+        return this.userGames.filter(game => !game.submittedAt)
       }
     },
 
@@ -47,6 +45,7 @@
       PageTitle,
       CardListLayout,
       CardList,
+      InfiniteScroll,
     }
   }
 </script>
