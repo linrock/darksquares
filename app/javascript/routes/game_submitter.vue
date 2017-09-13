@@ -15,7 +15,8 @@
   import CardListLayout from '../layouts/card_list_layout.vue'
   import CardList from '../components/card_list.vue'
   import requireLogin from './guards/require_login'
-  import { gameCache, loadMyGames } from '../store/games'
+  import { loadMyGames } from '../store/games'
+  import { gameCache } from '../store/game_cache'
 
   export default {
     beforeRouteEnter: requireLogin,
