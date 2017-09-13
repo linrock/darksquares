@@ -41,6 +41,9 @@ const cardListsStore = {
 
   mutations: {
     initRouteData(state, routeKey) {
+      if (state.routes[routeKey]) {
+        return
+      }
       Vue.set(state.routes, routeKey, initialRouteState())
     },
     startFetching(state, routeKey) {
@@ -112,7 +115,33 @@ const cardListsStore = {
     },
     saveScrollPosition({ commit }, payload) {
       commit('saveScrollPosition', payload)
-    }
+    },
+    addGames({ state, commit }, { routeKey, games }) {
+      if (!state.routes[routeKey]) {
+        commit('initRouteData', routeKey)
+      }
+      const { lastPageNum, hasMorePages } = state.routes[routeKey]
+      games.forEach(game => gameCache.cacheGame(game))
+      commit('addGames', {
+        routeKey,
+        gameIds: games.map(game => game.id),
+        lastPageNum,
+        hasMorePages
+      })
+    },
+    addAnnotations({ state, commit }, { routeKey, annotations }) {
+      if (!state.routes[routeKey]) {
+        commit('initRouteData', routeKey)
+      }
+      const { lastPageNum, hasMorePages } = state.routes[routeKey]
+      annotations.forEach(annotation => annotationCache.add(annotation))
+      commit('addAnnotations', {
+        routeKey,
+        annotationIds: annotations.map(annotation => annotation.id),
+        lastPageNum,
+        hasMorePages
+      })
+    },
   },
 
   getters: {

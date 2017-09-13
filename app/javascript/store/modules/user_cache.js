@@ -21,6 +21,18 @@ const usersStore = {
       return getUserProfile(username).then(response => {
         const user = new User(response.data.user)
         dispatch('setUser', user)
+        if (user.games.length) {
+          dispatch('addGames', {
+            routeKey: `/u/${username}/games`,
+            games: user.games
+          })
+        }
+        if (user.annotations.length) {
+          dispatch('addAnnotations', {
+            routeKey: `/u/${username}/annotations`,
+            annotations: user.annotations
+          })
+        }
       })
     }
   },
