@@ -16,38 +16,35 @@
 
   export default {
     props: {
-      apiCaller: {
-        type: Function,
+      routeKey: {
+        type: String,
         required: true
       }
     },
 
     data() {
       return {
-        page: 1,
-        isComplete: false,
-        isFetching: false,
         interval: null
       }
     },
 
-    methods: {
-      fetchFromApi() {
-        if (this.isFetching) {
-          return
+    created() {
+      if (this.isComplete) {
+        return
+      }
+      this.fetchFromServer()
+      this.interval = setInterval(() => {
+        if (this.distanceFromBottom() < THRESHOLD) {
+          this.fetchFromServer()
         }
-        this.isFetching = true
-        this.apiCaller({ page: this.page }).then(data => {
-          if (data.results.length === 0 || data.moreResults === false) {
-            console.log('no more!')
-            clearInterval(this.interval)
-            this.isFetching = false
-            this.isComplete = true
-            return
-          }
-          this.page = this.page + 1
-          setTimeout(() => { this.isFetching = false }, 1000)
-        })
+      }, POLL_INTERVAL)
+    },
+
+    methods: {
+      fetchFromServer() {
+        if (!this.isFetching) {
+          this.$store.dispatch('fetchFromServer', this.routeKey)
+        }
       },
       distanceFromBottom() {
         if (!this.$refs.bottom) {
@@ -57,13 +54,22 @@
       }
     },
 
-    created() {
-      this.fetchFromApi()
-      this.interval = setInterval(() => {
-        if (this.distanceFromBottom() < THRESHOLD) {
-          this.fetchFromApi()
+    computed: {
+      isFetching() {
+        return this.$store.getters.isFetching(this.routeKey)
+      },
+      isComplete() {
+        return this.$store.getters.isComplete(this.routeKey)
+      }
+    },
+
+    watch: {
+      isComplete() {
+        if (this.isComplete) {
+          console.log('infinite scroll complete!')
+          clearInterval(this.interval)
         }
-      }, POLL_INTERVAL)
+      }
     },
 
     components: {

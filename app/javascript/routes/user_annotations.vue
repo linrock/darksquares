@@ -1,7 +1,7 @@
 <template lang="pug">
   section#user_annotations
     template(v-if="annotationsCount >= PAGE_SIZE")
-      infinite-scroll-new(:routeKey="userAnnotationsPath")
+      infinite-scroll(:routeKey="userAnnotationsPath")
         card-list(:annotations="userAnnotations")
     template(v-if="annotationsCount > 0 && annotationsCount < PAGE_SIZE")
       card-list(:annotations="annotations")
@@ -15,7 +15,6 @@
   import PageTitle from '../layouts/page_title'
   import User from '../models/user'
   import InfiniteScroll from '../components/infinite_scroll.vue'
-  import InfiniteScrollNew from '../components/infinite_scroll_new.vue'
   import CardList from '../components/card_list.vue'
   import { PAGE_SIZE } from '../constants'
 
@@ -49,7 +48,7 @@
 
     components: {
       PageTitle,
-      InfiniteScrollNew,
+      InfiniteScroll,
       CardList,
     }
   }

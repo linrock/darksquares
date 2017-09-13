@@ -9,7 +9,7 @@
       | Share and annotate chess games with the community.
       router-link(to="/sign_up") Sign up
       | to get started.
-    infinite-scroll-new(routeKey="/")
+    infinite-scroll(routeKey="/")
       card-list(:games="homeGames")
     page-title(title="Dark Squares - share and annotate chess games")
 
@@ -18,7 +18,7 @@
 <script>
   import PageTitle from '../layouts/page_title'
   import CardListLayout from '../layouts/card_list_layout.vue'
-  import InfiniteScrollNew from '../components/infinite_scroll_new.vue'
+  import InfiniteScroll from '../components/infinite_scroll.vue'
   import CardList from '../components/card_list.vue'
   import { applyStateChange } from '../store/miniboard'
   import { gameCache } from '../store/game_cache'
@@ -85,7 +85,7 @@
     components: {
       PageTitle,
       CardListLayout,
-      InfiniteScrollNew,
+      InfiniteScroll,
       CardList,
     }
   }

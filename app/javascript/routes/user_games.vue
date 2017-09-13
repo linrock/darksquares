@@ -1,7 +1,7 @@
 <template lang="pug">
   section#user_games
     template(v-if="gamesCount >= PAGE_SIZE")
-      infinite-scroll-new(:routeKey="userGamesPath")
+      infinite-scroll(:routeKey="userGamesPath")
         card-list(:games="userGames")
     template(v-if="gamesCount > 0 && gamesCount < PAGE_SIZE")
       card-list(:games="games")
@@ -14,7 +14,7 @@
 <script>
   import PageTitle from '../layouts/page_title'
   import User from '../models/user'
-  import InfiniteScrollNew from '../components/infinite_scroll_new.vue'
+  import InfiniteScroll from '../components/infinite_scroll.vue'
   import CardList from '../components/card_list.vue'
   import { loadUserGames } from '../store/games'
   import { gameCache } from '../store/game_cache'
@@ -50,7 +50,7 @@
 
     components: {
       PageTitle,
-      InfiniteScrollNew,
+      InfiniteScroll,
       CardList,
     }
   }
