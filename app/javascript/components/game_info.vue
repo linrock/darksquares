@@ -40,7 +40,14 @@
         return this.gameName
       },
       line2() {
-        return this.players ? `${this.players} • ${this.result}` : ``
+        let line2 = ``
+        if (this.players) {
+          line2 = this.players
+        }
+        if (this.result) {
+          line2 = `${line2} • ${this.result}`
+        }
+        return line2
       },
       line3() {
         const eco = this.pgnHeaders["ECO"]
