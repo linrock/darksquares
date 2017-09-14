@@ -79,8 +79,8 @@
       },
 
       fetchGame() {
-        getGame(this.game.id).then(response => {
-          this.currentGame = new Game(response.data.game)
+        this.$store.dispatch('fetchGame', this.game.id).then(game => {
+          this.currentGame = game
           if (this.periodicFetcher) {
             clearInterval(this.periodicFetcher)
           }

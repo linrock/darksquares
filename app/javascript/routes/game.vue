@@ -99,10 +99,6 @@
 
     mounted() {
       window.scrollTo(0, 0)
-      if (!this.scrolledToMove) {
-        this.scrollToMoveIfFar(this.initialMoveIndex())
-        this.scrolledToMove = true
-      }
       Mousetrap.bind('left', () => {
         const i = this.gameState.i
         if (i > 0) {
