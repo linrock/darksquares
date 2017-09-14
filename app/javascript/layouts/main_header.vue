@@ -27,7 +27,7 @@
   export default {
     computed: {
       username() {
-        return this.$store.state.currentUser.username
+        return this.$store.getters.currentUser.username
       },
       userPath() {
         return this.username ? `/u/${this.username}` : `/sign_up`

@@ -67,7 +67,7 @@
 
     computed: {
       username() {
-        return this.$store.state.currentUser.username
+        return this.$store.getters.currentUser.username
       },
       textareaPlaceholder() {
         return `Write an annotation for ${this.moveString}`

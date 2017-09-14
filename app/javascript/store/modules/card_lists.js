@@ -60,7 +60,8 @@ const cardListsStore = {
     },
     removeGameFromSets(state, game) {
       Object.keys(state.routes).forEach(routeKey => {
-        const gameIds = state.routes[routeKey].gameIds
+        const routeData = state.routes[routeKey]
+        const gameIds = routeData.gameIds
         if (gameIds.has(game.id)) {
           gameIds.delete(game.id)
           Vue.set(state.routes[routeKey], 'gameIds', gameIds)
@@ -121,6 +122,9 @@ const cardListsStore = {
       commit('saveScrollPosition', payload)
     },
     addGames({ state, commit }, { routeKey, games, lastPageNum, hasMorePages }) {
+      if (!routeKey) {
+        return
+      }
       if (!state.routes[routeKey]) {
         commit('initRouteData', routeKey)
       }
@@ -135,6 +139,9 @@ const cardListsStore = {
       })
     },
     addAnnotations({ state, commit }, { routeKey, annotations, lastPageNum, hasMorePages }) {
+      if (!routeKey) {
+        return
+      }
       if (!state.routes[routeKey]) {
         commit('initRouteData', routeKey)
       }

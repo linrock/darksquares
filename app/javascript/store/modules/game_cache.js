@@ -17,17 +17,20 @@ const gamesStore = {
   },
 
   actions: {
-    fetchGame({ dispatch, commit }, gameId) {
+    fetchGame({ dispatch }, gameId) {
       return getGame(gameId).then(response => {
         const game = new Game(response.data.game)
         dispatch('addGames', { games: [game] })
         return game
       })
     },
-    createGame({ dispatch, commit }, gameData) {
+    createGame({ dispatch, getters }, gameData) {
       return createGame(gameData).then(response => {
         const game = new Game(response.data.game)
-        dispatch('addGames', { games: [game] })
+        dispatch('addGames', {
+          routeKey: `/u/${getters.currentUser.username}/games`,
+          games: [game],
+        })
         return game
       })
     },

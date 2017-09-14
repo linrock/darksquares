@@ -35,12 +35,12 @@
     methods: {
       updateGame() {
         const name = this.$refs.name.value.trim()
-        const gameData = {}
+        const gameData = { game: {} }
         if (name) {
-          gameData.name = name
+          gameData.game.name = name
         }
         if (this.game.pgnHeaders) {
-          gameData.pgn_headers = this.game.pgnHeaders
+          gameData.game.pgn_headers = this.game.pgnHeaders
         }
         this.$store.dispatch('patchGame', { game: this.game, gameData })
         this.game.name = name

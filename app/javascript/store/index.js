@@ -54,6 +54,7 @@ const store = new Vuex.Store({
   },
 
   getters: {
+    currentUser: state => state.currentUser,
     getGameVote: state => gameId => state.gameVotes[gameId] || 0
   },
 

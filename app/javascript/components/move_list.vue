@@ -58,7 +58,7 @@
         return (i - 1) === this.annotationInputIndex || i % 2 === 0
       },
       toggleAnnotationInput(i) {
-        if (!this.$store.state.currentUser.username) {
+        if (!this.$store.getters.currentUser.username) {
           this.$store.dispatch('openModal')
           return
         }

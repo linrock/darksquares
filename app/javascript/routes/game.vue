@@ -114,7 +114,7 @@
     },
 
     updated() {
-      if (!this.scrolledToMove) {
+      if (!this.scrolledToMove && !this.isPromptOpen) {
         this.scrollToMoveIfFar(this.initialMoveIndex())
         this.scrolledToMove = true
       }
@@ -146,7 +146,7 @@
         return this.$store.getters.getGame(this.id)
       },
       username() {
-        return this.$store.state.currentUser.username
+        return this.$store.getters.currentUser.username
       },
       canTakeActions() {
         return this.game.user.username === this.username
@@ -210,9 +210,6 @@
           return
         }
         this.scrollToMove(i)
-      },
-      showingPrompt() {
-        return this.gameState.isSubmitting || this.gameState.isDeleting
       },
       disableAutoscroll() {
         this.shouldScrollToMove = false
