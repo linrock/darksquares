@@ -124,11 +124,12 @@ const cardListsStore = {
       commit('saveScrollPosition', payload)
     },
     addGames({ state, commit }, { routeKey, games, lastPageNum, hasMorePages }) {
-      if (!state.routes[routeKey]) {
+      const routeData = state.routes[routeKey]
+      if (!routeData) {
         commit('initRouteData', routeKey)
       }
-      lastPageNum = lastPageNum || state.routes[routeKey].lastPageNum
-      hasMorePages = hasMorePages || state.routes[routeKey].hasMorePages
+      lastPageNum = typeof lastPageNum !== 'undefined' ? lastPageNum : routeData.lastPageNum
+      hasMorePages = typeof hasMorePages !== 'undefined' ? hasMorePages : routeData.hasMorePages
       commit('addGames', {
         routeKey,
         gameIds: games.map(game => game.id),
