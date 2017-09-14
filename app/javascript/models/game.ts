@@ -121,6 +121,14 @@ export default class Game {
     this.computeAnnotationMap()
   }
 
+  public replaceAnnotation(moveString: string, annotation: Annotation): void {
+    const annotationIdx = this.annotations.findIndex(a => {
+      return !a.id && a.move_string === annotation.move_string
+    })
+    this.annotations[annotationIdx] = annotation
+    this.computeAnnotationMap()
+  }
+
   public annotationsAt(i: number): Array<Annotation> {
     return this.annotationMap[this.moveString(i)]
   }

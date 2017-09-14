@@ -1,6 +1,6 @@
 import Vue from 'Vue' 
 import Annotation from '../../models/annotation'
-import { deleteAnnotation } from '../../api/requests'
+import { createAnnotation, deleteAnnotation } from '../../api/requests'
 
 const annotationsStore = {
   state: {
@@ -17,15 +17,22 @@ const annotationsStore = {
   },
 
   actions: {
-    createGame({ dispatch, commit }, gameData) {
-      return createGame(gameData).then(response => {
-        const game = new Game(response.data.game)
-        dispatch('addGames', { games: [game] })
-        return game
+    createAnnotation({ dispatch, commit }, { game, annotation }) {
+      game.addAnnotation(annotation)
+      return createAnnotation(game.id, annotation).then(response => {
+        const newAnnotation = new Annotation(response.data.annotation)
+        game.replaceAnnotation(annotation.move_string, newAnnotation)
+        dispatch('addAnnotations', { annotations: [newAnnotation] })
       })
     },
-    deleteAnnotation({ dispatch, commit }, annotation) {
-      deleteAnnotation(annotation).then(response => dispatch('removeAnnotation', annotation))
+    deleteAnnotation({ dispatch, commit }, { game, annotation }) {
+      game.removeAnnotation(annotation)
+      if (annotation.id) {
+        if (!annotation.game) {
+          annotation.game = game
+        }
+        deleteAnnotation(annotation).then(response => dispatch('removeAnnotation', annotation))
+      }
     },
     addAnnotations({ commit }, { annotations }) {
       annotations.forEach(annotation => commit('setAnnotation', annotation))

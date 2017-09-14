@@ -8,7 +8,6 @@
 <script>
   import Annotation from '../models/annotation'
   import Game from '../models/game'
-  import { deleteAnnotation } from '../api/requests'
 
   export default {
     props: {
@@ -29,13 +28,9 @@
         // this.$emit("edit-annotation", 'whoa')
       },
       deleteAnnotation() {
-        if (!confirm("Delete this annotation?")) {
-          return
+        if (confirm("Delete this annotation?")) {
+          this.$store.dispatch('deleteAnnotation', { game: this.game, annotation: this.annotation })
         }
-        if (this.annotation.id) {
-          deleteAnnotation(this.annotation)
-        }
-        this.game.removeAnnotation(this.annotation)
       }
     }
   }

@@ -17,7 +17,6 @@
 <script>
   import Annotation from '../models/annotation'
   import Game from '../models/game'
-  import { createAnnotation } from '../api/requests'
 
   export default {
     props: {
@@ -61,14 +60,7 @@
             this.$refs.annotator.value = ''
           }
         }
-        this.game.addAnnotation(annotation)
-        createAnnotation(this.game.id, annotation).then(response => {
-          const newAnnotation = this.game.annotations.find(annotation => {
-            return !annotation.id && annotation.move_string === this.moveString
-          })
-          newAnnotation.id = response.data.annotation.id
-          newAnnotation.game = this.game
-        })
+        this.$store.dispatch('createAnnotation', { game: this.game, annotation })
         this.$emit(`annotation-created`)
       }
     },
