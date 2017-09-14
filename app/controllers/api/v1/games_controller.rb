@@ -3,7 +3,12 @@ class API::V1::GamesController < API::V1::BaseController
 
   # GET /api/v1/games
   def index
-    games = Game.includes(:user, annotations: :user).order('id DESC').offset(page_offset).limit(PAGE_SIZE)
+    games = Game.includes(:user, annotations: :user).
+      where('submitted_at IS NOT NULL').
+      order('submitted_at DESC').
+      offset(page_offset).
+      limit(PAGE_SIZE)
+
     results = {
       games: games.includes(:annotations).map {|game|
         game.as_json.merge({
