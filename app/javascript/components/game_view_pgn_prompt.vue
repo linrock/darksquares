@@ -1,6 +1,6 @@
 <template lang="pug">
   .game-view-pgn-prompt
-    textarea {{ game.pgn }}
+    textarea(readonly) {{ game.pgn }}
 
     .actions  
       button.cancel(@click="cancel") Cancel
