@@ -51,10 +51,10 @@
 
     methods: {
       loadUserProfile(username) {
-        if (this.user) {
+        if (this.user && this.user.username === username) {
           return
         }
-        this.$store.dispatch('fetchUserProfile', this.username).catch(error => {
+        this.$store.dispatch('fetchUserProfile', username).catch(error => {
           const statusCode = error.response.status
           this.errorMessage = statusCode === 404 && "User not found" || `Error ${statusCode}`
         })
