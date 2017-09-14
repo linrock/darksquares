@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 import cardLists from './modules/card_lists'
 import userCache from './modules/user_cache'
 import gameCache from './modules/game_cache'
+import annotationCache from './modules/annotation_cache'
 
 Vue.use(Vuex)
 
@@ -59,7 +60,8 @@ const store = new Vuex.Store({
   modules: {
     cardLists,
     userCache,
-    gameCache
+    gameCache,
+    annotationCache
   }
 })
 

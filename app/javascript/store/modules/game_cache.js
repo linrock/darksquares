@@ -35,7 +35,6 @@ const gamesStore = {
       deleteGame(game).then(response => dispatch('removeGame', game))
     },
     addGames({ commit }, { games }) {
-      console.log(`adding ${games.length} games in game_cache`)
       games.forEach(game => commit('setGame', game))
     },
     removeGame({ commit }, game) {

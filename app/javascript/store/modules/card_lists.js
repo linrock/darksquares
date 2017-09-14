@@ -6,8 +6,6 @@ import {
   getUserGames,
   getUserAnnotations,
 } from '../../api/requests'
-import { annotationCache } from '../annotation_cache'
-
 
 const getFetcher = (routeKey) => {
   if (routeKey === "/") {
@@ -109,10 +107,9 @@ const cardListsStore = {
         }
         if (response.data.annotations) {
           const annotations = response.data.annotations.map(data => new Annotation(data))
-          annotations.forEach(annotation => annotationCache.add(annotation))
-          commit('addAnnotations', {
+          dispatch('addAnnotations', {
             routeKey,
-            annotationIds: annotations.map(annotation => annotation.id),
+            annotations,
             lastPageNum: pageNum,
             hasMorePages: response.data.more_results,
           })
@@ -124,10 +121,10 @@ const cardListsStore = {
       commit('saveScrollPosition', payload)
     },
     addGames({ state, commit }, { routeKey, games, lastPageNum, hasMorePages }) {
-      const routeData = state.routes[routeKey]
-      if (!routeData) {
+      if (!state.routes[routeKey]) {
         commit('initRouteData', routeKey)
       }
+      const routeData = state.routes[routeKey]
       lastPageNum = typeof lastPageNum !== 'undefined' ? lastPageNum : routeData.lastPageNum
       hasMorePages = typeof hasMorePages !== 'undefined' ? hasMorePages : routeData.hasMorePages
       commit('addGames', {
@@ -137,12 +134,13 @@ const cardListsStore = {
         hasMorePages
       })
     },
-    addAnnotations({ state, commit }, { routeKey, annotations }) {
+    addAnnotations({ state, commit }, { routeKey, annotations, lastPageNum, hasMorePages }) {
       if (!state.routes[routeKey]) {
         commit('initRouteData', routeKey)
       }
-      const { lastPageNum, hasMorePages } = state.routes[routeKey]
-      annotations.forEach(annotation => annotationCache.add(annotation))
+      const routeData = state.routes[routeKey]
+      lastPageNum = typeof lastPageNum !== 'undefined' ? lastPageNum : routeData.lastPageNum
+      hasMorePages = typeof hasMorePages !== 'undefined' ? hasMorePages : routeData.hasMorePages
       commit('addAnnotations', {
         routeKey,
         annotationIds: annotations.map(annotation => annotation.id),
@@ -160,9 +158,9 @@ const cardListsStore = {
       const gameIds = state.routes[routeKey] ? state.routes[routeKey].gameIds : []
       return Array.from(gameIds).map(id => getters.getGame(id))
     },
-    annotations: state => routeKey => {
+    annotations: (state, getters) => routeKey => {
       const annotationIds = state.routes[routeKey] ? state.routes[routeKey].annotationIds : []
-      return Array.from(annotationIds).map(id => annotationCache.get(id))
+      return Array.from(annotationIds).map(id => getters.getAnnotation(id))
     },
     scrollPosition: state => routeKey => {
       return state.routes[routeKey] ? state.routes[routeKey].scrollY : 0
