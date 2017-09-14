@@ -1,6 +1,6 @@
 import Vue from 'Vue' 
 import Game from '../../models/game'
-import { createGame, getGame } from '../../api/requests'
+import { createGame, deleteGame, getGame } from '../../api/requests'
 
 const gamesStore = {
   state: {

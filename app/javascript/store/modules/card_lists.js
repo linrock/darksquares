@@ -58,11 +58,11 @@ const cardListsStore = {
         hasMorePages,
       }))
     },
-    removeGameFromSets(state, { gameId }) {
+    removeGameFromSets(state, game) {
       Object.keys(state.routes).forEach(routeKey => {
         const gameIds = state.routes[routeKey].gameIds
-        if (gamesIds.has(gameId)) {
-          gameIds.delete(gameId)
+        if (gameIds.has(game.id)) {
+          gameIds.delete(game.id)
           Vue.set(state.routes[routeKey], 'gameIds', gameIds)
         }
       })
