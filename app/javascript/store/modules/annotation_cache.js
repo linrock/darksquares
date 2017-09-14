@@ -1,4 +1,4 @@
-import Vue from 'Vue' 
+import Vue from 'vue' 
 import Annotation from '../../models/annotation'
 import { createAnnotation, deleteAnnotation } from '../../api/requests'
 

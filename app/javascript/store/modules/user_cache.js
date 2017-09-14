@@ -1,4 +1,4 @@
-import Vue from 'Vue' 
+import Vue from 'vue' 
 import User from '../../models/user'
 import { getUserProfile } from '../../api/requests'
 

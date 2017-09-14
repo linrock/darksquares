@@ -1,4 +1,4 @@
-import Vue from 'Vue' 
+import Vue from 'vue' 
 import Game from '../../models/game'
 import { createGame, patchGame, deleteGame, getGame } from '../../api/requests'
 
