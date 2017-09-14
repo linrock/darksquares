@@ -11,7 +11,6 @@
 
 <script>
   import PgnHeadersEditor from './pgn_headers_editor'
-  import { patchGame } from '../api/requests'
   import Game from '../models/game'
 
   export default {
@@ -36,14 +35,14 @@
     methods: {
       updateGame() {
         const name = this.$refs.name.value.trim()
-        const game = {}
+        const gameData = {}
         if (name) {
-          game.name = name
+          gameData.name = name
         }
         if (this.game.pgnHeaders) {
-          game.pgn_headers = this.game.pgnHeaders
+          gameData.pgn_headers = this.game.pgnHeaders
         }
-        patchGame(this.game, { game })
+        this.$store.dispatch('patchGame', { game: this.game, gameData })
         this.game.name = name
         this.gameState.isEditing = false
       },

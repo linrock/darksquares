@@ -12,7 +12,6 @@
 
 <script>
   import router from '../router'
-  import { patchGame } from '../api/requests'
   import Game from '../models/game'
 
   export default {
@@ -29,10 +28,13 @@
 
     methods: {
       submitGame() {
-        patchGame(this.game, {
-          submit: true,
-          game: {
-            name: this.$refs.name.value.trim(),
+        this.$store.dispatch('patchGame', {
+          game: this.game,
+          gameData: {
+            submit: true,
+            game: {
+              name: this.$refs.name.value.trim(),
+            }
           }
         })
         router.push({ path: '/' })

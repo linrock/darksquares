@@ -1,6 +1,6 @@
 import Vue from 'Vue' 
 import Game from '../../models/game'
-import { createGame, deleteGame, getGame } from '../../api/requests'
+import { createGame, patchGame, deleteGame, getGame } from '../../api/requests'
 
 const gamesStore = {
   state: {
@@ -26,6 +26,13 @@ const gamesStore = {
     },
     createGame({ dispatch, commit }, gameData) {
       return createGame(gameData).then(response => {
+        const game = new Game(response.data.game)
+        dispatch('addGames', { games: [game] })
+        return game
+      })
+    },
+    patchGame({ dispatch, commit }, { game, gameData }) {
+      return patchGame(game, gameData).then(response => {
         const game = new Game(response.data.game)
         dispatch('addGames', { games: [game] })
         return game
