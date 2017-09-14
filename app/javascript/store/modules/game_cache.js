@@ -32,7 +32,8 @@ const gamesStore = {
       })
     },
     deleteGame({ dispatch, commit }, game) {
-      deleteGame(game).then(response => dispatch('removeGame', game))
+      dispatch('removeGame', game)
+      deleteGame(game)
     },
     addGames({ commit }, { games }) {
       games.forEach(game => commit('setGame', game))
