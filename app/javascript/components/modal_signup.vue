@@ -45,7 +45,7 @@
     },
 
     destroyed() {
-      document.body.style.overflow = 'auto'
+      setTimeout(() => document.body.style.overflow = 'auto', 200)
       Mousetrap.reset()
     },
 
