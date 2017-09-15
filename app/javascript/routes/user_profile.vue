@@ -2,7 +2,7 @@
   section#user_overview
     template(v-if="itemsCount > 0")
       loading(v-if="isLoading")
-      card-list(:annotations="user.annotations" :games="user.games")
+      card-list(:annotations="userAnnotations" :games="userGames")
     template(v-if="itemsCount === 0")
       .empty {{ user.username }} hasn't created any games or annotations
     page-title(:title="pageTitle" v-if="pageTitle")
@@ -39,7 +39,19 @@
     computed: {
       pageTitle() {
         return this.user.username && `${this.user.username} - Overview`
-      }
+      },
+      userGamesPath() {
+        return `/u/${this.user.username}/games`
+      },
+      userGames() {
+        return this.$store.getters.games(this.userGamesPath).slice(0, 5)
+      },
+      userAnnotationsPath() {
+        return `/u/${this.user.username}/annotations`
+      },
+      userAnnotations() {
+        return this.$store.getters.annotations(this.userAnnotationsPath).slice(0, 5)
+      },
     },
 
     components: {

@@ -64,12 +64,16 @@
       }, 7000)
     },
 
+    destroyed() {
+      clearInterval(this.periodicFetcher)
+    },
+
     methods: {
       checkOrFetchGame() {
         getGameStatus(this.game.id).then(response => {
           const analysisStatus = response.data.game.status
           const percentComplete = response.data.game.percent
-          if (percentComplete === 100) {
+          if (percentComplete === 100 && analysisStatus === 'complete') {
             this.fetchGame()
           } else {
             this.analysisStatus = analysisStatus
