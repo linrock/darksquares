@@ -85,8 +85,8 @@
     position relative
 
   .loading
-    margin 50px 0 50px -45px
     position absolute
-    left 50%
+    margin-top 60px
+    margin-left 60px
 
 </style>

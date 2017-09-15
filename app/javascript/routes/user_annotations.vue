@@ -4,7 +4,7 @@
       infinite-scroll(:routeKey="userAnnotationsPath")
         card-list(:annotations="userAnnotations")
     template(v-if="annotationsCount > 0 && annotationsCount < PAGE_SIZE")
-      card-list(:annotations="annotations")
+      card-list(:annotations="userAnnotations")
     template(v-if="annotationsCount === 0")
       .empty {{ user.username }} hasn't created any annotations
     page-title(:title="pageTitle" v-if="pageTitle")
@@ -30,7 +30,6 @@
       return {
         PAGE_SIZE,
         annotationsCount: this.user.annotationsCount,
-        annotations: this.user.annotations,
       }
     },
 

@@ -13,12 +13,15 @@
           router-link(:to="gamesLink") {{ user.gamesCount }} Games
           router-link(:to="annotationsLink") {{ user.annotationsCount }} Annotations
       .content
-        router-view(v-if="user && user.username" :isLoading="isLoading" :user="user")
+        .loading-indicator(v-if="isLoading")
+          loading
+        router-view(v-if="!isLoading" :user="user")
 
 </template>
 
 <script>
   import MiniBoardDetailed from '../components/mini_board_detailed.vue'
+  import Loading from '../components/loading.vue'
 
   export default {
     props: {
@@ -84,6 +87,7 @@
 
     components: {
       MiniBoardDetailed,
+      Loading,
     }
   }
 </script>
@@ -157,5 +161,9 @@
       background card-list-bg-color
       min-height 1000px
       height 100%
+
+      .loading-indicator
+        padding-top 60px
+        margin-left 60px
 
 </style>

@@ -4,7 +4,7 @@
       infinite-scroll(:routeKey="userGamesPath")
         card-list(:games="userGames")
     template(v-if="gamesCount > 0 && gamesCount < PAGE_SIZE")
-      card-list(:games="games")
+      card-list(:games="userGames")
     template(v-if="gamesCount === 0")
       .empty {{ user.username }} hasn't created any games
     page-title(:title="pageTitle" v-if="pageTitle")
@@ -30,7 +30,6 @@
       return {
         PAGE_SIZE,
         gamesCount: this.user.gamesCount,
-        games: this.user.games
       }
     },
 

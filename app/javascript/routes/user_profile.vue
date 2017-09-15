@@ -1,7 +1,6 @@
 <template lang="pug">
   section#user_overview
     template(v-if="itemsCount > 0")
-      loading(v-if="isLoading")
       card-list(:annotations="userAnnotations" :games="userGames")
     template(v-if="itemsCount === 0")
       .empty {{ user.username }} hasn't created any games or annotations
@@ -21,9 +20,6 @@
         type: User,
         required: true
       },
-      isLoading: {
-        type: Boolean
-      }
     },
 
     data() {
