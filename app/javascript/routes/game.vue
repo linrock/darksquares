@@ -99,6 +99,10 @@
 
     mounted() {
       window.scrollTo(0, 0)
+      if (this.game && !this.scrolledToMove && !this.isPromptOpen) {
+        this.scrollToMoveIfFar(this.initialMoveIndex())
+        this.scrolledToMove = true
+      }
       Mousetrap.bind('left', () => {
         const i = this.gameState.i
         if (i > 0) {
@@ -206,7 +210,8 @@
           window.scrollTo(0, 0)
           return
         }
-        if (isElementInViewport(this.moveEl(i))) {
+        const moveEl = this.moveEl(i)
+        if (!moveEl || isElementInViewport(moveEl)) {
           return
         }
         this.scrollToMove(i)
