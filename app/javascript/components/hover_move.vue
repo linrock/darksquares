@@ -4,7 +4,7 @@
 </template>
 
 <script>
-  import { boardState } from '../store/miniboard'
+  import { applyStateChange, boardState } from '../store/miniboard'
 
   export default {
     props: {
@@ -29,24 +29,28 @@
     },
 
     methods: {
-      showPosition: function() {
+      showPosition() {
         this.initialFen = boardState.fen
         this.initialHighlights = boardState.highlights
         this.initialMoveString = boardState.move
         this.initialBestMove = boardState.bestMove
         this.initialScore = boardState.score
-        boardState.move = this.moveString
-        boardState.fen = this.fen
-        boardState.highlights = []
-        boardState.bestMove = ""
-        boardState.score = ""
+        applyStateChange({
+          move: this.moveString,
+          fen: this.fen,
+          highlights: [],
+          bestMove: "",
+          score: ""
+        })
       },
-      resetPosition: function() {
-        boardState.move = this.initialMoveString
-        boardState.fen = this.initialFen
-        boardState.highlights = this.initialHighlights
-        boardState.bestMove = this.initialBestMove
-        boardState.score = this.initialScore
+      resetPosition() {
+        applyStateChange({
+          move: this.initialMoveString,
+          fen: this.initialFen,
+          highlights: this.initialHighlights,
+          bestMove: this.initialBestMove,
+          score: this.initialScore
+        })
       }
     }
   }

@@ -25,7 +25,7 @@
   import EvaluationGraph from './evaluation_graph.vue'
   import AnnotationPreviews from './annotation_previews.vue'
   import Game from '../models/game'
-  import { boardState } from '../store/miniboard'
+  import { applyStateChange } from '../store/miniboard'
 
   export default {
     props: {
@@ -38,7 +38,6 @@
 
     data() {
       return {
-        boardState,
         gameState: {
           i: 0,
         },
@@ -47,8 +46,9 @@
 
     methods: {
       previewGame() {
-        this.boardState.pgn = this.game.pgn
-        this.boardState.pgnHeaders = this.game.pgnHeaders
+        applyStateChange({
+          pgnHeaders: this.game.pgnHeaders
+        })
         this.$store.dispatch(`setActiveGameKey`, this.game.key)
       },
     },

@@ -20,7 +20,7 @@
 <script>
   import Game from '../models/game'
   import Annotation from '../models/annotation'
-  import { boardState } from '../store/miniboard'
+  import { applyStateChange } from '../store/miniboard'
 
   export default {
     props: {
@@ -33,12 +33,14 @@
 
     methods: {
       previewAnnotatedGame() {
-        boardState.fen = this.annotation.fen
-        boardState.highlights = [this.annotation.move.from, this.annotation.move.to]
-        boardState.move = this.annotation.move_string
-        boardState.pgnHeaders = this.game.pgnHeaders || {}
-        boardState.bestMove = ``
-        boardState.score = ``
+        applyStateChange({
+          fen: this.annotation.fen,
+          highlights: [this.annotation.move.from, this.annotation.move.to],
+          move: this.annotation.move_string,
+          pgnHeaders: this.game.pgnHeaders || {},
+          bestMove: ``,
+          score: ``
+        })
         this.$store.dispatch(`setActiveGameKey`, this.annotation.key)
       },
     },

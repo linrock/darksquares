@@ -1,11 +1,10 @@
 const initialBoardState = {
   fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
-  pgn: "",
-  pgnHeaders: {},
   move: "",
   score: "",
   bestMove: "",
   highlights: [],
+  pgnHeaders: {},
 }
 
 const blankState = () => Object.assign({}, initialBoardState)
@@ -31,6 +30,7 @@ let boardState = blankState()
 
 export {
   boardState,
+  applyStateChange,
   resetBoardState,
   showGamePosition,
 }
