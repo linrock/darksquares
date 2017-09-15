@@ -2,7 +2,7 @@
   .game-edit-prompt
     .prompt-text Edit this game
     input(type="text" placeholder="Name (optional)" ref="name" :value="game.name")
-    pgn-headers-editor(:game="game")
+    pgn-headers-editor(:game="game" ref="pgnHeadersEditor")
     .actions  
       button.save(@click="updateGame") Save
       button.cancel(@click="cancel") Cancel
@@ -25,30 +25,33 @@
       },
     },
 
-    data() {
-      return {
-        originalName: this.game.name,
-        originalPgnHeaders: Object.assign({}, this.game.pgnHeaders)
-      }
-    },
-
     methods: {
+      getPgnHeaders() {
+        const newPgnHeaders = {}
+        this.$refs.pgnHeadersEditor.getPgnHeadersArray().forEach(pair => {
+          const [header, value] = pair.map(str => str.trim())
+          if (header && value) {
+            newPgnHeaders[header] = value
+          }
+        })
+        return newPgnHeaders
+      },
       updateGame() {
         const name = this.$refs.name.value.trim()
+        const newPgnHeaders = this.getPgnHeaders()
         const gameData = { game: {} }
         if (name) {
           gameData.game.name = name
         }
         if (this.game.pgnHeaders) {
-          gameData.game.pgn_headers = this.game.pgnHeaders
+          gameData.game.pgn_headers = newPgnHeaders
         }
         this.$store.dispatch('patchGame', { game: this.game, gameData })
         this.game.name = name
+        this.game.pgnHeaders = newPgnHeaders
         this.gameState.isEditing = false
       },
       cancel() {
-        this.game.name = this.originalName
-        this.game.pgnHeaders = this.originalPgnHeaders
         this.gameState.isEditing = false
       }
     },

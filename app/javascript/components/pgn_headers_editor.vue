@@ -1,8 +1,8 @@
 <template lang="pug">
   section.pgn-headers-editor
-    .pgn-header(v-for="(value, header) in game.pgnHeaders")
-      input.header.mousetrap(type="text" :value="header" @keyup="updateHeaders")
-      input.value.mousetrap(type="text" :value="value" @keyup="updateHeaders")
+    .pgn-header(v-for="(header, i) in pgnHeaders")
+      input.header.mousetrap(type="text" :value="header[0]" @input="updateHeadersData")
+      input.value.mousetrap(type="text" :value="header[1]" @input="updateHeadersData")
 
 </template>
 
@@ -18,6 +18,12 @@
       },
     },
 
+    data() {
+      return {
+        pgnHeaders: Object.keys(this.game.pgnHeaders).map(key => [key, this.game.pgnHeaders[key]])
+      }
+    },
+
     created() {
       Mousetrap.bind('enter', () => this.addBlankHeader())
     },
@@ -27,30 +33,29 @@
     },
 
     methods: {
-      updateHeaders() {
-        const newPgnHeaders = {}
-        ;[...this.$el.querySelectorAll(".pgn-header")].map(headers => {
-          return [...headers.children].map(input => input.value)
-        }).forEach(pair => {
-          const header = pair[0]
-          const value = pair[1]
-          if (!header && !value) {
-            return
-          }
-          newPgnHeaders[header] = value
+      getPgnHeadersArray() {
+        const headersArray = []
+        const headersEl = [...this.$el.querySelectorAll(".pgn-header")]
+        headersEl.map(h => [...h.children].map(input => input.value)).forEach(pair => {
+          headersArray.push(pair)
         })
-        this.game.pgnHeaders = newPgnHeaders
+        return headersArray
+      },
+      updateHeadersData() {
+        this.getPgnHeadersArray().forEach((pair, i) => {
+          this.pgnHeaders[i] = pair
+        })
       },
       addBlankHeader() {
-        const blank = this.game.pgnHeaders[""]
-        if (!blank) {
-          this.game.pgnHeaders[""] = " "
-          this.$forceUpdate()
-          requestAnimationFrame(() => {
-            const headerInputs = this.$el.querySelectorAll("input.header")
-            headerInputs[headerInputs.length - 1].focus()
-          })
+        if (this.pgnHeaders.some(header => header[0].trim() === "")) {
+          return
         }
+        this.pgnHeaders = [...this.pgnHeaders, ["", ""]]
+        this.$forceUpdate()
+        requestAnimationFrame(() => {
+          const headerInputs = this.$el.querySelectorAll("input.header")
+          headerInputs[headerInputs.length - 1].focus()
+        })
       }
     },
   }
