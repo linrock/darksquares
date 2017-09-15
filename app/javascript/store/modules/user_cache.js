@@ -2,6 +2,8 @@ import Vue from 'vue'
 import User from '../../models/user'
 import { getUserProfile } from '../../api/requests'
 
+const getUsernameFromRouteKey = (routeKey) => routeKey.split("/")[2]
+
 const usersStore = {
   state: {
     users: {}
@@ -34,7 +36,23 @@ const usersStore = {
           })
         }
       })
-    }
+    },
+    addGames({ commit, getters }, { routeKey, games, prepend }) {
+      if (!prepend) {
+        return
+      }
+      const user = getters.getUser(getUsernameFromRouteKey(routeKey))
+      user.gamesCount += games.length
+      commit('setUser', user)
+    },
+    addAnnotations({ commit, getters }, { routeKey, annotations, prepend }) {
+      if (!prepend) {
+        return
+      }
+      const user = getters.getUser(getUsernameFromRouteKey(routeKey))
+      user.annotationsCount += annotations.length
+      commit('setUser', user)
+    },
   },
 
   getters: {

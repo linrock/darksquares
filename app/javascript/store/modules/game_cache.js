@@ -30,6 +30,7 @@ const gamesStore = {
         dispatch('addGames', {
           routeKey: `/u/${getters.currentUser.username}/games`,
           games: [game],
+          prepend: true,
         })
         return game
       })

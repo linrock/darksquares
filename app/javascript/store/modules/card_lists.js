@@ -49,11 +49,18 @@ const cardListsStore = {
     stopFetching(state, routeKey) {
       state.routes[routeKey].isFetching = false
     },
-    addGames(state, { routeKey, gameIds, lastPageNum, hasMorePages }) {
+    addGames(state, { routeKey, gameIds, lastPageNum, hasMorePages, prepend }) {
       const routeData = state.routes[routeKey]
-      gameIds.forEach(id => routeData.gameIds.add(id))
+      const gameIdsSet = new Set()
+      if (prepend) {
+        gameIds.forEach(id => gameIdsSet.add(id))
+        routeData.gameIds.forEach(id => gameIdsSet.add(id))
+      } else {
+        routeData.gameIds.forEach(id => gameIdsSet.add(id))
+        gameIds.forEach(id => gameIdsSet.add(id))
+      }
       Vue.set(state.routes, routeKey, Object.assign({}, routeData, {
-        gameIds: routeData.gameIds,
+        gameIds: gameIdsSet,
         lastPageNum,
         hasMorePages,
       }))
@@ -68,14 +75,31 @@ const cardListsStore = {
         }
       })
     },
-    addAnnotations(state, { routeKey, annotationIds, lastPageNum, hasMorePages }) {
+    addAnnotations(state, { routeKey, annotationIds, lastPageNum, hasMorePages, prepend }) {
       const routeData = state.routes[routeKey]
-      annotationIds.forEach(id => routeData.annotationIds.add(id))
+      const annotationIdsSet = new Set()
+      if (prepend) {
+        annotationIds.forEach(id => annotationIdsSet.add(id))
+        routeData.annotationIds.forEach(id => annotationIdsSet.add(id))
+      } else {
+        routeData.annotationIds.forEach(id => annotationIdsSet.add(id))
+        annotationIds.forEach(id => annotationIdsSet.add(id))
+      }
       Vue.set(state.routes, routeKey, Object.assign({}, routeData, {
-        annotationIds: routeData.annotationIds,
+        annotationIds: annotationIdsSet,
         lastPageNum,
         hasMorePages,
       }))
+    },
+    removeAnnotationFromSets(state, annotation) {
+      Object.keys(state.routes).forEach(routeKey => {
+        const routeData = state.routes[routeKey]
+        const annotationIds = routeData.annotationIds
+        if (annotationIds.has(annotation.id)) {
+          annotationIds.delete(annotation.id)
+          Vue.set(state.routes[routeKey], 'annotationIds', annotationIds)
+        }
+      })
     },
     saveScrollPosition(state, { routeKey, scrollY }) {
       state.routes[routeKey].scrollY = scrollY
@@ -121,7 +145,7 @@ const cardListsStore = {
     saveScrollPosition({ commit }, payload) {
       commit('saveScrollPosition', payload)
     },
-    addGames({ state, commit }, { routeKey, games, lastPageNum, hasMorePages }) {
+    addGames({ state, commit }, { routeKey, games, lastPageNum, hasMorePages, prepend }) {
       if (!routeKey) {
         return
       }
@@ -135,10 +159,11 @@ const cardListsStore = {
         routeKey,
         gameIds: games.map(game => game.id),
         lastPageNum,
-        hasMorePages
+        hasMorePages,
+        prepend,
       })
     },
-    addAnnotations({ state, commit }, { routeKey, annotations, lastPageNum, hasMorePages }) {
+    addAnnotations({ state, commit }, { routeKey, annotations, lastPageNum, hasMorePages, prepend }) {
       if (!routeKey) {
         return
       }
@@ -152,11 +177,15 @@ const cardListsStore = {
         routeKey,
         annotationIds: annotations.map(annotation => annotation.id),
         lastPageNum,
-        hasMorePages
+        hasMorePages,
+        prepend,
       })
     },
     removeGame({ commit }, game) {
       commit('removeGameFromSets', game)
+    },
+    removeAnnotation({ commit }, annotation) {
+      commit('removeAnnotationFromSets', annotation)
     }
   },
 
