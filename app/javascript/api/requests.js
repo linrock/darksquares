@@ -1,5 +1,5 @@
 import APIClient from './client'
-import { setUsername } from '../store/local_storage'
+import { setUsername } from '../persistence/local_storage'
 import store from '../store'
 
 const api = new APIClient()
@@ -51,12 +51,8 @@ export const getGameStatus = function(id) {
   return api.get(`/api/v1/games/${id}/status`)
 }
 
-export const getMyUserInfo = function() {
-  return api.get(`/api/v1/users/me`).then(response => {
-    const username = response.data.username
-    store.dispatch('setCurrentUser', { username })
-    setUsername(username)
-  })
+export const getMe = function() {
+  return api.get(`/api/v1/users/me`)
 }
 
 export const getMyGames = function(page) {

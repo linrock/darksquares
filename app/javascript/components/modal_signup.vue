@@ -29,7 +29,7 @@
 
 <script>
   import Mousetrap from 'mousetrap'
-  import { createUser, getMyUserInfo } from '../api/requests'
+  import { createUser } from '../api/requests'
 
   export default {
     data() {
@@ -77,7 +77,7 @@
           return
         }
         createUser(credentials).then(() => {
-          getMyUserInfo()
+          this.$store.dispatch('fetchMyUserInfo')
           this.$store.dispatch('closeModal')
         }).catch(error => this.setError(error.response.data.error))
       }

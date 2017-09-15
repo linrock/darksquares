@@ -6,7 +6,12 @@ import userCache from './modules/user_cache'
 import gameCache from './modules/game_cache'
 import annotationCache from './modules/annotation_cache'
 
-import { getAccessToken, getUsername } from './local_storage'
+import { getMe } from '../api/requests'
+import {
+  getAccessToken,
+  getUsername,
+  setUsername
+} from '../persistence/local_storage'
 
 Vue.use(Vuex)
 
@@ -23,6 +28,10 @@ const store = new Vuex.Store({
   },
 
   mutations: {
+    setCurrentUser(state, username) {
+      state.currentUser.username = username
+      setUsername(username)
+    },
     setActiveGameKey(state, key) {
       state.activeGameKey = key
     },
@@ -35,6 +44,12 @@ const store = new Vuex.Store({
   },
 
   actions: {
+    fetchMyUserInfo({ commit }) {
+      getMe().then(response => {
+        const username = response.data.username
+        commit('setCurrentUser', username)
+      })
+    },
     setActiveGameKey({ commit }, key) {
       commit('setActiveGameKey', key)
     },

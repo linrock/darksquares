@@ -1,4 +1,4 @@
-import { getAccessToken } from '../../store/local_storage'
+import { getAccessToken } from '../../persistence/local_storage'
 
 export default function(to, from, next) {
   if (getAccessToken()) {

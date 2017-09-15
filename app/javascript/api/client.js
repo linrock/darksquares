@@ -2,7 +2,7 @@ import axios from 'axios'
 import {
   getAccessToken,
   setAccessToken,
-} from '../store/local_storage'
+} from '../persistence/local_storage'
 
 export default class APIClient {
 

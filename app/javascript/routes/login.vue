@@ -20,7 +20,7 @@
   import PageTitle from '../layouts/page_title'
   import router from '../router'
   import requireAnonymous from './guards/require_anonymous'
-  import { createSession, getMyUserInfo } from '../api/requests'
+  import { createSession } from '../api/requests'
 
   export default {
     beforeRouteEnter: requireAnonymous,
@@ -45,7 +45,7 @@
           return
         }
         createSession(credentials).then(() => {
-          getMyUserInfo()
+          this.$store.dispatch('fetchMyUserInfo')
           router.push({ path: '/' })
         }).catch(() => {
           this.showError = true

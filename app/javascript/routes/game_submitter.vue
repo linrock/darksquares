@@ -17,7 +17,6 @@
   import CardList from '../components/card_list.vue'
   import InfiniteScroll from '../components/infinite_scroll.vue'
   import requireLogin from './guards/require_login'
-  import { getUsername } from '../store/local_storage'
 
   export default {
     beforeRouteEnter: requireLogin,
@@ -28,7 +27,7 @@
 
     computed: {
       userLink() {
-        return `/u/${getUsername()}/games`
+        return `/u/${this.$store.getters.currentUser.username}/games`
       },
       gamesLoaded() {
         return this.$store.getters.hasFetched(this.userLink)
