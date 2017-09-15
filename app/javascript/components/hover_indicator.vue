@@ -33,10 +33,10 @@
   }
 </script>
 
-<style scoped>
-  svg {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
+<style lang="stylus" scoped>
+  svg
+    position absolute
+    top 0
+    left 0
+
 </style>
