@@ -1,7 +1,6 @@
 import Vue from 'vue' 
 import Annotation from '../../models/annotation'
 import { createAnnotation, deleteAnnotation } from '../../api/requests'
-import { getUsername } from '../local_storage'
 
 const annotationsStore = {
   state: {
@@ -18,14 +17,14 @@ const annotationsStore = {
   },
 
   actions: {
-    createAnnotation({ dispatch, commit }, { game, annotation }) {
+    createAnnotation({ dispatch, commit, getters }, { game, annotation }) {
       game.addAnnotation(annotation)
       return createAnnotation(game.id, annotation).then(response => {
         const newAnnotation = new Annotation(response.data.annotation)
         game.replaceAnnotation(annotation.move_string, newAnnotation)
         dispatch('addAnnotations', {
           annotations: [newAnnotation],
-          routeKey: `/u/${getUsername()}/annotations`,
+          routeKey: `/u/${getters.currentUser.username}/annotations`,
           prepend: true
         })
       })

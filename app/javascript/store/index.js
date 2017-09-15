@@ -6,6 +6,8 @@ import userCache from './modules/user_cache'
 import gameCache from './modules/game_cache'
 import annotationCache from './modules/annotation_cache'
 
+import { getAccessToken, getUsername } from './local_storage'
+
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
@@ -13,7 +15,7 @@ const store = new Vuex.Store({
     activeGameKey: null,
     gameVotes: {},
     currentUser: {
-      username: null,
+      username: getAccessToken() && getUsername(),
     },
     modal: {
       isOpen: false,
@@ -23,9 +25,6 @@ const store = new Vuex.Store({
   mutations: {
     setActiveGameKey(state, key) {
       state.activeGameKey = key
-    },
-    setCurrentUser(state, { username }) {
-      state.currentUser.username = username
     },
     setModalOpenState(state, isOpen) {
       state.modal.isOpen = isOpen
@@ -38,9 +37,6 @@ const store = new Vuex.Store({
   actions: {
     setActiveGameKey({ commit }, key) {
       commit('setActiveGameKey', key)
-    },
-    setCurrentUser({ commit }, payload) {
-      commit('setCurrentUser', payload)
     },
     openModal({ commit }) {
       commit('setModalOpenState', true)

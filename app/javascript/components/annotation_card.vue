@@ -36,7 +36,7 @@
         boardState.fen = this.annotation.fen
         boardState.highlights = [this.annotation.move.from, this.annotation.move.to]
         boardState.move = this.annotation.move_string
-        boardState.pgnHeaders = this.annotation.game.pgnHeaders || {}
+        boardState.pgnHeaders = this.game.pgnHeaders || {}
         boardState.bestMove = ``
         boardState.score = ``
         this.$store.dispatch(`setActiveGameKey`, this.annotation.key)
@@ -44,6 +44,9 @@
     },
 
     computed: {
+      game() {
+        return this.annotation.game || this.$store.getters.getGame(this.annotation.gameId)
+      },
       userPath() {
         return `/u/${this.annotation.username}`
       },

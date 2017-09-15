@@ -50,7 +50,8 @@
         const annotation = new Annotation({
           username: this.username,
           move_string: this.moveString,
-          text: this.$refs.input.value
+          text: this.$refs.input.value,
+          gameId: this.game.id,
         })
         this.$refs.input.value = ''
         if (this.$refs.annotator) {
