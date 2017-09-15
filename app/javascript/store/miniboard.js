@@ -14,10 +14,23 @@ const resetBoardState = () => boardState = blankState()
 
 const applyStateChange = (stateChange) => Object.assign(boardState, stateChange)
 
+const showGamePosition = (game, i, updatePgnHeaders = false) => {
+  if (updatePgnHeaders) {
+    applyStateChange(
+      Object.assign(
+        { pgnHeaders: game.pgnHeaders },
+        game.stateAtPositionIndex(i)
+      )
+    )
+  } else {
+    applyStateChange(game.stateAtPositionIndex(i))
+  }
+}
+
 let boardState = blankState()
 
 export {
   boardState,
   resetBoardState,
-  applyStateChange,
+  showGamePosition,
 }

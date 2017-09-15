@@ -25,7 +25,7 @@
   import HoverIndicator from './hover_indicator'
   import MoveList from './move_list'
   import Game from '../models/game'
-  import { applyStateChange } from '../store/miniboard'
+  import { showGamePosition } from '../store/miniboard'
 
   export default {
     props: {
@@ -50,7 +50,7 @@
     methods: {
       setPositionIndex(e) {
         this.gameState.i = ~~(this.game.nPoints * e.offsetX / this.width)
-        applyStateChange(this.game.stateAtPositionIndex(this.gameState.i))
+        showGamePosition(this.game, this.gameState.i)
       },
       handleClick() {
         this.clickedGraph(this.gameState.i)

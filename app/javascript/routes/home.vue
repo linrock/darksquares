@@ -20,7 +20,7 @@
   import CardListLayout from '../layouts/card_list_layout.vue'
   import InfiniteScroll from '../components/infinite_scroll.vue'
   import CardList from '../components/card_list.vue'
-  import { applyStateChange } from '../store/miniboard'
+  import { showGamePosition } from '../store/miniboard'
 
   export default {
     data() {
@@ -43,11 +43,7 @@
 
     methods: {
       previewGame(game, positionIndex) {
-        const state = Object.assign(
-          { pgnHeaders: game.pgnHeaders },
-          game.stateAtPositionIndex(positionIndex),
-        )
-        applyStateChange(state)
+        showGamePosition(game, positionIndex, true)
         this.$store.dispatch(`setActiveGameKey`, game.key)
       }
     },

@@ -54,7 +54,7 @@
   import GameEditPrompt from '../components/game_edit_prompt'
   import GameDeletePrompt from '../components/game_delete_prompt'
   import GameViewPgnPrompt from '../components/game_view_pgn_prompt'
-  import { resetBoardState, applyStateChange } from '../store/miniboard'
+  import { resetBoardState, showGamePosition } from '../store/miniboard'
   import { isElementInViewport } from '../util'
 
   export default {
@@ -135,7 +135,7 @@
         }
         history.replaceState(null, null, `#${this.i}`)
         this.scrollToMoveIfFar(this.i)
-        applyStateChange(this.game.stateAtPositionIndex(this.i))
+        showGamePosition(this.game, this.i)
       },
       game() {
         this.initializeGame()
@@ -181,7 +181,7 @@
 
     methods: {
       initializeGame() {
-        applyStateChange(this.game.stateAtPositionIndex(this.gameState.i))
+        showGamePosition(this.game, this.gameState.i)
         this.$store.dispatch(`setActiveGameKey`, this.game.key)
       },
       initialMoveIndex() {
