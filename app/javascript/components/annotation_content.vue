@@ -6,7 +6,7 @@
         span.author
           router-link.username(:to="userPath" v-if="showUsername(annotation)")
             | {{ annotation.username }}
-          span.time-ago {{ annotation.timeAgo }}
+          span.time-ago {{ annotation.editedTimeAgo }}
       template(v-if="annotation.annotator")
         span.annotator
           span.prefix &ndash;

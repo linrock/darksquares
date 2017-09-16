@@ -13,6 +13,7 @@ export interface AnnotationOptions {
   text: string
   annotator: string
   created_at: string
+  updated_at: string
 }
 
 export default class Annotation {
@@ -26,6 +27,7 @@ export default class Annotation {
   public text: string
   public annotator: string
   public createdAt: Date
+  public updatedAt: Date
 
   public constructor(options: AnnotationOptions) {
     this.id = options.id
@@ -40,6 +42,7 @@ export default class Annotation {
     this.text = options.text
     this.annotator = options.annotator
     this.createdAt = options.created_at ? parseDate(options.created_at) : new Date()
+    this.updatedAt = options.updated_at ? parseDate(options.updated_at) : new Date()
   }
 
   get positionIndex(): number {
@@ -100,5 +103,13 @@ export default class Annotation {
       replace('a ', '1 ').
       replace('minute', 'min').
       replace('second', 'sec')
+  }
+
+  get editedTimeAgo(): string {
+    let timeAgo = this.timeAgo
+    if (this.updatedAt - this.createdAt > 180 * 1000) {
+      timeAgo = `${timeAgo}*`
+    }
+    return timeAgo
   }
 }

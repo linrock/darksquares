@@ -123,7 +123,7 @@
 
   .annotation-input
     clear left
-    margin 10px 0
+    padding 10px 0
     width 100%
 
     input[type="submit"]
@@ -141,7 +141,7 @@
 
       &.cancel
         background rgb(200, 200, 200)
-        margin-left 5px
+        margin-left 8px
 
       &:hover
         cursor pointer
