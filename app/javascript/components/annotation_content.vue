@@ -11,7 +11,11 @@
         span.annotator
           span.prefix &ndash;
           | {{ annotation.annotator }}
-      annotation-commands(:annotation="annotation" :game="game")
+      annotation-commands(
+        v-if="canModifyAnnotation"
+        :annotation="annotation"
+        :game="game"
+      )
 
 </template>
 
@@ -42,7 +46,11 @@
     computed: {
       userPath() {
         return `/u/${this.annotation.username}`
-      }
+      },
+      canModifyAnnotation() {
+        const username = this.$store.getters.currentUser.username
+        return username === this.annotation.username || username === this.game.username
+      },
     },
 
     components: {
