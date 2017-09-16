@@ -59,7 +59,7 @@
 
     computed: {
       shouldShowLine() {
-        return this.$store.state.activeGameKey === this.game.key
+        return this.$store.getters.activeGameKey === this.game.key
       },
     },
 

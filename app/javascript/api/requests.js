@@ -17,6 +17,7 @@ export const createSession = function(data) {
   return api.post(`/oauth/token`, data).then(response => {
     const accessToken = response.data.access_token
     api.createHttpClient(accessToken)
+    return response
   })
 }
 
@@ -24,6 +25,7 @@ export const createUser = function(data) {
   return api.post(`/api/v1/users`, data).then(response => {
     const accessToken = response.data.access_token
     api.createHttpClient(accessToken)
+    return response
   })
 }
 

@@ -5,6 +5,7 @@ import cardLists from './modules/card_lists'
 import userCache from './modules/user_cache'
 import gameCache from './modules/game_cache'
 import annotationCache from './modules/annotation_cache'
+import activeGame from './modules/active_game'
 
 import { getMe } from '../api/requests'
 import {
@@ -17,7 +18,6 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    activeGameKey: null,
     gameVotes: {},
     currentUser: {
       username: getAccessToken() && getUsername(),
@@ -31,9 +31,6 @@ const store = new Vuex.Store({
     setCurrentUser(state, username) {
       state.currentUser.username = username
       setUsername(username)
-    },
-    setActiveGameKey(state, key) {
-      state.activeGameKey = key
     },
     setModalOpenState(state, isOpen) {
       state.modal.isOpen = isOpen
@@ -49,9 +46,6 @@ const store = new Vuex.Store({
         const username = response.data.username
         commit('setCurrentUser', username)
       })
-    },
-    setActiveGameKey({ commit }, key) {
-      commit('setActiveGameKey', key)
     },
     openModal({ commit }) {
       commit('setModalOpenState', true)
@@ -73,7 +67,8 @@ const store = new Vuex.Store({
     cardLists,
     userCache,
     gameCache,
-    annotationCache
+    annotationCache,
+    activeGame
   }
 })
 
