@@ -1,6 +1,4 @@
 import APIClient from './client'
-import { setUsername } from '../persistence/local_storage'
-import store from '../store'
 
 const api = new APIClient()
 
