@@ -107,7 +107,7 @@ export default class Annotation {
 
   get editedTimeAgo(): string {
     let timeAgo = this.timeAgo
-    if (this.updatedAt - this.createdAt > 180 * 1000) {
+    if (Number(this.updatedAt) - Number(this.createdAt) > 180 * 1000) {
       timeAgo = `${timeAgo}*`
     }
     return timeAgo
