@@ -6,7 +6,7 @@
     infinite-scroll(:routeKey="userLink")
       card-list(:games="unsubmittedGames")
     .directions(v-if="gamesLoaded && !unsubmittedGames.length")
-      | You must import some games before you can submit one!
+      | You must import some games before you can submit a game!
     page-title(title="Submit game")
 
 </template>
@@ -51,6 +51,6 @@
 
 <style lang="stylus" scoped>
   .directions
-    margin 60px
+    margin-left 60px
 
 </style>

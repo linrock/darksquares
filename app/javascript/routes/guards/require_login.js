@@ -1,10 +1,7 @@
-import {
-  getAccessToken,
-  getUsername,
-} from '../../persistence/local_storage'
+import store from '../../store'
 
 export default function(to, from, next) {
-  if (getAccessToken() && getUsername()) {
+  if (store.getters.username) {
     next()
   } else {
     next({ path: "/sign_up" })

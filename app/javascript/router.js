@@ -4,7 +4,6 @@ import Home from './routes/home.vue'
 import GameImporter from './routes/game_importer.vue'
 import GameSubmitter from './routes/game_submitter.vue'
 import About from './routes/about.vue'
-
 import Login from './routes/login.vue'
 import SignUp from './routes/sign_up.vue'
 import Game from './routes/game.vue'
