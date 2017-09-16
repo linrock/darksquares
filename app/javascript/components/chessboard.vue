@@ -21,7 +21,7 @@
       squareSize: Number,
     },
 
-    data: function() {
+    data() {
       return {
         cols: ['a','b','c','d','e','f','g','h'],
         rows: [8,7,6,5,4,3,2,1],
@@ -29,7 +29,7 @@
       }
     },
 
-    mounted: function() {
+    mounted() {
       if (!this.fen) {
         return
       }
@@ -37,7 +37,7 @@
     },
 
     watch: {
-      fen: function() {
+      fen() {
         this.renderFen(this.fen)
       }
     },
@@ -72,7 +72,7 @@
     },
 
     computed: {
-      boardStyle: function() {
+      boardStyle() {
         if (this.squareSize) {
           const boardSize = this.squareSize * 8 + 2
           return {

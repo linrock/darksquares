@@ -3,14 +3,17 @@
     sub-header Import Game
     .content
       section.left-side
-        chessboard(:fen="boardState.fen" :squareSize="55")
+        chessboard(:fen="fen" :squareSize="55")
       section.right-side
         h1 Import Game
         .description
           | Enter a PGN in the area below
         form(@submit="importGame")
-          textarea(ref="pgn" class="pgn-importer" :placeholder="pgnPlaceholder"
-                   @keyup="clearError")
+          textarea.pgn-importer(
+            ref="pgn"
+            :placeholder="pgnPlaceholder"
+            @input="updateBoardPosition"
+          )
           .commands
             input(type="submit" :value="buttonText" :disabled="isSubmitting")
             .error-message {{ errorMessage }}
@@ -24,15 +27,16 @@
   import SubHeader from '../layouts/sub_header'
   import Chessboard from '../components/chessboard.vue'
   import requireLogin from './guards/require_login'
-  import { boardState } from '../store/miniboard'
   import router from '../router'
 
   export default {
     beforeRouteEnter: requireLogin,
 
     data() {
+      const cjs = new Chess()
       return {
-        boardState,
+        cjs,
+        fen: cjs.fen(),
         errorMessage: ``,
         isSubmitting: false,
         pgnPlaceholder: `[ECO "D30"]\n[Opening "Queen's gambit declined"]\n\n1.d4 d5 2.c4 e6 3.Nf3 c6`
@@ -42,7 +46,7 @@
     computed: {
       buttonText() {
         return this.isSubmitting ? "Importing..." : "Import PGN"
-      }
+      },
     },
 
     methods: {
@@ -58,8 +62,7 @@
       importGame(e) {
         e.preventDefault()
         const pgn = this.cleanedPgn()
-        const cjs = new Chess()
-        if (!cjs.load_pgn(pgn)) {
+        if (!this.cjs.load_pgn(pgn)) {
           this.errorMessage = "Import failed. PGN is invalid!"
           return
         }
@@ -76,8 +79,11 @@
           this.isSubmitting = false
         })
       },
-      clearError() {
+      updateBoardPosition() {
         this.errorMessage = ``
+        if (this.cjs.load_pgn(this.cleanedPgn())) {
+          this.fen = this.cjs.fen()
+        }
       }
     },
 

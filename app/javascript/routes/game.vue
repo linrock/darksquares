@@ -27,11 +27,13 @@
           )
       section.right-side
         game-info(:pgnHeaders="game.pgnHeaders" :fixed="true")
-        .game-actions(v-if="canTakeActions && !isPromptOpen")
-          .submit-game(@click="showSubmitGamePrompt" v-if="!game.submittedAt") Submit game
-          .edit-game(@click="showEditGamePrompt") Edit
-          .delete-game(@click="showDeleteGamePrompt") Delete
-          .view-pgn.right(@click="showViewPgnPrompt") View PGN
+        .game-actions
+          template(v-if="canTakeActions && !isPromptOpen")
+            .submit-game(@click="showSubmitGamePrompt" v-if="!game.submittedAt") Submit game
+            .edit-game(@click="showEditGamePrompt") Edit
+            .delete-game(@click="showDeleteGamePrompt") Delete
+          template(v-if="!isPromptOpen")
+            .view-pgn.right(@click="showViewPgnPrompt") View PGN
         move-list(:game="game" v-if="!isPromptOpen")
         game-delete-prompt(:game="game" :gameState="gameState" v-if="gameState.isDeleting")
         game-edit-prompt(:game="game" :gameState="gameState" v-if="gameState.isEditing")

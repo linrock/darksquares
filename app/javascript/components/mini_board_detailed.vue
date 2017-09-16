@@ -29,14 +29,14 @@
       }
     },
 
-    data: function() {
+    data() {
       return {
         boardState,
       }
     },
 
     computed: {
-      fen: function() {
+      fen() {
         return this.boardState.fen
       }
     },
