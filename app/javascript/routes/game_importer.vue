@@ -76,6 +76,7 @@
           router.push({ path: `/games/${game.id}` })
           this.isSubmitting = false
         }).catch(error => {
+          this.errorMessage = "Import failed. Server error!"
           this.isSubmitting = false
         })
       },

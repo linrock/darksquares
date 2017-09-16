@@ -10,6 +10,7 @@ class Game < ApplicationRecord
   validates_presence_of :moves
   validates_presence_of :positions
   validates_length_of :name, in: (1..64), allow_nil: true
+  validates_length_of :moves, in: (1...256)
   validate :pgn_headers_must_be_valid
 
   belongs_to :user
