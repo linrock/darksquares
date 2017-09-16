@@ -1,16 +1,24 @@
 <template lang="pug">
-  .annotations(v-if="annotations")
-    annotation(
-      v-for="annotation in annotations"
-      :key="annotation.id"
-      :annotation="annotation"
-      :game="game"
-    )
+  .move-annotations(v-if="annotations")
+    template(v-for="annotation in annotations")
+      annotation-input(
+        v-if="$store.getters.editingAnnotationId === annotation.id"
+        :annotation="annotation"
+        :moveString="annotation.move_string"
+        :game="game"
+      )
+      annotation(
+        v-else
+        :key="annotation.id"
+        :annotation="annotation"
+        :game="game"
+      )
 
 </template>
 
 <script>
   import Annotation from './annotation.vue'
+  import AnnotationInput from './annotation_input.vue'
   import Game from '../models/game'
 
   export default {
@@ -26,6 +34,7 @@
 
     components: {
       Annotation,
+      AnnotationInput
     }
   }
 </script>

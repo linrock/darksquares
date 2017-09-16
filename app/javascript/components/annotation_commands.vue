@@ -23,13 +23,14 @@
 
     methods: {
       editAnnotation() {
-        // make annotation input show up with text inside
-        // console.log('editing')
-        // this.$emit("edit-annotation", 'whoa')
+        this.$store.dispatch('editAnnotationId', this.annotation.id)
       },
       deleteAnnotation() {
         if (confirm("Delete this annotation?")) {
-          this.$store.dispatch('deleteAnnotation', { game: this.game, annotation: this.annotation })
+          this.$store.dispatch('deleteAnnotation', {
+            game: this.game,
+            annotation: this.annotation
+          })
         }
       }
     }

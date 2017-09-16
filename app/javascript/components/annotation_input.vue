@@ -1,16 +1,23 @@
 <template lang="pug">
-  form.annotation-input(@submit="createAnnotation")
+  form.annotation-input(@submit="saveAnnotation")
     textarea(
       :style="textareaStyle"
       :placeholder="textareaPlaceholder"
+      :value="annotation && annotation.text"
       ref="input"
       v-focus=""
       @input="resizeTextarea"
     )
     .under-input
-      input(type="submit" value="Save")
+      input.save(type="submit" value="Save")
+      input.cancel(type="submit" value="Cancel" @click="cancelEdit")
       template(v-if="username === game.username")
-        input(type="text" placeholder="Annotator (optional)" ref="annotator")
+        input(
+          type="text"
+          placeholder="Annotator (optional)"
+          :value="annotation && annotation.annotator"
+          ref="annotator"
+        )
 
 </template>
 
@@ -20,6 +27,9 @@
 
   export default {
     props: {
+      annotation: {
+        type: Annotation
+      },
       game: {
         type: Game,
         required: true
@@ -45,8 +55,28 @@
           this.textareaStyle = `height: ${currentHeight}px`
         }
       },
-      createAnnotation(ev) {
+      cancelEdit(ev) {
         ev.preventDefault()
+        this.$store.dispatch('cancelAnnotationEdit')
+      },
+      saveAnnotation(ev) {
+        ev.preventDefault()
+        if (this.annotation) {
+          this.updateAnnotation()
+        } else {
+          this.createAnnotation()
+        }
+      },
+      updateAnnotation() {
+        this.annotation.text = this.$refs.input.value.trim()
+        this.$refs.input.value = ''
+        if (this.$refs.annotator) {
+          this.annotation.annotator = this.$refs.annotator.value.trim()
+          this.$refs.annotator.value = ''
+        }
+        this.$store.dispatch('updateAnnotation', { annotation: this.annotation })
+      },
+      createAnnotation() {
         const annotation = new Annotation({
           username: this.username,
           move_string: this.moveString,
@@ -62,7 +92,6 @@
           }
         }
         this.$store.dispatch('createAnnotation', { game: this.game, annotation })
-        this.$emit(`annotation-created`)
       }
     },
 
@@ -87,21 +116,26 @@
   @import "../common.styl"
 
   .annotation-input
-    float left
     clear left
     margin 10px 0
     width 100%
 
     input[type="submit"]
       color white
-      background highlight-color
       border none
       border-radius 2px
       font-size 14px
+      opacity 0.9
       padding 4px 0
       text-align center
-      opacity 0.9
       width 70px
+
+      &.save
+        background highlight-color
+
+      &.cancel
+        background rgb(200, 200, 200)
+        margin-left 5px
 
       &:hover
         cursor pointer

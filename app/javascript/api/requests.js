@@ -70,6 +70,10 @@ export const patchGame = function(game, data) {
   return api.patch(`/api/v1/games/${game.id}`, data)
 }
 
+export const patchAnnotation = function(annotation, data) {
+  return api.patch(`/api/v1/games/${annotation.gameId}/annotations/${annotation.id}`, data)
+}
+
 // DELETE
 
 export const deleteGame = function(game) {
@@ -77,5 +81,5 @@ export const deleteGame = function(game) {
 }
 
 export const deleteAnnotation = function(annotation) {
-  return api.delete(`/api/v1/games/${annotation.game.id}/annotations/${annotation.id}`)
+  return api.delete(`/api/v1/games/${annotation.gameId}/annotations/${annotation.id}`)
 }

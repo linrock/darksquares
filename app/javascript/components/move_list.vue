@@ -6,7 +6,7 @@
         .move-san(
           :class="highlight(i)"
           :id="moveId(i)"
-          @click="updateMoveIndex(i)"
+          @click="setMoveIndex(i)"
         ) {{ move.san }}
         .move-actions
           img(
@@ -19,10 +19,9 @@
         :game="game"
       )
       annotation-input(
-        v-if="annotationInputIndex === i"
+        v-if="$store.getters.annotationInputIndex === i"
         :game="game"
         :moveString="game.moveString(i)"
-        @annotation-created="annotationInputIndex = -1"
       )
 
 </template>
@@ -40,28 +39,23 @@
       },
     },
 
-    data: function() {
-      return {
-        annotationInputIndex: -1,
-      }
-    },
-
     methods: {
       showMoveNum(i) {
         if (i > 0 && this.game.annotationsAt(i - 1)) {
           return true
         }
-        return (i - 1) === this.annotationInputIndex || i % 2 === 0
+        return (i - 1) === this.$store.getters.annotationInputIndex || i % 2 === 0
       },
       toggleAnnotationInput(i) {
         if (!this.$store.getters.username) {
           this.$store.dispatch('openModal')
           return
         }
-        this.annotationInputIndex = this.annotationInputIndex === i ? -1 : i
-        this.updateMoveIndex(i)
+        const annotationInputIndex = this.$store.getters.annotationInputIndex
+        this.$store.dispatch('setAnnotationInputIndex', annotationInputIndex === i ? -1 : i)
+        this.setMoveIndex(i)
       },
-      updateMoveIndex(i) {
+      setMoveIndex(i) {
         this.$store.dispatch('setPositionIndex', i + 1)
       },
       highlight(i) {
@@ -140,7 +134,7 @@
         cursor pointer
         opacity 1
 
-  .annotations
+  .move-annotations
     clear left
     float left
     margin 10px 0 20px
