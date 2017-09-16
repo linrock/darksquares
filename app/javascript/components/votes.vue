@@ -5,10 +5,11 @@
         g
           polygon(points="6 0 12 10 0 10")
     .score(:class="[{ voted: voteState !== Vote.None }]") {{ score }}
-    a(@click="downvoteItem" :class="[{ voted: voteState === Vote.Downvoted }]")
-      svg.downvote(width="12px" height="10px" viewBox="0 0 12 10")
-        g
-          polygon(points="6 10 12 0 0 0")
+    template(v-if="allowDownvotes")
+      a(@click="downvoteItem" :class="[{ voted: voteState === Vote.Downvoted }]")
+        svg.downvote(width="12px" height="10px" viewBox="0 0 12 10")
+          g
+            polygon(points="6 10 12 0 0 0")
 
 </template>
 
@@ -34,7 +35,8 @@
     data() {
       return {
         Vote,
-        initialScore: this.item.score - this.$store.getters.getGameVote(this.item.id)
+        initialScore: this.item.score - this.$store.getters.getGameVote(this.item.id),
+        allowDownvotes: false,
       }
     },
 
@@ -117,7 +119,7 @@
 
     a.voted svg g
       fill highlight-color
-      opacity 0.6
+      opacity 0.8
 
     &.disabled
       a:hover

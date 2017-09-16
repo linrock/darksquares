@@ -75,10 +75,15 @@ class API::V1::GamesController < API::V1::BaseController
       render_json({}, status: 400)
     else
       vote = game.votes.find_by(user_id: current_user.id)
+      value = vote_game_params[:value]
+      if value < 0
+        render_json({}, status: 400)
+        return
+      end
       if vote
-        vote.value = vote_game_params[:value]
+        vote.value = value
       else
-        vote = game.votes.new(user_id: current_user.id, value: vote_game_params[:value])
+        vote = game.votes.new(user_id: current_user.id, value: value)
       end
       vote.save!
       render_json({
