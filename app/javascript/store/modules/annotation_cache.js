@@ -37,7 +37,9 @@ const annotationsStore = {
     updateAnnotation({ dispatch, commit }, { annotation }) {
       dispatch('cancelAnnotationEdit')
       commit('setAnnotation', annotation)
-      return patchAnnotation(annotation, { annotation })
+      return patchAnnotation(annotation, { annotation }).then((response) => {
+        commit('setAnnotation', new Annotation(response.data.annotation))
+      })
     },
     deleteAnnotation({ dispatch, commit }, { game, annotation }) {
       game.removeAnnotation(annotation)

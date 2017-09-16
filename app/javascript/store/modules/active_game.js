@@ -28,8 +28,11 @@ const activeGameStore = {
   },
 
   actions: {
-    setActiveGameKey({ commit }, key) {
-      commit('setActiveGameKey', key)
+    setActiveGameKey({ commit, getters }, key) {
+      if (key !== getters.activeGameKey) {
+        commit('setPositionIndex', 0)
+        commit('setActiveGameKey', key)
+      }
     },
     setPositionIndex({ commit, getters }, positionIndex) {
       if (getters.positionIndex != positionIndex) {
