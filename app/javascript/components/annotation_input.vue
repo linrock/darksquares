@@ -3,8 +3,8 @@
     textarea(
       :style="textareaStyle"
       :placeholder="textareaPlaceholder"
-      :value="annotation && annotation.text"
       ref="input"
+      v-model="text"
       v-focus=""
       @input="resizeTextarea"
     )
@@ -15,8 +15,8 @@
         input(
           type="text"
           placeholder="Annotator (optional)"
-          :value="annotation && annotation.annotator"
           ref="annotator"
+          v-model="annotator"
         )
 
 </template>
@@ -44,7 +44,13 @@
       return {
         textareaHeight: 64,
         textareaStyle: `height: auto`,
+        text: this.annotation && this.annotation.text,
+        annotator: this.annotation && this.annotation.annotator,
       }
+    },
+
+    mounted() {
+      this.resizeTextarea()
     },
 
     methods: {
