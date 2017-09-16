@@ -67,7 +67,6 @@
     data() {
       return {
         gameState: {
-          i: this.initialMoveIndex() || 0,
           isDeleting: false,
           isEditing: false,
           isSubmitting: false,
@@ -80,7 +79,7 @@
     },
 
     created() {
-      resetBoardState()
+      this.$store.dispatch('setPositionIndex', this.initialMoveIndex())
       const gameId = Number(this.id)
       if (Number.isNaN(gameId)) {
         this.errorMessage = "Game not found"
