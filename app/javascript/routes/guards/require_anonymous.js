@@ -1,7 +1,10 @@
-import { getAccessToken } from '../../persistence/local_storage'
+import {
+  getAccessToken,
+  getUsername,
+} from '../../persistence/local_storage'
 
 export default function(to, from, next) {
-  if (getAccessToken()) {
+  if (getAccessToken() && getUsername()) {
     next({ path: "/" })
   } else {
     next()

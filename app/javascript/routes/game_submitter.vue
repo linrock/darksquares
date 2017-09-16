@@ -27,7 +27,7 @@
 
     computed: {
       userLink() {
-        return `/u/${this.$store.getters.currentUser.username}/games`
+        return `/u/${this.$store.getters.username}/games`
       },
       gamesLoaded() {
         return this.$store.getters.hasFetched(this.userLink)

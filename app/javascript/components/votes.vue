@@ -40,7 +40,7 @@
 
     computed: {
       username() {
-        return this.$store.getters.currentUser.username
+        return this.$store.getters.username
       },
       voteValue() {
         return this.$store.getters.getGameVote(this.item.id)

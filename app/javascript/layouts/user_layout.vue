@@ -59,7 +59,7 @@
         }
         this.$store.dispatch('fetchUserProfile', username).catch(error => {
           const statusCode = error.response.status
-          this.errorMessage = statusCode === 404 && "User not found" || `Error ${statusCode}`
+          this.errorMessage = statusCode === 404 ? "User not found" : `Error ${statusCode}`
         })
       }
     },

@@ -48,7 +48,7 @@
         return `/u/${this.annotation.username}`
       },
       canModifyAnnotation() {
-        const username = this.$store.getters.currentUser.username
+        const username = this.$store.getters.username
         return username === this.annotation.username || username === this.game.username
       },
     },

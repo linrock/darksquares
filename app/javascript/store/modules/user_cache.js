@@ -42,13 +42,19 @@ const usersStore = {
         return
       }
       const user = getters.getUser(getUsernameFromRouteKey(routeKey))
+      if (!user) {
+        return
+      }
       user.gamesCount += games.length
       commit('setUser', user)
     },
     removeGame({ commit, getters }, game) {
-      const username = getters.currentUser.username
+      const username = getters.username
       if (username === game.user.username) {
         const user = getters.getUser(username)
+        if (!user) {
+          return
+        }
         user.gamesCount -= 1
         commit('setUser', user)
       }
@@ -58,13 +64,19 @@ const usersStore = {
         return
       }
       const user = getters.getUser(getUsernameFromRouteKey(routeKey))
+      if (!user) {
+        return
+      }
       user.annotationsCount += annotations.length
       commit('setUser', user)
     },
     removeAnnotation({ commit, getters }, annotation) {
-      const username = getters.currentUser.username
+      const username = getters.username
       if (username === annotation.username) {
         const user = getters.getUser(username)
+        if (!user) {
+          return
+        }
         user.annotationsCount -= 1
         commit('setUser', user)
       }

@@ -20,7 +20,6 @@
   import PageTitle from '../layouts/page_title'
   import router from '../router'
   import requireAnonymous from './guards/require_anonymous'
-  import { createSession } from '../api/requests'
 
   export default {
     beforeRouteEnter: requireAnonymous,
@@ -38,14 +37,14 @@
       submitCredentials(e) {
         e.preventDefault()
         const credentials = {
+          grant_type: 'password',
           username: this.$refs.username.value.trim(),
           password: this.$refs.password.value.trim()
         }
         if (!credentials.username || !credentials.password) {
           return
         }
-        createSession(credentials).then(() => {
-          this.$store.dispatch('fetchMyUserInfo')
+        this.$store.dispatch('logIn', credentials).then(() => {
           router.push({ path: '/' })
         }).catch(() => {
           this.showError = true

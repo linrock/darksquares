@@ -4,7 +4,7 @@ import {
   setAccessToken,
 } from '../persistence/local_storage'
 
-export default class APIClient {
+class APIClient {
 
   constructor() {
     this.createHttpClient(getAccessToken())
@@ -37,3 +37,5 @@ export default class APIClient {
     return this.httpClient.patch(...arguments)
   }
 }
+
+export const api = new APIClient()

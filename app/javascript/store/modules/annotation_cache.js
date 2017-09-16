@@ -24,7 +24,7 @@ const annotationsStore = {
         game.replaceAnnotation(annotation.move_string, newAnnotation)
         dispatch('addAnnotations', {
           annotations: [newAnnotation],
-          routeKey: `/u/${getters.currentUser.username}/annotations`,
+          routeKey: `/u/${getters.username}/annotations`,
           prepend: true
         })
       })

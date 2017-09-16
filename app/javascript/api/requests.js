@@ -1,6 +1,4 @@
-import APIClient from './client'
-
-const api = new APIClient()
+import { api } from './client'
 
 // POST
 
@@ -13,20 +11,11 @@ export const createAnnotation = function(gameId, data) {
 }
 
 export const createSession = function(data) {
-  data.grant_type = 'password'
-  return api.post(`/oauth/token`, data).then(response => {
-    const accessToken = response.data.access_token
-    api.createHttpClient(accessToken)
-    return response
-  })
+  return api.post(`/oauth/token`, data)
 }
 
 export const createUser = function(data) {
-  return api.post(`/api/v1/users`, data).then(response => {
-    const accessToken = response.data.access_token
-    api.createHttpClient(accessToken)
-    return response
-  })
+  return api.post(`/api/v1/users`, data)
 }
 
 export const createGameVote = function(gameId, data) {

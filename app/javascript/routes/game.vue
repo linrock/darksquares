@@ -148,7 +148,7 @@
         return this.$store.getters.getGame(this.id)
       },
       username() {
-        return this.$store.getters.currentUser.username
+        return this.$store.getters.username
       },
       canTakeActions() {
         return this.game.user.username === this.username

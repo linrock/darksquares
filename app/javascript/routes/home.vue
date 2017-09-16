@@ -70,7 +70,7 @@
         return this.$store.getters.scrollPosition("/")
       },
       username() {
-        return this.$store.getters.currentUser.username
+        return this.$store.getters.username
       },
       isLoggedIn() {
         return !!this.username

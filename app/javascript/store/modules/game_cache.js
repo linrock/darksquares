@@ -28,7 +28,7 @@ const gamesStore = {
       return createGame(gameData).then(response => {
         const game = new Game(response.data.game)
         dispatch('addGames', {
-          routeKey: `/u/${getters.currentUser.username}/games`,
+          routeKey: `/u/${getters.username}/games`,
           games: [game],
           prepend: true,
         })

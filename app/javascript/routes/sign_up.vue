@@ -22,7 +22,6 @@
   import PageTitle from '../layouts/page_title'
   import router from '../router'
   import requireAnonymous from './guards/require_anonymous'
-  import { createUser } from '../api/requests'
 
   export default {
     beforeRouteEnter: requireAnonymous,
@@ -47,8 +46,7 @@
             password_confirmation: this.$refs.password_confirmation.value
           }
         }
-        createUser(credentials).then(() => {
-          this.$store.dispatch('fetchMyUserInfo')
+        this.$store.dispatch('signUp', credentials).then(() => {
           router.push({ path: '/' })
         }).catch((error) => {
           this.errorMessage = error.response.data.error
