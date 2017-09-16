@@ -1,8 +1,8 @@
 <template lang="pug">
   section.pgn-headers
-    .pgn-header(v-for="(value, header) in pgnHeaders" v-if="validValue(value)")
-      .header {{ header }}
-      .value {{ value }}
+    .pgn-header(v-for="row in sortedPgnHeaders" v-if="validValue(row[1])")
+      .header {{ row[0] }}
+      .value {{ row[1] }}
 
 </template>
 
@@ -12,6 +12,16 @@
       pgnHeaders: {
         type: Object,
         required: true
+      }
+    },
+    computed: {
+      sortedPgnHeaders() {
+        const pgnHeadersArray = []
+        const keys = Object.keys(this.pgnHeaders).sort()
+        keys.forEach(key => {
+          pgnHeadersArray.push([key, this.pgnHeaders[key]])
+        })
+        return pgnHeadersArray
       }
     },
     methods: {
@@ -33,9 +43,9 @@
     overflow-x hidden
     text-overflow ellipsis
     white-space nowrap
-    width 120px
+    width 125px
 
   .value
-    width 190px
+    width 185px
 
 </style>
