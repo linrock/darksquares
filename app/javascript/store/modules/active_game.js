@@ -1,7 +1,7 @@
 const activeGameStore = {
   state: {
     key: null,
-    i: null,
+    i: 0,
   },
 
   mutations: {
