@@ -5,7 +5,6 @@
       :width="width"
       :height="height"
       :game="currentGame"
-      :gameState="gameState"
       :clickedGraph="clickedGraph"
     )
     .loading(v-if="isLoading")
@@ -33,10 +32,6 @@
       },
       game: {
         type: Game,
-        required: true,
-      },
-      gameState: {
-        type: Object,
         required: true,
       },
       clickedGraph: {

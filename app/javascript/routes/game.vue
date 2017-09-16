@@ -23,7 +23,6 @@
             :width="443"
             :height="120"
             :game="game"
-            :gameState="gameState"
             :clickedGraph="scrollToMove"
           )
       section.right-side
@@ -33,7 +32,7 @@
           .edit-game(@click="showEditGamePrompt") Edit
           .delete-game(@click="showDeleteGamePrompt") Delete
           .view-pgn.right(@click="showViewPgnPrompt") View PGN
-        move-list(:game="game" :gameState="gameState" v-if="!isPromptOpen")
+        move-list(:game="game" v-if="!isPromptOpen")
         game-delete-prompt(:game="game" :gameState="gameState" v-if="gameState.isDeleting")
         game-edit-prompt(:game="game" :gameState="gameState" v-if="gameState.isEditing")
         game-submit-prompt(:game="game" :gameState="gameState" v-if="gameState.isSubmitting")
@@ -104,15 +103,15 @@
         this.scrolledToMove = true
       }
       Mousetrap.bind('left', () => {
-        const i = this.gameState.i
+        const i = this.$store.getters.positionIndex
         if (i > 0) {
-          this.gameState.i -= 1
+          this.$store.dispatch('setPositionIndex', i - 1)
         }
       })
       Mousetrap.bind('right', () => {
-        const i = this.gameState.i
+        const i = this.$store.getters.positionIndex
         if (i < this.game.positions.length - 1) {
-          this.gameState.i += 1
+          this.$store.dispatch('setPositionIndex', i + 1)
         }
       })
     },
@@ -133,7 +132,7 @@
         if (!this.scrolledToMove || !this.shouldScrollToMove) {
           return
         }
-        history.replaceState(null, null, `#${this.i}`)
+        history.replaceState(null, null, `#${this.$store.getters.positionIndex}`)
         this.scrollToMoveIfFar(this.i)
         showGamePosition(this.game, this.i)
       },
@@ -144,7 +143,7 @@
 
     computed: {
       i() {
-        return this.gameState.i
+        return this.$store.getters.positionIndex
       },
       game() {
         return this.$store.getters.getGame(this.id)
@@ -181,7 +180,7 @@
 
     methods: {
       initializeGame() {
-        showGamePosition(this.game, this.gameState.i)
+        showGamePosition(this.game, this.$store.getters.positionIndex)
         this.$store.dispatch(`setActiveGameKey`, this.game.key)
       },
       initialMoveIndex() {

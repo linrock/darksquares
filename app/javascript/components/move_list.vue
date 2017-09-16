@@ -38,10 +38,6 @@
         type: Game,
         required: true
       },
-      gameState: {
-        type: Object,
-        required: true
-      }
     },
 
     data: function() {
@@ -66,10 +62,10 @@
         this.updateMoveIndex(i)
       },
       updateMoveIndex(i) {
-        this.gameState.i = i + 1
+        this.$store.dispatch('setPositionIndex', i + 1)
       },
       highlight(i) {
-        if (i + 1 === this.gameState.i) {
+        if (i + 1 === this.$store.getters.positionIndex) {
           return `highlighted`
         }
       },

@@ -9,7 +9,6 @@
           :width="600"
           :height="150"
           :game="game"
-          :gameState="gameState"
         )
     .annotations-container(v-if="game.annotations.length")
       annotation-previews(:game="game")
@@ -36,14 +35,6 @@
       isPreviewing: Boolean
     },
 
-    data() {
-      return {
-        gameState: {
-          i: 0,
-        },
-      }
-    },
-
     methods: {
       previewGame() {
         applyStateChange({
@@ -64,7 +55,7 @@
         return this.annotationsRemaining === 1 ? `annotation` : `annotations`
       },
       gamePositionPath() {
-        return `${this.game.path}#${this.gameState.i}`
+        return `${this.game.path}#${this.$store.getters.positionIndex}`
       }
     },
 

@@ -14,7 +14,7 @@
           v-if="shouldShowLine"
           :width="width"
           :height="height"
-          :i="gameState.i"
+          :i="$store.getters.positionIndex"
           :points="game.scores"
         )
 
@@ -33,10 +33,6 @@
         type: Game,
         required: true
       },
-      gameState: {
-        type: Object,
-        required: true
-      },
       clickedGraph: {
         type: Function,
         default: function() {}
@@ -49,11 +45,12 @@
     //
     methods: {
       setPositionIndex(e) {
-        this.gameState.i = ~~(this.game.nPoints * e.offsetX / this.width)
-        showGamePosition(this.game, this.gameState.i)
+        const positionIndex = ~~(this.game.nPoints * e.offsetX / this.width)
+        this.$store.dispatch('setPositionIndex', positionIndex)
+        showGamePosition(this.game, positionIndex)
       },
       handleClick() {
-        this.clickedGraph(this.gameState.i)
+        this.clickedGraph(this.$store.getters.positionIndex)
       }
     },
 
