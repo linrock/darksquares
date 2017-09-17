@@ -100,7 +100,7 @@
     mounted() {
       window.scrollTo(0, 0)
       if (this.game && !this.scrolledToMove && !this.isPromptOpen) {
-        this.scrollToMoveIfFar(this.initialMoveIndex())
+        this.scrollToMoveIfFar(this.$store.getters.positionIndex)
         this.scrolledToMove = true
       }
       Mousetrap.bind('left', () => {
@@ -119,7 +119,7 @@
 
     updated() {
       if (!this.scrolledToMove && !this.isPromptOpen) {
-        this.scrollToMoveIfFar(this.initialMoveIndex())
+        this.scrollToMoveIfFar(this.$store.getters.positionIndex)
         this.scrolledToMove = true
       }
     },
@@ -182,7 +182,7 @@
     methods: {
       initializeGame() {
         showGamePosition(this.game, this.$store.getters.positionIndex)
-        this.$store.dispatch(`setActiveGameKey`, this.game.key)
+        this.$store.dispatch(`setActiveGameKey`, { key: this.game.key })
       },
       initialMoveIndex() {
         const hash = window.location.hash

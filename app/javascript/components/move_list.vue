@@ -4,7 +4,7 @@
       .move-num(v-if="showMoveNum(i)") {{ game.moveNum(i) }}
       .move
         .move-san(
-          :class="highlight(i)"
+          :class="[{ highlighted: i + 1 === $store.getters.positionIndex }]"
           :id="moveId(i)"
           @click="setMoveIndex(i)"
         ) {{ move.san }}
@@ -58,22 +58,9 @@
       setMoveIndex(i) {
         this.$store.dispatch('setPositionIndex', i + 1)
       },
-      highlight(i) {
-        if (i + 1 === this.$store.getters.positionIndex) {
-          return `highlighted`
-        }
-      },
       moveId(positionIndex) {
         return `move-${positionIndex + 1}`
       },
-    },
-
-    directives: {
-      focus: {
-        inserted(el) {
-          el.focus()
-        }
-      }
     },
 
     components: {

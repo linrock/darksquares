@@ -41,7 +41,10 @@
           bestMove: ``,
           score: ``
         })
-        this.$store.dispatch(`setActiveGameKey`, this.annotation.key)
+        this.$store.dispatch(`setActiveGameKey`, {
+          key: this.annotation.key,
+          resetPositionIndex: true
+        })
       },
     },
 
