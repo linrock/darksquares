@@ -75,7 +75,9 @@ const router = new VueRouter({
 })
 
 router.afterEach((to, from) => {
-  // console.log(to.path)
+  if (window.ga) {
+    ga('send', 'pageview', to.path)
+  }
 })
 
 export default router
