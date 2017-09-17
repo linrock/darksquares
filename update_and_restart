@@ -1,0 +1,8 @@
+#!/bin/bash
+
+bundle exec rake db:migrate
+bundle exec rake assets:precompile
+
+PID=`ps a | grep puma | grep darksquares | grep 127.0.0.1 | cut -d' ' -f1`
+echo "Sending phased restart signal to $PID"
+kill -USR1 $PID
