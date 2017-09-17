@@ -36,17 +36,13 @@ const routes = [
     component: SignUp
   },
   {
-    path: '/games/:id',
-    component: Game,
-    props: true
-  },
-  {
-    path: '/settings',
-    component: UserSettings,
-  },
-  {
     path: '/about',
     component: About,
+  },
+  {
+    path: '/g/:id',
+    component: Game,
+    props: true
   },
   {
     path: '/u/:username',
@@ -66,6 +62,10 @@ const routes = [
         component: UserAnnotations,
       }
     ]
+  },
+  {
+    path: '/settings',
+    component: UserSettings,
   },
 ]
 

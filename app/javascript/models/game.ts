@@ -83,7 +83,7 @@ export default class Game {
   }
 
   get path(): string {
-    return `/games/${this.id}`
+    return `/g/${this.id}`
   }
 
   get key(): string {

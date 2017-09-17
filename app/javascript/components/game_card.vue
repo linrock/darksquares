@@ -58,7 +58,12 @@
         return this.annotationsRemaining === 1 ? `annotation` : `annotations`
       },
       gamePositionPath() {
-        return `${this.game.path}#${this.$store.getters.positionIndex}`
+        const i = this.$store.getters.positionIndex
+        if (i > 0) {
+          return `${this.game.path}#${i}`
+        } else {
+          return this.game.path
+        }
       }
     },
 

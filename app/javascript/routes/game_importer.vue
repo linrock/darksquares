@@ -73,7 +73,7 @@
           }
         }
         this.$store.dispatch('createGame', data).then(game => {
-          router.push({ path: `/games/${game.id}` })
+          router.push({ path: game.path })
           this.isSubmitting = false
         }).catch(error => {
           this.errorMessage = "Import failed. Server error!"

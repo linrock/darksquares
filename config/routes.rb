@@ -13,7 +13,8 @@ Rails.application.routes.draw do
   get "/submit"       => "application#index"
   get "/profile"      => "application#index"
   get "/about"        => "application#index"
-  get "/games/:id"    => "application#index"
+
+  get "/g/:id"        => "application#index"
 
   get "/u/:username"             => "application#index"
   get "/u/:username/games"       => "application#index"

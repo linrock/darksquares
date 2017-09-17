@@ -57,7 +57,7 @@
       },
       gamePath() {
         const i = Game.moveStringToPositionIndex(this.annotation.move_string)
-        return `/games/${this.annotation.gameId}#${i}`
+        return `/g/${this.annotation.gameId}#${i}`
       }
     }
   }
