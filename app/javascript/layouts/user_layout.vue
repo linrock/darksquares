@@ -10,8 +10,8 @@
       nav
         template(v-if="user && user.username")
           router-link(:to="userLink") Overview
-          router-link(:to="gamesLink") {{ user.gamesCount }} Games
-          router-link(:to="annotationsLink") {{ user.annotationsCount }} Annotations
+          router-link(:to="gamesLink") {{ user.gamesCount }} {{ pluralizedGames }}
+          router-link(:to="annotationsLink") {{ user.annotationsCount }} {{ pluralizedAnnotations }}
       .content
         .loading-indicator(v-if="isLoading")
           loading
@@ -83,6 +83,12 @@
       headerText() {
         return this.errorMessage ? this.errorMessage : this.user ? this.user.username : ''
       },
+      pluralizedGames() {
+        return this.user.gamesCount === 1 ? `Game` : `Games`
+      },
+      pluralizedAnnotations() {
+        return this.user.annotationsCount === 1 ? `Annotation` : `Annotations`
+      }
     },
 
     components: {
