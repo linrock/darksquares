@@ -1,4 +1,6 @@
 class Annotation < ApplicationRecord
+  acts_as_paranoid
+
   before_validation :trim_annotation_text
 
   validates_presence_of :game
