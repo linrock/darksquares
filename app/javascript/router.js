@@ -74,4 +74,8 @@ const router = new VueRouter({
   mode: 'history'
 })
 
+router.afterEach((to, from) => {
+  // console.log(to.path)
+})
+
 export default router

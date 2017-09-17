@@ -109,6 +109,18 @@ export default class Game {
     return annotator && annotator.match(/^[\w\s]+$/) ? annotator : null
   }
 
+  get sourceUrl(): string {
+    const site = this.pgnHeaders["Site"]
+    if (site && site.match(/^https:\/\/lichess\.org/)) {
+      return site
+    }
+    const source = this.pgnHeaders["Source"]
+    if (source && (source.match(/www\.chessgames\.com/) ||
+                   source.match(/www\.youtube\.com/))) {
+      return source
+    }
+  }
+
   // annotations
 
   public addAnnotation(annotation: Annotation): void {

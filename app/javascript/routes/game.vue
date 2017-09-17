@@ -28,12 +28,16 @@
       section.right-side
         game-info(:pgnHeaders="game.pgnHeaders" :fixed="true")
         .game-actions
-          template(v-if="canTakeActions && !isPromptOpen")
-            .submit-game(@click="showSubmitGamePrompt" v-if="!game.submittedAt") Submit game
-            .edit-game(@click="showEditGamePrompt") Edit
-            .delete-game(@click="showDeleteGamePrompt") Delete
-          template(v-if="!isPromptOpen")
-            .view-pgn.right(@click="showViewPgnPrompt") View PGN
+          .left(v-if="canTakeActions && !isPromptOpen")
+            .action.submit-game(@click="showSubmitGamePrompt" v-if="!game.submittedAt") Submit game
+            .action.edit-game(@click="showEditGamePrompt") Edit
+            .action.delete-game(@click="showDeleteGamePrompt") Delete
+          .right(v-if="!isPromptOpen")
+            .action.source-url(v-if="game.sourceUrl")
+              a(:href="game.sourceUrl" target="_blank")
+                img.external-link-icon(src="/icons/external-link.svg")
+                | Source URL
+            .action.view-pgn(@click="showViewPgnPrompt") View PGN
         move-list(:game="game" v-if="!isPromptOpen")
         game-delete-prompt(:game="game" :gameState="gameState" v-if="gameState.isDeleting")
         game-edit-prompt(:game="game" :gameState="gameState" v-if="gameState.isEditing")
@@ -321,15 +325,33 @@
     .game-actions
       padding-top 12px
       font-size 12px
+      line-height 12px
+      height 24px
       display flex
 
-      div
-        margin-right 25px
-        opacity 0.5
+      a
+        display flex
+        color inherit
+        text-decoration none
 
-        &.right
-          margin-right 0
-          margin-left auto
+      .left
+        display flex
+        margin-left 0
+        margin-right auto
+
+        .action
+          margin-right 25px
+
+      .right
+        display flex
+        margin-right 0
+        margin-left auto
+
+        .action
+          margin-left 25px
+
+      .action
+        opacity 0.5
 
         &:hover
           cursor pointer
@@ -342,6 +364,16 @@
 
         &:hover
           opacity 1
+
+      .source-url
+        display flex
+        height 12px
+
+      .external-link-icon
+        height 17px
+        margin-right 5px
+        position relative
+        top -1px
 
     .move-list
       margin 36px 0 80px

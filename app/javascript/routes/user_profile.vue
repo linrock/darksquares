@@ -34,7 +34,7 @@
 
     computed: {
       pageTitle() {
-        return this.user.username && `${this.user.username} - Overview`
+        return this.user.username && `${this.user.username} - overview`
       },
       userGamesPath() {
         return `/u/${this.user.username}/games`

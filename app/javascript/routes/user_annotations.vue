@@ -35,7 +35,7 @@
 
     computed: {
       pageTitle() {
-        return this.user.username && `${this.user.username} - Annotations`
+        return this.user.username && `${this.user.username} - annotations`
       },
       userAnnotationsPath() {
         return `/u/${this.user.username}/annotations`
