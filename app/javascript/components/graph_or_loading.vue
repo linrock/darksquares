@@ -54,25 +54,22 @@
         return
       }
       this.checkOrFetchGame()
-      this.periodicFetcher = setInterval(() => {
-        this.checkOrFetchGame()
-      }, 7000)
+      this.periodicFetcher = setInterval(() => this.checkOrFetchGame(), 7000)
     },
 
     destroyed() {
-      clearInterval(this.periodicFetcher)
+      if (this.periodicFetcher) {
+        clearInterval(this.periodicFetcher)
+      }
     },
 
     methods: {
       checkOrFetchGame() {
         getGameStatus(this.game.id).then(response => {
-          const analysisStatus = response.data.game.status
-          const percentComplete = response.data.game.percent
-          if (percentComplete === 100 && analysisStatus === 'complete') {
+          this.analysisStatus = response.data.game.status
+          this.percentComplete = response.data.game.percent
+          if (this.percentComplete === 100 && this.analysisStatus === 'complete') {
             this.fetchGame()
-          } else {
-            this.analysisStatus = analysisStatus
-            this.percentComplete = percentComplete
           }
         })
       },
