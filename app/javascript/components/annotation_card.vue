@@ -12,7 +12,8 @@
         :class="[{ previewing: isPreviewing }]"
       )
         .move-string {{ annotation.move_string }}
-        .text {{ annotation.text }}
+        .text
+          annotation-text-basic(:annotation="annotation")
         .annotator(v-if="annotation.annotator") &ndash; {{ annotation.annotator }}
 
 </template>
@@ -20,6 +21,7 @@
 <script>
   import Game from '../models/game'
   import Annotation from '../models/annotation'
+  import AnnotationTextBasic from './annotation_text_basic'
   import { applyStateChange } from '../store/miniboard'
 
   export default {
@@ -59,6 +61,10 @@
         const i = Game.moveStringToPositionIndex(this.annotation.move_string)
         return `/g/${this.annotation.gameId}#${i}`
       }
+    },
+
+    components: {
+      AnnotationTextBasic
     }
   }
 </script>
