@@ -1,6 +1,9 @@
 <template lang="pug">
   .annotation-commands
-    .edit-annotation(@click="editAnnotation") Edit
+    .edit-annotation(
+      v-if="canEditAnnotation"
+      @click="editAnnotation"
+    ) Edit
     .delete-annotation(@click="deleteAnnotation") Delete
 
 </template>
@@ -32,6 +35,15 @@
             annotation: this.annotation
           })
         }
+      }
+    },
+
+    computed: {
+      username() {
+        return this.$store.getters.username
+      },
+      canEditAnnotation() {
+        return this.username === this.annotation.username
       }
     }
   }

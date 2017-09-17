@@ -42,7 +42,8 @@ CREATE TABLE annotations (
     fen character varying,
     move jsonb,
     annotator character varying,
-    deleted_at timestamp without time zone
+    deleted_at timestamp without time zone,
+    deleted_by_user_id integer
 );
 
 
@@ -627,6 +628,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170821192928'),
 ('20170827032341'),
 ('20170828062241'),
-('20170917000256');
+('20170917000256'),
+('20170917000814');
 
 

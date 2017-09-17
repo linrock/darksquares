@@ -37,7 +37,12 @@ class API::V1::AnnotationsController < API::V1::BaseController
 
   # DELETE /api/v1/games/:game_id/annotations/:id
   def destroy
-    current_user.annotations.find(params[:id]).destroy!
+    if current_user.id == game.user_id
+      annotation = game.annotations.find(params[:id])
+    else
+      annotation = current_user.annotations.find(params[:id])
+    end
+    annotation.destroy_by_user! current_user
     render_json({})
   end
 

@@ -31,6 +31,13 @@ class Annotation < ApplicationRecord
     })
   end
 
+  def destroy_by_user!(user)
+    Annotation.transaction do
+      self.update_attributes!({ deleted_by_user_id: user.id })
+      self.destroy!
+    end
+  end
+
   private
 
   def trim_annotation_text
