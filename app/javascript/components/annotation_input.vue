@@ -125,6 +125,7 @@
     clear left
     padding 10px 0
     width 100%
+    margin-top -10px
 
     input[type="submit"]
       color white

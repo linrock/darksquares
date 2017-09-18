@@ -128,6 +128,7 @@
     width 100%
 
     & + .annotation-input
+      margin-top 0
       padding-top 0
       position relative
       top -20px
