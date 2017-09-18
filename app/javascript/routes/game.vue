@@ -116,6 +116,12 @@
           this.$store.dispatch('setPositionIndex', i + 1)
         }
       })
+      Mousetrap.bind('esc', () => {
+        this.gameState.isSubmitting = false
+        this.gameState.isEditing = false
+        this.gameState.isDeleting = false
+        this.gameState.isViewingPgn = false
+      })
     },
 
     updated() {
