@@ -1,13 +1,21 @@
 <template lang="pug">
   .graph-or-loading
-    evaluation-graph(
-      v-if="!isLoading"
-      :width="width"
-      :height="height"
-      :game="currentGame"
-      :clickedGraph="clickedGraph"
-    )
-    .loading(v-if="isLoading")
+    template(v-if="!isLoading")
+      evaluation-graph-click(
+        v-if="graphMode === `click`"
+        :width="width"
+        :height="height"
+        :game="currentGame"
+        :clickedGraph="clickedGraph"
+      )
+      evaluation-graph(
+        v-else
+        :width="width"
+        :height="height"
+        :game="currentGame"
+        :clickedGraph="clickedGraph"
+      )
+    .loading(v-else)
       template(v-if="!analysisStatus || analysisStatus === `pending`")
         | Waiting for server to start analyzing game...
       template(v-if="analysisStatus === `in_progress`")
@@ -18,6 +26,7 @@
 <script>
   import { getGame, getGameStatus } from '../api/requests'
   import EvaluationGraph from './evaluation_graph'
+  import EvaluationGraphClick from './evaluation_graph_click'
   import Game from '../models/game'
 
   export default {
@@ -33,6 +42,9 @@
       game: {
         type: Game,
         required: true,
+      },
+      graphMode: {
+        type: String,
       },
       clickedGraph: {
         type: Function,
@@ -94,7 +106,8 @@
     },
 
     components: {
-      EvaluationGraph
+      EvaluationGraph,
+      EvaluationGraphClick
     }
   }
 </script>

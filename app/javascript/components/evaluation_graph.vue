@@ -11,7 +11,7 @@
       )
       transition(name="fade")
         hover-indicator(
-          v-if="shouldShowLine"
+          v-if="$store.getters.activeGameKey === game.key"
           :width="width"
           :height="height"
           :i="$store.getters.positionIndex"
@@ -52,12 +52,6 @@
       handleClick() {
         this.clickedGraph(this.$store.getters.positionIndex)
       }
-    },
-
-    computed: {
-      shouldShowLine() {
-        return this.$store.getters.activeGameKey === this.game.key
-      },
     },
 
     components: {

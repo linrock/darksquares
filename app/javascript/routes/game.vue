@@ -13,10 +13,7 @@
 
     .error-message(v-if="errorMessage") {{ errorMessage }}
     .content(v-if="game")
-      section.left-side(
-        @mouseenter="disableAutoscroll"
-        @mouseleave="enableAutoscroll"
-      )
+      section.left-side
         .left-side-inner
           mini-board-detailed(:squareSize="55")
           graph-or-loading(
@@ -24,6 +21,7 @@
             :height="120"
             :game="game"
             :clickedGraph="scrollToMove"
+            graphMode="click"
           )
       section.right-side
         game-info(:pgnHeaders="game.pgnHeaders" :fixed="true")
@@ -78,7 +76,6 @@
           isSubmitting: false,
           isViewingPgn: false,
         },
-        shouldScrollToMove: true,
         scrolledToMove: false,
         errorMessage: null
       }
@@ -134,7 +131,7 @@
 
     watch: {
       i() {
-        if (!this.scrolledToMove || !this.shouldScrollToMove) {
+        if (!this.scrolledToMove) {
           return
         }
         history.replaceState(null, null, `#${this.$store.getters.positionIndex}`)
@@ -219,12 +216,6 @@
           return
         }
         this.scrollToMove(i)
-      },
-      disableAutoscroll() {
-        this.shouldScrollToMove = false
-      },
-      enableAutoscroll() {
-        this.shouldScrollToMove = true
       },
       showSubmitGamePrompt() {
         this.gameState.isSubmitting = true

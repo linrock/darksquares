@@ -18,12 +18,16 @@
       x: {
         type: Number,
         required: true
+      },
+      color: {
+        type: String,
       }
     },
 
     computed: {
       svgStyle() {
-        return `width: ${this.width}px; height: ${this.height}px`
+        const color = this.color || `rgba(0,0,0,0.4)`
+        return `width: ${this.width}px; height: ${this.height}px; stroke: ${color}`
       }
     }
   }
@@ -31,7 +35,6 @@
 
 <style lang="stylus" scoped>
   svg.d3-vertical-line
-    stroke rgba(0,0,0,0.4)
     fill none
     stroke-width 0.5px
 
