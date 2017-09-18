@@ -6,6 +6,11 @@
         :class="squareClass(i - 1, j - 1)"
         :style="squareStyle"
       )
+        template(v-if="shouldShowLabels")
+          .row-label(v-if="i === 1")
+            | {{ rows[j - 1] }}
+          .col-label(v-if="j === 8")
+            | {{ cols[i - 1] }}
         template(v-if="pieceAt(i - 1, j - 1)")
           img(:src="pieceImgSrc(i - 1, j - 1)")
 
@@ -19,6 +24,10 @@
       fen: String,
       highlights: Array,
       squareSize: Number,
+      shouldShowLabels: {
+        type: Boolean,
+        default: false
+      }
     },
 
     data() {
@@ -97,6 +106,8 @@
   @import "../common.styl"
 
   square-size = 42px
+  dark-square-color = #ceb3a2
+  light-square-color = #f3e4cf
 
   .chessboard
     border 1px solid #938172
@@ -112,12 +123,19 @@
       width square-size
       height square-size
       transition background 0.15s ease
+      position relative
 
       &.light
-        background #f3e4cf
+        background light-square-color
+
+        .row-label, .col-label
+          color dark-square-color
 
       &.dark
-        background #ceb3a2
+        background dark-square-color
+
+        .row-label, .col-label
+          color light-square-color
 
       &.highlight-0
         background rgb(255, 255, 204)
@@ -125,8 +143,24 @@
       &.highlight-1
         background rgb(255, 255, 102)
 
+      .row-label, .col-label
+        position absolute
+        font-size 10px
+        opacity 0.9
+        z-index 0
+
+      .row-label
+        left 3px
+        top 3px
+
+      .col-label
+        right 3px
+        bottom 3px
+
       img
         width 100%
         height 100%
+        position relative
+        z-index 1
 
 </style>

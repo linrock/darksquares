@@ -1,8 +1,11 @@
 <template lang="pug">
   section.mini-board-view
-    chessboard(:fen="boardState.fen"
-               :highlights="boardState.highlights"
-               :squareSize="squareSize")
+    chessboard(
+      :fen="boardState.fen"
+      :shouldShowLabels="shouldShowLabels"
+      :highlights="boardState.highlights"
+      :squareSize="squareSize"
+    )
     .position-info
       game-position
       position-evaluation
@@ -22,6 +25,9 @@
       showPgn: {
         type: Boolean,
         default: false,
+      },
+      shouldShowLabels: {
+        type: Boolean,
       },
       squareSize: {
         type: Number,

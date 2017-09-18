@@ -15,7 +15,10 @@
     .content(v-if="game")
       section.left-side
         .left-side-inner
-          mini-board-detailed(:squareSize="55")
+          mini-board-detailed(
+            :squareSize="55"
+            :shouldShowLabels="true"
+          )
           graph-or-loading(
             :width="443"
             :height="120"
