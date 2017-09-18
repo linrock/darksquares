@@ -1,13 +1,12 @@
 <template lang="pug">
   section.pgn-headers-editor
-    .pgn-header(v-for="(header, i) in pgnHeaders")
-      input.header.mousetrap(type="text" :value="header[0]" @input="updateHeadersData")
-      input.value.mousetrap(type="text" :value="header[1]" @input="updateHeadersData")
+    .pgn-header(v-for="(header, i) in pgnHeaders" @keyup.enter="addBlankHeader")
+      input.header(type="text" :value="header[0]" @input="updateHeadersData")
+      input.value(type="text" :value="header[1]" @input="updateHeadersData")
 
 </template>
 
 <script>
-  import Mousetrap from 'mousetrap'
   import Game from '../models/game'
 
   export default {
@@ -22,14 +21,6 @@
       return {
         pgnHeaders: Object.keys(this.game.pgnHeaders).map(key => [key, this.game.pgnHeaders[key]])
       }
-    },
-
-    created() {
-      Mousetrap.bind('enter', () => this.addBlankHeader())
-    },
-
-    destroyed() {
-      Mousetrap.unbind('enter')
     },
 
     methods: {
