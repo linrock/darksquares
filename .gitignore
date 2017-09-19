@@ -22,4 +22,5 @@
 /node_modules
 
 /data/scid.eco
+/deploy
 /.env
