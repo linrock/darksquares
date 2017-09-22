@@ -27,13 +27,15 @@
       shouldShowLabels: {
         type: Boolean,
         default: false
+      },
+      perspective: {
+        type: String,
+        default: 'white'
       }
     },
 
     data() {
       return {
-        cols: ['a','b','c','d','e','f','g','h'],
-        rows: [8,7,6,5,4,3,2,1],
         ch: new Chess()
       }
     },
@@ -81,6 +83,14 @@
     },
 
     computed: {
+      cols() {
+        let cols = ['a','b','c','d','e','f','g','h']
+        return this.perspective === 'white' ? cols : cols.reverse()
+      },
+      rows() {
+        let rows = [8,7,6,5,4,3,2,1]
+        return this.perspective === 'white' ? rows : rows.reverse()
+      },
       boardStyle() {
         if (this.squareSize) {
           const boardSize = this.squareSize * 8 + 2

@@ -5,6 +5,7 @@
       :shouldShowLabels="shouldShowLabels"
       :highlights="boardState.highlights"
       :squareSize="squareSize"
+      :perspective="perspective"
     )
     .position-info
       game-position
@@ -32,6 +33,10 @@
       squareSize: {
         type: Number,
         default: null,
+      },
+      perspective: {
+        type: String,
+        default: 'white'
       }
     },
 
