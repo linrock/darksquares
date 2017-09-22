@@ -18,7 +18,10 @@
           mini-board-detailed(
             :squareSize="55"
             :shouldShowLabels="true"
+            :perspective="perspective"
           )
+          .board-actions
+            img.flip-board(src="/icons/flip-board.svg" @click="flipBoard")
           graph-or-loading(
             :width="443"
             :height="120"
@@ -80,7 +83,8 @@
           isViewingPgn: false,
         },
         scrolledToMove: false,
-        errorMessage: null
+        errorMessage: null,
+        perspective: 'white'
       }
     },
 
@@ -204,6 +208,9 @@
         }
         return 0
       },
+      flipBoard() {
+        this.perspective = this.perspective === 'white' ? 'black' : 'white'
+      },
       moveEl(i) {
         return this.$el.querySelector(`#move-${i}`)
       },
@@ -292,6 +299,21 @@
 
     .left-side-inner
       width 443px
+
+      .board-actions
+        text-align center
+        height 0
+
+        .flip-board
+          width 20px
+          position relative
+          top -19px
+          opacity 0.07
+          transition opacity 0.2s ease
+
+          &:hover
+            cursor pointer
+            opacity 0.4
 
       .graph-or-loading
         margin-top 25px
