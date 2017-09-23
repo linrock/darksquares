@@ -44,7 +44,8 @@
     methods: {
       previewGame(game, positionIndex) {
         showGamePosition(game, positionIndex, true)
-        this.$store.dispatch(`setActiveGameKey`, { key: game.key })
+        this.$store.dispatch(`setActiveItemKey`, game.key)
+        this.$store.dispatch(`setActiveGameId`, { id: game.id })
         this.$store.dispatch(`setPositionIndex`, positionIndex)
       }
     },

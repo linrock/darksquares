@@ -6,6 +6,7 @@ import userCache from './modules/user_cache'
 import gameCache from './modules/game_cache'
 import annotationCache from './modules/annotation_cache'
 import activeGame from './modules/active_game'
+import activeItem from './modules/active_item'
 import currentUser from './modules/current_user'
 
 Vue.use(Vuex)
@@ -49,6 +50,7 @@ const store = new Vuex.Store({
     gameCache,
     annotationCache,
     activeGame,
+    activeItem,
     currentUser
   }
 })

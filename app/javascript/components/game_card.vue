@@ -40,8 +40,9 @@
         applyStateChange({
           pgnHeaders: this.game.pgnHeaders
         })
-        this.$store.dispatch(`setActiveGameKey`, {
-          key: this.game.key,
+        this.$store.dispatch(`setActiveItemKey`, this.game.key)
+        this.$store.dispatch(`setActiveGameId`, {
+          id: this.game.id,
           resetPositionIndex: true
         })
       },

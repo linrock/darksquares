@@ -197,7 +197,8 @@
       initializeGame() {
         showGamePosition(this.game, this.$store.getters.positionIndex)
         this.perspective = this.game.perspective
-        this.$store.dispatch(`setActiveGameKey`, { key: this.game.key })
+        this.$store.dispatch(`setActiveItemKey`, this.game.key)
+        this.$store.dispatch(`setActiveGameId`, { id: this.game.id })
       },
       initialMoveIndex() {
         const hash = window.location.hash

@@ -1,14 +1,16 @@
+// The currently-active game, both when hovering over a game card + on game page
+
 const activeGameStore = {
   state: {
-    key: null,
+    id: null,
     positionIndex: 0,
     annotationInputIndex: -1,
     editingAnnotationId: -1,
   },
 
   mutations: {
-    setActiveGameKey(state, key) {
-      state.key = key
+    setActiveGameId(state, id) {
+      state.id = id
     },
     setPositionIndex(state, positionIndex) {
       state.positionIndex = positionIndex
@@ -28,12 +30,12 @@ const activeGameStore = {
   },
 
   actions: {
-    setActiveGameKey({ commit, getters }, { key, resetPositionIndex }) {
-      if (key !== getters.activeGameKey) {
+    setActiveGameId({ commit, getters }, { id, resetPositionIndex }) {
+      if (id !== getters.activeGameId) {
         if (resetPositionIndex) {
           commit('setPositionIndex', 0)
         }
-        commit('setActiveGameKey', key)
+        commit('setActiveGameId', id)
       }
     },
     setPositionIndex({ commit, getters }, positionIndex) {
@@ -53,13 +55,10 @@ const activeGameStore = {
   },
 
   getters: {
-    activeGameKey: state => state.key,
+    activeGameId: state => state.id,
     activeGamePerspective: (state, getters) => {
-      const gameKey = getters.activeGameKey
-      if (!gameKey) {
-        return `white`
-      }
-      return getters.getGame(gameKey.split("-")[1]).perspective
+      const game = getters.getGame(state.id)
+      return game ? game.perspective : `white`
     },
     positionIndex: state => state.positionIndex,
     annotationInputIndex: state => state.annotationInputIndex,

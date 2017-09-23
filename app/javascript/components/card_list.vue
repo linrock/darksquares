@@ -7,14 +7,14 @@
           .annotation-card-container(v-if="item.text")
             annotation-card(
               :annotation="item"
-              :isPreviewing="$store.getters.activeGameKey === item.key"
+              :isPreviewing="$store.getters.activeItemKey === item.key"
             )
           .game-card-container(v-if="item.pgn")
             game-card-header(:game="item")
             .game-container
               game-card(
                 :game="item"
-                :isPreviewing="$store.getters.activeGameKey === item.key"
+                :isPreviewing="$store.getters.activeItemKey === item.key"
               )
 
 </template>
