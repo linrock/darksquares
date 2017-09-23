@@ -44,7 +44,8 @@
           return true
         }
         if (row[0] === "Source" &&
-            (row[1].match(/^https?:\/\/www\.youtube\.com/) ||
+            (row[1].match(/^https?:\/\/lichess\.org/) ||
+             row[1].match(/^https?:\/\/www\.youtube\.com/) ||
              row[1].match(/^https?:\/\/www\.chessgames\.com/))) {
           return true
         }
