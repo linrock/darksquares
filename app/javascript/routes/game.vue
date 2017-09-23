@@ -309,7 +309,7 @@
           width 20px
           position relative
           top -19px
-          opacity 0.07
+          opacity 0.15
           transition opacity 0.2s ease
 
           &:hover

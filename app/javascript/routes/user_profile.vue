@@ -1,5 +1,5 @@
 <template lang="pug">
-  section#user_overview
+  section#user-overview
     template(v-if="itemsCount > 0")
       card-list(:annotations="userAnnotations" :games="userGames")
     template(v-if="itemsCount === 0")
@@ -59,6 +59,9 @@
 </script>
 
 <style lang="stylus" scoped>
+  #user-overview
+    padding-bottom 100px
+
   .loading
     margin 0 auto
     padding 60px 0
