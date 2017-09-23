@@ -3,7 +3,6 @@
     .left-content
       mini-board-detailed(
         :showPgn="true"
-        :perspective="$store.getters.activeGamePerspective"
       )
     .right-content
       header.main

@@ -5,7 +5,7 @@
       :shouldShowLabels="shouldShowLabels"
       :highlights="boardState.highlights"
       :squareSize="squareSize"
-      :perspective="perspective"
+      :perspective="boardPerspective"
     )
     .position-info
       game-position
@@ -35,8 +35,7 @@
         default: null,
       },
       perspective: {
-        type: String,
-        default: 'white'
+        type: String
       }
     },
 
@@ -49,6 +48,9 @@
     computed: {
       fen() {
         return this.boardState.fen
+      },
+      boardPerspective() {
+        return this.perspective || this.$store.getters.activeGamePerspective
       }
     },
 
