@@ -16,6 +16,10 @@ interface BoardState {
   highlights: Array<string>
 }
 
+export interface GameMetadata {
+  perspective: string
+}
+
 export interface GameOptions {
   id: number
   user: UserOptions
@@ -28,6 +32,7 @@ export interface GameOptions {
   score: number
   graph_points: Array<Array<number>>
   annotations: Array<AnnotationOptions>
+  metadata: GameMetadata
   created_at: string
   submitted_at: string
 }
@@ -44,6 +49,7 @@ export default class Game {
   public score: number
   public graphPoints: Array<Array<number>>
   public annotations: Array<Annotation> = []
+  public metadata: GameMetadata
   public createdAt: Date
   public submittedAt: Date
 
@@ -74,6 +80,7 @@ export default class Game {
       })
       this.computeAnnotationMap()
     }
+    this.metadata = options.metadata || <GameMetadata>{}
     if (options.created_at) {
       this.createdAt = parseDate(options.created_at)
     }
@@ -107,6 +114,10 @@ export default class Game {
   get annotator(): string {
     const annotator = this.pgnHeaders["Annotator"]
     return annotator && annotator.match(/^[\w\s]+$/) ? annotator : null
+  }
+
+  get perspective(): string {
+    return this.metadata.perspective || `white`
   }
 
   get sourceUrl(): string {

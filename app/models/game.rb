@@ -11,6 +11,7 @@ class Game < ApplicationRecord
   validates_presence_of :positions
   validates_length_of :name, in: (1..64), allow_nil: true
   validates_length_of :moves, in: (1...256)
+  validate :metadata_must_be_valid
   validate :pgn_headers_must_be_valid
 
   belongs_to :user
@@ -18,6 +19,8 @@ class Game < ApplicationRecord
   has_many :votes, class_name: 'GameVote'
 
   delegate :status, :percent_analyzed, to: :analysis_status
+
+  METADATA_KEYS = %w( perspective )
 
   def calculate_moves_and_positions
     return if pgn_headers.present? && moves.present? && positions.present?
@@ -52,6 +55,10 @@ class Game < ApplicationRecord
     pgn.gsub(/.*\]/, '').strip
   end
 
+  def perspective=(perspective)
+    self.metadata["perspective"] = perspective
+  end
+
   def as_json(options = {})
     super(options).merge({
       user: {
@@ -61,6 +68,20 @@ class Game < ApplicationRecord
   end
 
   private
+
+  def metadata_must_be_valid
+    perspective = self.metadata["perspective"]
+    metadata.keys.each {|key|
+      if !METADATA_KEYS.include? key
+        errors.add(:metadata, "invalid metadata key - #{key}")
+      end
+    }
+    if perspective.present?
+      unless %w( white black ).include? perspective
+        errors.add(:metadata, "perspective is invalid - #{perspective}")
+      end
+    end
+  end
 
   def pgn_headers_must_be_valid
     return unless self.pgn_headers.present?

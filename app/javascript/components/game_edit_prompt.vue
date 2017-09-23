@@ -2,6 +2,22 @@
   .game-edit-prompt
     .prompt-text Edit this game
     input(type="text" placeholder="Name (optional)" ref="name" :value="game.name")
+    .perspective
+      span Perspective
+      input(
+        type="radio"
+        id="perspective-white"
+        value="white"
+        v-model="perspective"
+      )
+      label(for="perspective-white") White
+      input(
+        type="radio"
+        id="perspective-black"
+        value="black"
+        v-model="perspective"
+      )
+      label(for="perspective-black") Black
     pgn-headers-editor(:game="game" ref="pgnHeadersEditor")
     .actions  
       button.save(@click="updateGame") Save
@@ -25,6 +41,12 @@
       },
     },
 
+    data() {
+      return {
+        perspective: this.game.perspective
+      }
+    },
+
     methods: {
       getPgnHeaders() {
         const newPgnHeaders = {}
@@ -46,6 +68,9 @@
         if (this.game.pgnHeaders) {
           gameData.game.pgn_headers = newPgnHeaders
         }
+        if (this.perspective) {
+          gameData.game.perspective = this.perspective
+        }
         this.$store.dispatch('patchGame', { game: this.game, gameData })
         this.game.name = name
         this.game.pgnHeaders = newPgnHeaders
@@ -66,10 +91,10 @@
   @import "../common.styl"
 
   .game-edit-prompt
-    margin-top 50px
+    margin-top 20px
 
     .actions
-      margin-top 40px
+      margin 40px 0
 
       .cancel
         margin-left 20px
@@ -78,10 +103,20 @@
       margin-bottom 20px
 
   input[type="text"]
+    display block
     font-size 18px
     padding 5px 12px
     width 400px
     margin-bottom 30px
+
+  .perspective
+    margin 25px 0
+
+    input[type="radio"]
+      margin-left 25px
+
+    label
+      margin-left 5px
 
   button
     border none
