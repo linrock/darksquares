@@ -122,12 +122,13 @@ export default class Game {
 
   get sourceUrl(): string {
     const site = this.pgnHeaders["Site"]
-    if (site && site.match(/^https:\/\/lichess\.org/)) {
+    if (site && site.match(/^https?:\/\/lichess\.org/)) {
       return site
     }
     const source = this.pgnHeaders["Source"]
-    if (source && (source.match(/www\.chessgames\.com/) ||
-                   source.match(/www\.youtube\.com/))) {
+    if (source && (source.match(/^https?:\/\/.lichess\.org/) ||
+                   source.match(/^https?:\/\/www\.chessgames\.com/) ||
+                   source.match(/^https?:\/\/www\.youtube\.com/))) {
       return source
     }
   }
