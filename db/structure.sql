@@ -125,7 +125,7 @@ CREATE TABLE games (
     analysis jsonb,
     best_moves jsonb,
     graph_points jsonb,
-    metadata jsonb,
+    metadata jsonb DEFAULT '{}'::jsonb,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     name character varying,
@@ -629,6 +629,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170827032341'),
 ('20170828062241'),
 ('20170917000256'),
-('20170917000814');
+('20170917000814'),
+('20170923193056');
 
 
