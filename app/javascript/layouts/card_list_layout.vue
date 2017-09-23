@@ -1,7 +1,10 @@
 <template lang="pug">
   main#card-list-layout
     .left-content
-      mini-board-detailed(:showPgn="true")
+      mini-board-detailed(
+        :showPgn="true"
+        :perspective="$store.getters.activeGamePerspective"
+      )
     .right-content
       header.main
         slot(name="header")

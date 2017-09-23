@@ -54,6 +54,13 @@ const activeGameStore = {
 
   getters: {
     activeGameKey: state => state.key,
+    activeGamePerspective: (state, getters) => {
+      const gameKey = getters.activeGameKey
+      if (!gameKey) {
+        return `white`
+      }
+      return getters.getGame(gameKey.split("-")[1]).perspective
+    },
     positionIndex: state => state.positionIndex,
     annotationInputIndex: state => state.annotationInputIndex,
     editingAnnotationId: state => state.editingAnnotationId,

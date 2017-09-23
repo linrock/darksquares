@@ -196,6 +196,7 @@
     methods: {
       initializeGame() {
         showGamePosition(this.game, this.$store.getters.positionIndex)
+        this.perspective = this.game.perspective
         this.$store.dispatch(`setActiveGameKey`, { key: this.game.key })
       },
       initialMoveIndex() {
