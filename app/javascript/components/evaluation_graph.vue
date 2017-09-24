@@ -11,7 +11,7 @@
       )
       transition(name="fade")
         hover-indicator(
-          v-if="$store.getters.activeGameKey === game.key"
+          v-if="$store.getters.activeGameId === game.id"
           :width="width"
           :height="height"
           :i="$store.getters.positionIndex"

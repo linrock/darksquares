@@ -50,8 +50,12 @@
       pathStyle() {
         return `fill: ${this.color}; stroke-width: 0;`
       },
+      normalizedPoints() {
+        const [yMin, yMax] = this.yRange
+        return this.points.map(y => y > yMax ? yMax : y < yMin ? yMin : y)
+      },
       dataPoints() {
-        return this.points.map((y,x) => ({ x, y }))
+        return this.normalizedPoints.map((y,x) => ({ x, y }))
       }
     },
   }

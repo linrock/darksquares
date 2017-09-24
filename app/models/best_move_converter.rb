@@ -1,4 +1,4 @@
-# Given a position and a UCI move, find the SAN representation as well
+# Given a position and a UCI move, find the SAN representation of the move
 #
 class BestMoveConverter
 

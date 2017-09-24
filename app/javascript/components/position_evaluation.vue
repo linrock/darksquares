@@ -10,11 +10,12 @@
   import { boardState } from '../store/miniboard'
 
   export default {
-    data: function() {
+    data() {
       return {
         boardState
       }
     },
+
     computed: {
       score() {
         return this.boardState.score
@@ -27,9 +28,15 @@
         if (score === 0) {
           score = `Even`
         } else if (score > 0) {
-          score = `+${score}`
+          if (score > 1000) {
+            score = `Mate in ${score - 1000}`
+          } else {
+            score = `+${score}`
+          }
         } else if (!this.score) {
           score = ``
+        } else if (score < -1000) {
+          score = `Mate in ${-(score + 1000)}`
         }
         return score
       },

@@ -26,7 +26,12 @@ class GraphPointsCalculator
       points[:depths][depth] = scores.map do |score|
         polarity *= -1
         if score =~ /mate (-?\d+)/
-          sc = score[/mate (-?\d+)/, 1].to_i > 0 ? 10 : -10
+          moves_until_mate = score[/mate (-?\d+)/, 1].to_i
+          if moves_until_mate > 0
+            sc = 1000 + moves_until_mate
+          else
+            sc = -1000 + moves_until_mate
+          end
           sc * polarity
         else
           score * polarity
