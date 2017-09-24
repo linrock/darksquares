@@ -43,10 +43,12 @@
                 | Source URL
             .action.view-pgn(@click="showViewPgnPrompt") View PGN
         move-list(:game="game" v-if="!isPromptOpen")
-        game-delete-prompt(:game="game" :gameState="gameState" v-if="gameState.isDeleting")
-        game-edit-prompt(:game="game" :gameState="gameState" v-if="gameState.isEditing")
-        game-submit-prompt(:game="game" :gameState="gameState" v-if="gameState.isSubmitting")
-        game-view-pgn-prompt(:game="game" :gameState="gameState" v-if="gameState.isViewingPgn")
+        .game-result {{ gameResult }}
+        .prompt-container
+          game-delete-prompt(:game="game" :gameState="gameState" v-if="gameState.isDeleting")
+          game-edit-prompt(:game="game" :gameState="gameState" v-if="gameState.isEditing")
+          game-submit-prompt(:game="game" :gameState="gameState" v-if="gameState.isSubmitting")
+          game-view-pgn-prompt(:game="game" :gameState="gameState" v-if="gameState.isViewingPgn")
     page-title(:title="pageTitle" v-if="errorMessage || game")
 
 </template>
@@ -190,6 +192,9 @@
             return `Game ${this.game.id}`
           }
         }
+      },
+      gameResult() {
+        return this.game.gameResult
       }
     },
 
@@ -400,6 +405,12 @@
         top -1px
 
     .move-list
-      margin 36px 0 80px
+      margin 36px 0
+
+    .game-result
+      font-size 14px
+      padding-top 20px
+      border-top 1px solid rgba(0,0,0,0.05)
+      margin-bottom 45px
 
 </style>

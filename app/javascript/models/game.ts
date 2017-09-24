@@ -133,6 +133,33 @@ export default class Game {
     }
   }
 
+  get gameResult(): string {
+    const pgnHeaders = this.pgnHeaders
+    const result = pgnHeaders["Result"]
+    const termination = pgnHeaders["Termination"]
+    const white = pgnHeaders["White"] || "White"
+    const black = pgnHeaders["Black"] || "Black"
+    let gameResult = ``
+    if (result) {
+      gameResult = result
+      if (result === `1-0`) {
+        gameResult = `${gameResult} • ${white} wins`
+      } else if (result === `0-1`) {
+        gameResult = `${gameResult} • ${black} wins`
+      } else if (result === `1/2-1/2`) {
+        gameResult = `${gameResult} • Draw`
+      } else {
+        return gameResult
+      }
+      if (termination) {
+        if (termination === `Time forfeit`) {
+          gameResult = `${gameResult} on time`
+        }
+      }
+    }
+    return gameResult
+  }
+
   // annotations
 
   public addAnnotation(annotation: Annotation): void {
