@@ -42,8 +42,9 @@
                 img.external-link-icon(src="/icons/external-link.svg")
                 | Source URL
             .action.view-pgn(@click="showViewPgnPrompt") View PGN
-        move-list(:game="game" v-if="!isPromptOpen")
-        .game-result {{ gameResult }}
+        template(v-if="!isPromptOpen")
+          move-list(:game="game")
+          .game-result {{ gameResult }}
         .prompt-container
           game-delete-prompt(:game="game" :gameState="gameState" v-if="gameState.isDeleting")
           game-edit-prompt(:game="game" :gameState="gameState" v-if="gameState.isEditing")
