@@ -55,7 +55,8 @@
         if (!this.gamesLoaded && this.homeGames.length > 0) {
           this.gamesLoaded = true
           const gameToPreview = this.homeGames[0]
-          const positionIndex = 5 + ~~(Math.random() * (gameToPreview.nPoints - 5))
+          const n = gameToPreview.nPoints
+          const positionIndex = Math.min(5 + ~~(Math.random() * (n - 5)), n - 1)
           this.previewGame(gameToPreview, positionIndex)
         }
       }
