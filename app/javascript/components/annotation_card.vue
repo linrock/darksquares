@@ -39,7 +39,7 @@
           fen: this.annotation.fen,
           highlights: [this.annotation.move.from, this.annotation.move.to],
           move: this.annotation.move_string,
-          pgnHeaders: this.game.pgnHeaders || {},
+          pgnHeaders: this.annotation.pgnHeaders || {},
           bestMove: ``,
           score: ``
         })
@@ -52,9 +52,6 @@
     },
 
     computed: {
-      game() {
-        return this.annotation.game || this.$store.getters.getGame(this.annotation.gameId)
-      },
       userPath() {
         return `/u/${this.annotation.username}`
       },

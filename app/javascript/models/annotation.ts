@@ -1,11 +1,10 @@
 import Game from './game'
-import { GameOptions } from './game'
 import { flatten, parseDate, timeAgo } from '../util'
 
 export interface AnnotationOptions {
   id: number
   game_id: number
-  game: GameOptions
+  pgn_headers: object
   fen: string
   username: string
   move: object
@@ -19,7 +18,7 @@ export interface AnnotationOptions {
 export default class Annotation {
   public id: number
   public gameId: number
-  public game: Game
+  public pgnHeaders: object
   public fen: string
   public username: string
   public move: object
@@ -32,9 +31,7 @@ export default class Annotation {
   public constructor(options: AnnotationOptions) {
     this.id = options.id
     this.gameId = options.game_id
-    if (options.game) {
-      this.game = new Game(options.game)
-    }
+    this.pgnHeaders = options.pgn_headers
     this.fen = options.fen
     this.username = options.username
     this.move = options.move
@@ -59,6 +56,7 @@ export default class Annotation {
 
   // Find valid positions from move strings in the annotation text
   //
+  /*
   public mapMoveStringsToPositions(): Map<string, string> {
     const moveStringMap = new Map()
     this.findMoveStrings().forEach(moveString => {
@@ -96,6 +94,7 @@ export default class Annotation {
     })
     return textArray
   }
+  */
 
   get timeAgo(): string {
     return timeAgo(this.createdAt).

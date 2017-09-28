@@ -67,9 +67,7 @@ class API::V1::UsersController < API::V1::BaseController
           # TODO deal with deleted games later
           pgn_headers = annotation.game&.pgn_headers || { "Deleted" => "Game" }
           annotation.as_json.merge({
-            game: {
-              pgn_headers: pgn_headers
-            }
+            pgn_headers: pgn_headers
           })
         },
         annotations_count: annotations.count,
@@ -106,9 +104,7 @@ class API::V1::UsersController < API::V1::BaseController
         # TODO deal with deleted games later
         pgn_headers = annotation.game&.pgn_headers || { "Deleted" => "Game" }
         annotation.as_json.merge({
-          game: {
-            pgn_headers: pgn_headers
-          }
+          pgn_headers: pgn_headers
         })
       },
       more_results: annotations.length == PAGE_SIZE && (PAGE_SIZE * page_num != user.annotations.count)

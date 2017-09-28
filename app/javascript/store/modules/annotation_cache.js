@@ -44,8 +44,8 @@ const annotationsStore = {
     deleteAnnotation({ dispatch, commit }, { game, annotation }) {
       game.removeAnnotation(annotation)
       if (annotation.id) {
-        if (!annotation.game) {
-          annotation.game = game
+        if (!annotation.gameId) {
+          annotation.gameId = game.id
         }
         deleteAnnotation(annotation).then(response => dispatch('removeAnnotation', annotation))
       }
