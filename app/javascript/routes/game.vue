@@ -150,7 +150,8 @@
         if (!this.scrolledToMove) {
           return
         }
-        history.replaceState(null, null, `#${this.$store.getters.positionIndex}`)
+        const i = this.$store.getters.positionIndex
+        history.replaceState(null, null, i > 0 ? `#${i}` : window.location.pathname)
         this.scrollToMoveIfFar(this.i)
         showGamePosition(this.game, this.i)
       },
