@@ -7,7 +7,7 @@
 </template>
 
 <style lang="stylus" scoped>
-  @import "../common.styl"
+  @require "../common.styl"
 
   .sub-header
     background #f5f5f5

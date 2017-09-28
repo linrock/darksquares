@@ -113,7 +113,7 @@
 </script>
 
 <style lang="stylus" scoped>
-  @import "../common.styl"
+  @require "../common.styl"
 
   square-size = 42px
   dark-square-color = #ceb3a2

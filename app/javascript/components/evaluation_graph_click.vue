@@ -98,7 +98,7 @@
 </script>
 
 <style lang="stylus" scoped>
-  @import "../common.styl"
+  @require "../common.styl"
 
   svg
     position absolute

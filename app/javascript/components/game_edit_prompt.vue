@@ -88,7 +88,7 @@
 </script>
 
 <style lang="stylus" scoped>
-  @import "../common.styl"
+  @require "../common.styl"
 
   .game-edit-prompt
     margin-top 20px

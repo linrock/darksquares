@@ -59,7 +59,7 @@
 </script>
 
 <style lang="stylus" scoped>
-  @import "../common.styl"
+  @require "../common.styl"
 
   main#login
     margin 100px auto

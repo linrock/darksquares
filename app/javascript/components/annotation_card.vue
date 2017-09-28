@@ -68,7 +68,7 @@
 </script>
 
 <style lang="stylus" scoped>
-  @import "../common.styl"
+  @require "../common.styl"
 
   .annotation-card-container
     margin-left 60px

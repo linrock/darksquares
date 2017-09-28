@@ -48,7 +48,7 @@
 </script>
 
 <style lang="stylus" scoped>
-  @import "../common.styl"
+  @require "../common.styl"
 
   .game-submit-prompt
     margin-top 50px

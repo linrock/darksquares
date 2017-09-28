@@ -2,7 +2,7 @@
   main#about
     .content
       p
-        | Dark Squares is a community for sharing and
+        | Dark Squares is a place for sharing and
         br
         | collaboratively annotating chess games.
       p
@@ -29,7 +29,7 @@
 </script>
 
 <style lang="stylus" scoped>
-  @import "../common.styl"
+  @require "../common.styl"
 
   .content
     width 1200px

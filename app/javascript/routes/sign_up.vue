@@ -62,7 +62,7 @@
 </script>
 
 <style lang="stylus" scoped>
-  @import "../common.styl"
+  @require "../common.styl"
 
   main#sign_up
     margin 100px auto

@@ -61,7 +61,7 @@
 </script>
 
 <style lang="stylus" scoped>
-  @import "../common.styl"
+  @require "../common.styl"
 
   .card-list
     padding-top 10px

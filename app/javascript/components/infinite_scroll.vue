@@ -79,7 +79,7 @@
 </script>
 
 <style lang="stylus" scoped>
-  @import "../common.styl"
+  @require "../common.styl"
 
   .infinite-scroll
     position relative
