@@ -1,7 +1,7 @@
 <template lang="pug">
   #modal-background(@click.self="closeModal")
     .modal-content
-      h1 Sign up
+      h1 Create a new account
       form(@submit="submitCredentials")
         input(
           type="text"
@@ -29,7 +29,6 @@
 
 <script>
   import Mousetrap from 'mousetrap'
-  import { createUser } from '../api/requests'
 
   export default {
     data() {
@@ -46,7 +45,7 @@
 
     destroyed() {
       setTimeout(() => document.body.style.overflow = 'auto', 200)
-      Mousetrap.reset()
+      Mousetrap.unbind('esc')
     },
 
     methods: {
@@ -76,7 +75,7 @@
           this.setError("Passwords don't match")
           return
         }
-        createUser(credentials).then(() => {
+        this.$store.dispatch('signUp', credentials).then(() => {
           this.$store.dispatch('fetchMyUserInfo')
           this.$store.dispatch('closeModal')
         }).catch(error => this.setError(error.response.data.error))
