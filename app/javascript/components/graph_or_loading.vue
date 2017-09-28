@@ -1,21 +1,20 @@
 <template lang="pug">
   .graph-or-loading
-    template(v-if="!isLoading")
-      evaluation-graph-click(
-        v-if="graphMode === `click`"
-        :width="width"
-        :height="height"
-        :game="currentGame"
-        :clickedGraph="clickedGraph"
-      )
-      evaluation-graph(
-        v-else
-        :width="width"
-        :height="height"
-        :game="currentGame"
-        :clickedGraph="clickedGraph"
-      )
-    .loading(v-else)
+    evaluation-graph-click(
+      v-if="graphMode === `click`"
+      :width="width"
+      :height="height"
+      :game="currentGame"
+      :clickedGraph="clickedGraph"
+    )
+    evaluation-graph(
+      v-else
+      :width="width"
+      :height="height"
+      :game="currentGame"
+      :clickedGraph="clickedGraph"
+    )
+    .loading(v-if="isLoading")
       template(v-if="!analysisStatus || analysisStatus === `pending`")
         | Waiting for server to start analyzing game...
       template(v-if="analysisStatus === `in_progress`")
@@ -24,7 +23,7 @@
 </template>
 
 <script>
-  import { getGame, getGameStatus } from '../api/requests'
+  import { getGameStatus } from '../api/requests'
   import EvaluationGraph from './evaluation_graph'
   import EvaluationGraphClick from './evaluation_graph_click'
   import Game from '../models/game'
@@ -98,7 +97,8 @@
 
     computed: {
       isLoading() {
-        return !this.currentGame.scores.length
+        const scores = this.currentGame.scores
+        return !scores.length || scores.filter(score => score !== 0).length === 0
       },
       progressText() {
         return this.percentComplete && `${this.percentComplete}% complete`
@@ -111,3 +111,16 @@
     }
   }
 </script>
+
+<style lang="stylus" scoped>
+  .graph-or-loading
+    position relative
+
+    .loading
+      color rgba(0,0,0,0.25)
+      font-size 14px
+      position absolute
+      pointer-events none
+      top 25px
+
+</style>

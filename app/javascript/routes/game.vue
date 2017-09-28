@@ -322,13 +322,8 @@
             cursor pointer
             opacity 0.4
 
-      .graph-or-loading
-        margin-top 25px
-
-      .graph-or-loading >>> .loading
-        font-size 16px
-        color rgba(0,0,0,0.4)
-        margin-top 30px
+    .graph-or-loading
+      margin-top 5px
 
   section.right-side
     padding 0 0 10px 40px

@@ -73,7 +73,7 @@ export default class Game {
     }
     this.bestMoves = options.best_moves
     this.score = options.score || 0
-    this.graphPoints = options.graph_points
+    this.graphPoints = options.graph_points || [new Array(this.positions.length).fill(0)]
     if (options.annotations) {
       this.annotations = options.annotations.map(annotation => {
         return new Annotation(Object.assign({ game: this }, annotation))

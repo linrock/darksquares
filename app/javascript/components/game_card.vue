@@ -90,11 +90,6 @@
     &:hover .more-annotations
       text-decoration underline
 
-  .graph-or-loading >>> .loading
-    font-size 14px
-    color rgba(0,0,0,0.4)
-    padding 40px 0
-
   .more-annotations
     color highlight-color
     font-size 12px
